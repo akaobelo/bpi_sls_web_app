@@ -1,0 +1,29 @@
+name: Deployment
+on:
+  push:
+    branches: [ master ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.TENANT_PORTAL_SECRET  }}
+          username: ubuntu
+          script: |
+            cd /var/www/tenant_portal/
+            git pull origin master
+            composer install --optimize-autoloader --no-dev
+            php artisan migrate
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install --lts
+            npm -v
+            node -v
+            npm install
+            npm run production
+
