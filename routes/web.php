@@ -17,15 +17,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function(){
     Route::view('/','pages.index')->name('login');
-    Route::post('/login', [AuthController::class,'authenticate']);
+    Route::view('/bip','pages.bip.bip_index')->name('bip.index');
+    Route::view('/sls','pages.sls.sls_index')->name('sls.index');
 });
 
-Route::get('/register',[UserController::class,'createUser'])->name('add-user');
+// Route::get('/register',[UserController::class,'createUser'])->name('add-user');
 
 
-Route::middleware('auth')->group(function(){
+// Route::middleware('auth')->group(function(){
 
-});
+// });
 
 
 
