@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +20,8 @@ Route::middleware('guest')->group(function(){
     Route::view('/bip','pages.bip.bip_index')->name('bip.index');
     Route::view('/sls','pages.sls.sls_index')->name('sls.index');
 });
+
+    Route::get('/api/store/migration',[StoreController::class,'storeMigration']);
 
 // Route::get('/register',[UserController::class,'createUser'])->name('add-user');
 

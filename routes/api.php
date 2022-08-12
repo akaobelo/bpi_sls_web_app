@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::middleware('secure:api')->prefix('/migrate')->group(function(){
-    Route::get('/tenants',[TenantController::class,'tenantMasterMigration']);
-});
+// Route::middleware('secure:api')->prefix('/migrate')->group(function(){
+//     Route::get('/tenants',[TenantController::class,'tenantMasterMigration']);
+// });
 
 

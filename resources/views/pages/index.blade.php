@@ -31,7 +31,7 @@
             <button class="btn p-0 burger-icon burger-icon-left ml-4" id="kt_header_mobile_toggle">
             <span></span>
             </button>
-            <button class="btn p-0 ml-2" id="kt_header_mobile_topbar_toggle">
+            {{-- <button class="btn p-0 ml-2" id="kt_header_mobile_topbar_toggle">
                <span class="svg-icon svg-icon-xl">
                   <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -43,7 +43,7 @@
                   </svg>
                   <!--end::Svg Icon-->
                </span>
-            </button>
+            </button> --}}
          </div>
          <!--end::Toolbar-->
       </div>
