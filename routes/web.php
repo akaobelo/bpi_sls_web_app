@@ -17,7 +17,7 @@ use App\Http\Controllers\StoreController;
 
 Route::middleware('guest')->group(function(){
     Route::view('/','pages.index')->name('login');
-    Route::view('/bip','pages.bip.bip_index')->name('bip.index');
+    Route::get('/bip',[StoreController::class,'bipIndexView'])->name('bip.index');
     Route::view('/sls','pages.sls.sls_index')->name('sls.index');
 });
 

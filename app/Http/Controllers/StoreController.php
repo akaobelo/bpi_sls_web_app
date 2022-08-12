@@ -8,6 +8,7 @@ use App\Traits\ResponseApi;
 use Illuminate\Support\Facades\Storage;
 use App\Models\StoreMigration;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Store;
 
 class StoreController extends Controller
 {
@@ -30,5 +31,11 @@ class StoreController extends Controller
         if(!$flag) return $this->error('Nothing to migrate', 400);
 
         return $this->success('Success', null, 201);
+    }
+
+    public function bipIndexView()
+    {
+
+        return view('pages.bip.bip_index',['stores' => Store::get()]);
     }
 }
