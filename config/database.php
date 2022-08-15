@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'odbc'),
 
     /*
     |--------------------------------------------------------------------------
@@ -89,6 +89,46 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
+        ],
+
+        'odbc_2001' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_2001',
+            'username' => '',
+            'password' => ''
+        ],
+
+        'odbc_2003' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_2003',
+            'username' => '',
+            'password' => ''
+        ],
+
+        'odbc_2006' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_2006',
+            'username' => '',
+            'password' => ''
+        ],
+
+        'odbc_2008' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_2008',
+            'username' => '',
+            'password' => ''
+        ],
+
+        'odbc_2009' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_2009',
+            'username' => '',
+            'password' => ''
         ],
 
     ],

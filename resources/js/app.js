@@ -134,6 +134,9 @@ window.datePickerDefaultSetting = {
     format:'yyyy-mm-dd'
 }
 
+window.numberWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
 
 window.humanDate = (date) => new Date(date).toLocaleString('en-us',{month:'long', day:'numeric',year:'numeric'})
 

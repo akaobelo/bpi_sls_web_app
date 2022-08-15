@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\StoreMigration;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Store;
-
+use App\Services\TpsConnection;
 class StoreController extends Controller
 {
     use ResponseApi;
@@ -35,7 +35,13 @@ class StoreController extends Controller
 
     public function bipIndexView()
     {
-
         return view('pages.bip.bip_index',['stores' => Store::get()]);
+    }
+
+    public function getStoreInformation(Request $request, $barcode)
+    {
+        $tps_2001 = new TpsConnection('odbc_2001');
+        return $tps_2001->getItemBySKU($barcode);
+
     }
 }

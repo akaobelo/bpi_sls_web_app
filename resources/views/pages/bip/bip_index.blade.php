@@ -41,7 +41,7 @@
                     <div class="col-lg-6">
                         <label>Date Received</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="received_date" placeholder="Select date" id='receivedDate' />
+                            <input type="text" class="form-control" name="receivedDate" placeholder="Select date" id='receivedDate' />
                             <div class="input-group-append">
                                 <span class="input-group-text">
                                     <i class="la la-calendar-check-o"></i>
@@ -54,17 +54,23 @@
                 <div class="form-group row">
                     <div class="col-lg-4">
                         <label>Sku/Barcode</label>
-                        <input type="email" class="form-control">
+                        <input type="" class="form-control" name="sku" id="sku">
                     </div>
                     <div class="col-lg-4">
                         <label>Quantity</label>
-                        <input type="email" class="form-control">
+                        <input type="" class="form-control" name="quantity" name="ven_no" id="ven_no">
                     </div>
                     <div class="col-lg-4">
                         <label>Type</label>
                         <div class="input-group">
                             <select autocomplete="off" class="form-control form-control-solid form-control-md" name="type" id="type">
-
+                                <option>Hard Tag</option>
+                                <option>Hard Tag Markdown</option>
+                                <option>Sticker Tag (Ballpen)</option>
+                                <option>Sticker Tag Markdown</option>
+                                <option>Shelf Hard Tag</option>
+                                <option>Concessionaire</option>
+                                <option>Concessionaire Markdown</option>
                             </select>
                         </div>
                     </div>
@@ -88,11 +94,8 @@
 
                 <div class="form-group row">
                     <div class="col-lg-8">
-
-
                     </div>
                     <div class="col-lg-2">
-
                     </div>
                     <div class="col-lg-2">
                         <label></label>
@@ -110,26 +113,26 @@
                 <div class="form-group row">
                     <div class="col-lg-8">
                         <label>Description</label>
-                        <input type="email" class="form-control" disabled>
+                        <input type="email" class="form-control" name="short_descr" id="short_descr" disabled>
                     </div>
                     <div class="col-lg-4">
                         <label>BUM</label>
-                        <input type="email" class="form-control" disabled>
+                        <input type="email" class="form-control" name="buy_unit" id="buy_unit" disabled>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-lg-4">
                         <label>Stock No.</label>
-                        <input type="email" class="form-control" disabled>
+                        <input type="email" class="form-control" name="ven_no" id="ven_no" disabled>
                     </div>
                     <div class="col-lg-4">
                         <label>Price</label>
-                        <input type="email" class="form-control" disabled>
+                        <input type="email" class="form-control" name="price" id="price" disabled>
                     </div>
                     <div class="col-lg-4">
                         <label>After Price</label>
-                        <input type="email" class="form-control" disabled>
+                        <input type="email" class="form-control" name="price" id="after_price" disabled>
                     </div>
                 </div>
 
