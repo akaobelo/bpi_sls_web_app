@@ -134,6 +134,8 @@
       <script src="{{ asset('/js/globals/plugins.bundle.js')}}" ></script>
       <script src="{{ asset('/js/globals/prismjs.bundle.js')}}" ></script>
       <script src="{{ asset('/js/globals/scripts.bundle.min.js')}}" ></script>
+      <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+      {{-- <script src="{{ asset('/js/globals/js_barcode.min.js')}}" ></script> --}}
       <!--end::Global Theme Bundle-->
       @once
         @stack('scripts')

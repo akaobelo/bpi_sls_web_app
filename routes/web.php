@@ -18,17 +18,11 @@ use App\Http\Controllers\StoreController;
 Route::middleware('guest')->group(function(){
     Route::view('/','pages.index')->name('login');
     Route::get('/bip',[StoreController::class,'bipIndexView'])->name('bip.index');
-    Route::view('/sls','pages.sls.sls_index')->name('sls.index');
+    Route::get('/sls',[StoreController::class,'slsIndexView'])->name('sls.index');
 });
     Route::get('/api/get/item/{barcode}',[StoreController::class,'getStoreInformation']);
     Route::get('/api/store/migration',[StoreController::class,'storeMigration']);
-
-// Route::get('/register',[UserController::class,'createUser'])->name('add-user');
-
-
-// Route::middleware('auth')->group(function(){
-
-// });
+    Route::get('/api/get/store/{business_unit_id}',[StoreController::class,'getStores']);
 
 
 

@@ -15,10 +15,9 @@ class CreateStoresTable extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->string('business_unit');
             $table->string('store');
-            $table->integer('store_code');
-            $table->timestamps();
+            $table->unsignedBigInteger('business_unit_id');
+            $table->foreign('business_unit_id')->references('id')->on('business_units');
         });
     }
 

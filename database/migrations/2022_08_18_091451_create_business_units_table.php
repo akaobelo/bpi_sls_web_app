@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStoreDataTable extends Migration
+class CreateBusinessUnitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateStoreDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_data', function (Blueprint $table) {
+        Schema::create('business_units', function (Blueprint $table) {
             $table->id();
-            $table->integer('bum')->nullable();
-            $table->decimal('before_price',18,6)->nullable();
-            $table->integer('stock_no')->nullable();
-            $table->integer('vendor_code')->nullable();
+            $table->longText('business_unit');
+            $table->timestamps();
         });
     }
 
@@ -29,6 +27,6 @@ class CreateStoreDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_data');
+        Schema::dropIfExists('business_units');
     }
 }

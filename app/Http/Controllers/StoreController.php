@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\StoreMigration;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Store;
+use App\Models\BusinessUnit;
 use App\Services\TpsConnection;
 class StoreController extends Controller
 {
@@ -35,13 +36,47 @@ class StoreController extends Controller
 
     public function bipIndexView()
     {
-        return view('pages.bip.bip_index',['stores' => Store::get()]);
+        return view('pages.bip.bip_index',['businessUnits' => BusinessUnit::get()]);
+    }
+
+    public function slsIndexView()
+    {
+        return view('pages.sls.sls_index',['businessUnits' => BusinessUnit::get()]);
     }
 
     public function getStoreInformation(Request $request, $barcode)
     {
-        $tps_2001 = new TpsConnection('odbc_2001');
-        return $tps_2001->getItemBySKU($barcode);
 
+        switch($request->code)
+        {
+            case 2001 :
+                $tps = new TpsConnection('odbc_2001');
+                return $tps->getItemBySKU($barcode);
+                break;
+            case 2003 :
+                $tps = new TpsConnection('odbc_2003');
+                return $tps->getItemBySKU($barcode);
+                break;
+            case 2006 :
+                $tps = new TpsConnection('odbc_2006');
+                return $tps->getItemBySKU($barcode);
+                break;
+            case 2008 :
+                $tps = new TpsConnection('odbc_2008');
+                return $tps->getItemBySKU($barcode);
+                break;
+            case 2009 :
+                $tps = new TpsConnection('odbc_2009');
+                return $tps->getItemBySKU($barcode);
+                break;
+            default:
+                throw new Error('Invalid Code', 400);
+        }
+
+    }
+
+    public function getStores($business_unit_id)
+    {
+       return Store::with('businessUnit','storeCode')->where('business_unit_id', $business_unit_id)->get();
     }
 }

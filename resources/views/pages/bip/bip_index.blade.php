@@ -1,5 +1,13 @@
 @extends('pages.index')
 
+<style>
+.barcode_display_data {
+    display: inline-block;
+    width: 10em;
+    /* margin-right: .7em; */
+}
+</style>
+
 @section('content')
 <div class="container">
     <form class="form" id="kt_form">
@@ -10,8 +18,8 @@
                         <label>BU</label>
                         <div class="input-group">
                             <select autocomplete="off" class="form-control form-control-solid form-control-md" name="business_unit" id="business_unit">
-                                @foreach($stores as $store)
-                                    <option >{{$store->business_unit}}</option>
+                                @foreach($businessUnits as $businessUnit)
+                                    <option value="{{$businessUnit->id}}">{{$businessUnit->business_unit}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -19,10 +27,8 @@
                     <div class="col-lg-6">
                         <label>Store</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md" name="type" id="type">
-                                @foreach($stores as $store)
-                                    <option>{{$store->store}}</option>
-                                @endforeach
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md " name="type" id="store">
+
                             </select>
                         </div>
                     </div>
@@ -31,10 +37,8 @@
                     <div class="col-lg-6">
                         <label>Store Code</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md" name="type" id="type">
-                                @foreach($stores as $store)
-                                    <option>{{$store->store_code}}</option>
-                                @endforeach
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md " name="type" id="store_code">
+
                             </select>
                         </div>
                     </div>
@@ -64,13 +68,13 @@
                         <label>Type</label>
                         <div class="input-group">
                             <select autocomplete="off" class="form-control form-control-solid form-control-md" name="type" id="type">
-                                <option>Hard Tag</option>
-                                <option>Hard Tag Markdown</option>
-                                <option>Sticker Tag (Ballpen)</option>
-                                <option>Sticker Tag Markdown</option>
-                                <option>Shelf Hard Tag</option>
-                                <option>Concessionaire</option>
-                                <option>Concessionaire Markdown</option>
+                                <option value="1">Hard Tag</option>
+                                <option value="2">Hard Tag Markdown</option>
+                                <option value="3">Sticker Tag (Ballpen)</option>
+                                <option value="4">Sticker Tag Markdown</option>
+                                <option value="5">Shelf Hard Tag</option>
+                                <option value="6">Concessionaire</option>
+                                <option value="7">Concessionaire Markdown</option>
                             </select>
                         </div>
                     </div>
@@ -99,7 +103,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" class="form-control btn btn-primary font-weight-bold">Clear</button>
+                        <button type="button" id="btn_clear" class="form-control btn btn-primary font-weight-bold">Clear</button>
                     </div>
                 </div>
                 <!-- end: Example Code-->
@@ -130,7 +134,7 @@
                         <label>Price</label>
                         <input type="email" class="form-control" name="price" id="price" disabled>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" id="after_price_field">
                         <label>After Price</label>
                         <input type="email" class="form-control" name="price" id="after_price" disabled>
                     </div>
@@ -157,7 +161,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" class="form-control btn btn-primary font-weight-bold">Print Preview</button>
+                        <button id="print_preview" type="button" class="form-control btn btn-primary font-weight-bold">Data Preview</button>
                     </div>
                     <div class="col-lg-2">
                         <label></label>
@@ -184,7 +188,28 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+
+            <div class="form-group row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4" style="text-align:center;">
+                    <label id="short_description"></label>
+                        <svg id="barcode"></svg>
+                    <div class="form-group row">
+                        <div class="col-lg-6">
+                            <label class="barcode_display_data"  id="barcode_receivedDate"></label>
+                            <label class="barcode_display_data" id="barcode_vendor"></label>
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="barcode_display_data"  id="bracode_price"></label>
+                            <label class="barcode_display_data" id="barcode_vendor_no"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                </div>
             </div>
         </div>
     </form>

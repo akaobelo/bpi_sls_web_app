@@ -9,5 +9,17 @@ class Store extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['business_unit','store','store_code'];
+    public $timestamps = false;
+
+    protected $fillable = ['store','bu_id'];
+
+    public function businessUnit()
+    {
+        return $this->belongsTo(BusinessUnit::class);
+    }
+
+    public function storeCode()
+    {
+        return $this->hasMany(StoreCode::class);
+    }
 }
