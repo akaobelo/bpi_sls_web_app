@@ -13,6 +13,8 @@ void new class BipIndex{
     }
 
     eventHandler = () => {
+        $('.bip_sl2').select2().on('change', this.getBusinessUnit)
+        $('.bip_sl2').trigger('change')
         $('#after_price_field').hide()
         document.querySelector('#sku').addEventListener('input',(e) => {
             let skuData = (e.target.value == null ? '' : e.target.value)
@@ -34,22 +36,24 @@ void new class BipIndex{
             this.previewPrint()
         })
 
-        document.querySelector('#business_unit').addEventListener('change', (e) => {
-            this.currentBusinessID = e.target.value
-            this.getBusinessUnit()
-        })
+        // document.querySelector('#business_unit').addEventListener('change', (e) => {
+        //     this.currentBusinessID = e.target.value
+        //     this.getBusinessUnit()
+        // })
 
         document.querySelector('#type').addEventListener('change', (e) => {
             if(e.target.value  == 2 || e.target.value  == 4 || e.target.value  == 7)
             {$('#after_price_field').show()}else{$('#after_price_field').hide()}
         })
 
+
+
     }
 
-    getBusinessUnit = async() => {
+    getBusinessUnit = async(e) => {
         $('#store').empty()
         $('#store_code').empty()
-        const {data:result} = await axios.get(`/api/get/store/${this.currentBusinessID}`)
+        const {data:result} = await axios.get(`/api/get/store/${e.target.value = 1 ? e.target.value : 1}`)
         for(const e of result){$('#store').append(`<option value="${e.id}">${e.store}</option>`)}
         for(const elem of result){
             elem.store_code.forEach(element => {

@@ -10,7 +10,7 @@
                         <div class="col-lg-4">
                             <label>BU</label>
                             <div class="input-group">
-                                <select autocomplete="off" class="form-control form-control-solid form-control-md" name="business_unit" id="business_unit">
+                                <select class="form-control form-control-solid form-control-md sl2" name="business_unit" id="business_unit">
                                     @foreach($businessUnits as $businessUnit)
                                         <option value="{{$businessUnit->id}}">{{$businessUnit->business_unit}}</option>
                                     @endforeach
@@ -20,7 +20,7 @@
                         <div class="col-lg-4">
                             <label>Store</label>
                             <div class="input-group">
-                                <select autocomplete="off" class="form-control form-control-solid form-control-md " name="type" id="store">
+                                <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store">
 
                                 </select>
                             </div>
@@ -28,7 +28,7 @@
                         <div class="col-lg-4">
                             <label>Store Code</label>
                             <div class="input-group">
-                                <select autocomplete="off" class="form-control form-control-solid form-control-md " name="type" id="store_code">
+                                <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store_code">
 
                                 </select>
                             </div>
@@ -58,14 +58,14 @@
                     </div>
                     <div class="col-lg-6">
                         <label>Price</label>
-                        <input type="email" class="form-control" name="price" id="price" disabled>
+                        <input type="" class="form-control" name="price" id="price" readonly="readonly" >
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-lg-12">
                         <label>Description</label>
-                        <input type="email" class="form-control" name="short_descr" id="short_descr" disabled>
+                        <input type="" class="form-control" name="short_descr" id="short_descr" disabled>
                     </div>
                 </div>
 
@@ -73,23 +73,23 @@
                 <div class="form-group row">
                     <div class="col-lg-4">
                         <label>Color</label>
-                        <input type="email" class="form-control" name="color" id="color">
+                        <input type="" class="form-control" name="color" id="color">
                     </div>
 
                     <div class="col-lg-4">
                         <label>Material</label>
-                        <input type="email" class="form-control" name="material" id="material">
+                        <input type="" class="form-control" name="material" id="material">
                     </div>
                     <div class="col-lg-4">
                         <label>Size</label>
-                        <input type="email" class="form-control" name="size" id="size">
+                        <input type="" class="form-control" name="size" id="size">
                     </div>
                 </div>
 
                 <div class="form-group row" id="shelf_container">
                     <div class="col-lg-12">
                         <label>Product Specifications</label>
-                        <input id="kt_tagify_1" class="form-control tagify" name='tags' placeholder='type...' v autofocus="" data-blacklist='' />
+                        <input id="kt_tagify_1" class="form-control tagify" name='product_specification' placeholder='type...' v autofocus="" data-blacklist='' />
                         <div class="mt-3">
                             <a href="javascript:;" id="kt_tagify_1_remove" class="btn btn-sm btn-light-primary font-weight-bold">Remove tags</a>
                         </div>
@@ -111,7 +111,6 @@
                     </div>
                 </div>
                 <!-- end: Example Code-->
-
                 <div class="form-group row">
                     <div class="col-lg-4">
 
@@ -121,7 +120,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" class="form-control btn btn-primary font-weight-bold">Print Preview</button>
+                        <button type="button" id="btn_sls_print_preview" data-toggle="modal" data-target="#print_preview_btn" class="form-control btn btn-primary font-weight-bold">Print Preview</button>
                     </div>
                     <div class="col-lg-2">
                         <label></label>
@@ -135,6 +134,7 @@
             </div>
         </div>
     </form>
+    @include('pages.partials.print_preview_modal')
 </div>
 @endsection
 

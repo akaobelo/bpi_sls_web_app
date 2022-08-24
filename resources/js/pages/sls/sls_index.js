@@ -2,13 +2,20 @@
 void new class SlsIndex{
     constructor(){
         this.input = document.querySelector('#kt_tagify_1')
+        this.slsForm = document.querySelector('#kt_form')
         this.removeButton =  document.querySelector('#kt_tagify_1_remove')
         this.typeOption = document.querySelector('#type')
         this.currentCode = document.querySelector('#store_code')
+        this.previewPrintBtn = document.querySelector('#btn_sls_print_preview')
+        this.bussUnit = document.querySelector('#business_unit')
+        // this.printPreviewBtn = document.querySelector('#btn_sls_print_preview')
+
         this.eventHandler()
     }
 
     eventHandler  ()  {
+        $('.sl2').select2().on('change', this.getBusinessUnit)
+        $('.sl2').trigger('change')
        this.tagify =  new Tagify(this.input, {
             whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
             blacklist: ["Shit", "Pussy", "Fuck"], // <-- passed as an attribute in this demo
@@ -24,17 +31,48 @@ void new class SlsIndex{
             this.getItemBySku(skuData)
         })
 
-        document.querySelector('#business_unit').addEventListener('change', (e) => {
-            this.currentBusinessID = e.target.value
-            this.getBusinessUnit()
+        document.querySelector('#btn_clear').addEventListener('click', (e) => {
+            this.slsForm.reset()
+        })
+
+
+        this.previewPrintBtn.addEventListener('click', () => {
+            this.populateDataPrintPreview()
         })
 
     }
 
-    getBusinessUnit = async() => {
+    populateDataPrintPreview = () => {
+        const data = this.getFormData()
+
+            JsBarcode("#barcode", `${data.get('sku')}`, {
+                format: "CODE39",
+                height: 50,
+                displayValue: false
+            })
+            const prod_spec = JSON.parse(data.get('product_specification'))
+            $('#product_specification').empty()
+            for(const specs of prod_spec){
+                $('#product_specification').append(`<ul class="text-muted text-hover-primary text-wrap">${specs.value}</ul>`)
+            }
+            $('.color').html(`${data.get('color')}`)
+            $('.material').html(`${data.get('material')}`)
+            $('.size').html(`${data.get('size')}`)
+            $('.price').val(`${data.get('price')}`)
+            $('#barcode_description').html(`<h3>${data.get('sku')}</h3>`)
+
+    }
+
+
+    getFormData = () => {
+        this.formData = new FormData(this.slsForm)
+        return this.formData
+    }
+
+    getBusinessUnit = async(e) => {
         $('#store').empty()
         $('#store_code').empty()
-        const {data:result} = await axios.get(`/api/get/store/${this.currentBusinessID}`)
+        const {data:result} = await axios.get(`/api/get/store/${e.target.value = 1 ? e.target.value : 1}`)
         for(const e of result){$('#store').append(`<option value="${e.id}">${e.store}</option>`)}
         for(const elem of result){
             elem.store_code.forEach(element => {

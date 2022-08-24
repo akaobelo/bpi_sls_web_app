@@ -17,7 +17,7 @@
                     <div class="col-lg-6">
                         <label>BU</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md" name="business_unit" id="business_unit">
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md bip_sl2" name="business_unit" id="business_unit">
                                 @foreach($businessUnits as $businessUnit)
                                     <option value="{{$businessUnit->id}}">{{$businessUnit->business_unit}}</option>
                                 @endforeach
@@ -27,7 +27,7 @@
                     <div class="col-lg-6">
                         <label>Store</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md " name="type" id="store">
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md bip_sl2" name="type" id="store">
 
                             </select>
                         </div>
@@ -37,7 +37,7 @@
                     <div class="col-lg-6">
                         <label>Store Code</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md " name="type" id="store_code">
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md bip_sl2" name="type" id="store_code">
 
                             </select>
                         </div>
