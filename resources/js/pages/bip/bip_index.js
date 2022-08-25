@@ -1,21 +1,22 @@
 const { default: axios } = require("axios");
-const { defaultsDeep } = require("lodash");
 
 void new class BipIndex{
 
     constructor()
     {
-        this.bipForm = document.querySelector('#kt_form')
-        this.currentCode = document.querySelector('#store_code')
+        this.initialization()
         this.formValidation()
         this.datePickers()
         this.eventHandler()
     }
-
-    eventHandler = () => {
+    initialization = () => {
+        this.bipForm = document.querySelector('#kt_form')
+        this.currentCode = document.querySelector('#store_code')
         $('.bip_sl2').select2().on('change', this.getBusinessUnit)
         $('.bip_sl2').trigger('change')
         $('#after_price_field').hide()
+    }
+    eventHandler = () => {
         document.querySelector('#sku').addEventListener('input',(e) => {
             let skuData = (e.target.value == null ? '' : e.target.value)
             this.skuData = skuData
@@ -36,32 +37,24 @@ void new class BipIndex{
             this.previewPrint()
         })
 
-        // document.querySelector('#business_unit').addEventListener('change', (e) => {
-        //     this.currentBusinessID = e.target.value
-        //     this.getBusinessUnit()
-        // })
-
         document.querySelector('#type').addEventListener('change', (e) => {
             if(e.target.value  == 2 || e.target.value  == 4 || e.target.value  == 7)
             {$('#after_price_field').show()}else{$('#after_price_field').hide()}
         })
 
-
-
     }
 
     getBusinessUnit = async(e) => {
-        let val = (e.target == 1 ? e.target.value : 1)
         $('#store').empty()
         $('#store_code').empty()
+        let val = (e.target == 1 ? e.target.value : 1)
         const {data:result} = await axios.get(`/api/get/store/${val}`)
-        for(const e of result){$('#store').append(`<option value="${e.id}">${e.store}</option>`)}
+        for(const e of result) $('#store').append(`<option value="${e.id}">${e.store}</option>`)
         for(const elem of result){
             elem.store_code.forEach(element => {
                 $('#store_code').append(`<option value="${element.store_code}">${element.store_code}</option>`)
             })
         }
-
     }
 
     previewPrint = () => {
@@ -81,10 +74,7 @@ void new class BipIndex{
         }
     }
 
-    getFormData = () =>{
-        this.formData = new FormData(this.bipForm)
-        return this.formData
-    }
+    getFormData = () =>{return  new FormData(this.bipForm)}
 
     getItemBySku = async(barcode) => {
         const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
