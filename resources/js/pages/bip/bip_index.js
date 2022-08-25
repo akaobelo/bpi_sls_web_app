@@ -51,9 +51,10 @@ void new class BipIndex{
     }
 
     getBusinessUnit = async(e) => {
+        let val = (e.target == 1 ? e.target.value : 1)
         $('#store').empty()
         $('#store_code').empty()
-        const {data:result} = await axios.get(`/api/get/store/${e.target.value = 1 ? e.target.value : 1}`)
+        const {data:result} = await axios.get(`/api/get/store/${val}`)
         for(const e of result){$('#store').append(`<option value="${e.id}">${e.store}</option>`)}
         for(const elem of result){
             elem.store_code.forEach(element => {

@@ -50,7 +50,7 @@
                     <div class="col-lg-6">
                         <label>Type</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md" name="type" id="type">
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md" name="printing_type" id="printing_type">
                                 <option value="1">Shelf label</option>
                                 <option value="2">Signage</option>
                             </select>
@@ -134,7 +134,7 @@
             </div>
         </div>
     </form>
-    @include('pages.partials.print_preview_modal')
+    @include('pages.partials.shelf_print_preview_modal')
 </div>
 @endsection
 

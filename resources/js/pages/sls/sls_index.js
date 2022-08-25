@@ -1,16 +1,17 @@
 
 void new class SlsIndex{
     constructor(){
+        this.initialization()
+        this.eventHandler()
+    }
+
+    initialization = () => {
         this.input = document.querySelector('#kt_tagify_1')
         this.slsForm = document.querySelector('#kt_form')
         this.removeButton =  document.querySelector('#kt_tagify_1_remove')
-        this.typeOption = document.querySelector('#type')
         this.currentCode = document.querySelector('#store_code')
         this.previewPrintBtn = document.querySelector('#btn_sls_print_preview')
         this.bussUnit = document.querySelector('#business_unit')
-        // this.printPreviewBtn = document.querySelector('#btn_sls_print_preview')
-
-        this.eventHandler()
     }
 
     eventHandler  ()  {
@@ -23,7 +24,7 @@ void new class SlsIndex{
        this.removeButton.addEventListener('click', this.tagify.removeAllTags.bind(this.tagify));
 
 
-        $(document).on('change','#type', this.UIpropertyChange)
+        $(document).on('change','#printing_type', this.UIpropertyChange)
 
         document.querySelector('#sku').addEventListener('input',(e) => {
             let skuData = (e.target.value == null ? '' : e.target.value)
@@ -44,21 +45,35 @@ void new class SlsIndex{
 
     populateDataPrintPreview = () => {
         const data = this.getFormData()
+        let size = 0
 
+            if(data.get('printing_type') == 2) size = 50
             JsBarcode("#barcode", `${data.get('sku')}`, {
                 format: "CODE39",
-                height: 50,
-                displayValue: false
+                height: 60,
+                fontSize: 40,
+                textAlign: "center",
+                marginRight: size
             })
-            const prod_spec = JSON.parse(data.get('product_specification'))
-            $('#product_specification').empty()
-            for(const specs of prod_spec){
-                $('#product_specification').append(`<ul class="text-muted text-hover-primary text-wrap">${specs.value}</ul>`)
+            if(data.get('product_specification')){
+                const prod_spec = JSON.parse(data.get('product_specification'))
+                $('#product_specification').empty()
+
+                for(const specs of prod_spec){
+                    $('#product_specification').append(`
+                    <ul class="list-group" style="list-style: none;">
+                        <li class="text-muted text-hover-primary text-wrap">
+                            ${specs.value}
+                        </li>
+                    </ul>
+                    `)
+                }
             }
             $('.color').html(`${data.get('color')}`)
             $('.material').html(`${data.get('material')}`)
             $('.size').html(`${data.get('size')}`)
-            $('.price').val(`${data.get('price')}`)
+            $('.price').val(`₱ ${numberWithCommas(parseFloat(data.get('price')).toFixed(2))}`)
+            $('.sale_price').val(`₱ ${numberWithCommas(parseFloat(data.get('sale_price')).toFixed(2))}`)
             $('#barcode_description').html(`<h3>${data.get('sku')}</h3>`)
 
     }
@@ -70,9 +85,10 @@ void new class SlsIndex{
     }
 
     getBusinessUnit = async(e) => {
+        let val = (e.target.value == 1 ? e.target.value : 1)
         $('#store').empty()
         $('#store_code').empty()
-        const {data:result} = await axios.get(`/api/get/store/${e.target.value = 1 ? e.target.value : 1}`)
+        const {data:result} = await axios.get(`/api/get/store/${val}`)
         for(const e of result){$('#store').append(`<option value="${e.id}">${e.store}</option>`)}
         for(const elem of result){
             elem.store_code.forEach(element => {
@@ -96,12 +112,16 @@ void new class SlsIndex{
         $('#static_row').empty()
         if(e.target.value == 1)
         {
+            $('#sale_price_container').attr('hidden', true)
+            $('#modal_size').removeClass('modal-lg')
+            $('#modal_size').addClass('modal-sm')
+            $('#shelf_container_print').show()
             $('#shelf_container').show()
             $('#static_row').append(`
             <div class="col-lg-6">
                 <label>Type</label>
                 <div class="input-group">
-                    <select autocomplete="off" class="form-control form-control-solid form-control-md" name="type" id="type">
+                    <select autocomplete="off" class="form-control form-control-solid form-control-md" name="printing_type" id="printing_type">
                         <option value="1" selected>Shelf label</option>
                         <option value="2">Signage</option>
                     </select>
@@ -113,12 +133,16 @@ void new class SlsIndex{
             </div>
             `)
         }else{
+            $('#sale_price_container').removeAttr('hidden')
+            $('#modal_size').addClass('modal-md')
+            $('#modal_size').removeClass('modal-sm')
+            $('#shelf_container_print').hide()
             $('#shelf_container').hide()
             $('#static_row').append(`
             <div class="col-lg-4">
                 <label>Type</label>
                 <div class="input-group">
-                    <select autocomplete="off" class="form-control form-control-solid form-control-md" name="type" id="type">
+                    <select autocomplete="off" class="form-control form-control-solid form-control-md" name="printing_type" id="printing_type">
                         <option value="1">Shelf label</option>
                         <option value="2" selected>Signage</option>
                     </select>
@@ -126,15 +150,14 @@ void new class SlsIndex{
             </div>
             <div class="col-lg-4">
                 <label>Price</label>
-                <input type="email" class="form-control" name="price" id="price" disabled>
+                <input type="" class="form-control" name="price" id="price" readonly="readonly">
             </div>
             <div class="col-lg-4">
                 <label>Sale Price</label>
-                <input type="email" class="form-control" name="price" id="price" disabled>
+                <input type="" class="form-control" name="sale_price" id="sale_price">
             </div>
             `)
         }
-
 
     }
 }
