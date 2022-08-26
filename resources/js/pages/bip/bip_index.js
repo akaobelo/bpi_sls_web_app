@@ -1,4 +1,5 @@
 const { default: axios } = require("axios");
+const { defaultsDeep } = require("lodash");
 
 void new class BipIndex{
 
@@ -61,13 +62,15 @@ void new class BipIndex{
 
         JsBarcode("#barcode", `${this.skuData}`, {
             format: "CODE39",
-            height: 50,
+            height: 60,
             displayValue: false
         })
         const formData = this.getFormData()
         $('#barcode_receivedDate').html(humanDate(formData.get('receivedDate')))
         for (const elem of this.data)
         {
+
+            $('#short_description').html(elem.short_descr)
             $('#bracode_price').html(numberWithCommas(parseFloat(elem.price).toFixed(2)))
             $('#barcode_vendor').html(elem.vendor)
             $('#barcode_vendor_no').html(elem.ven_no)
@@ -82,7 +85,6 @@ void new class BipIndex{
         for(const data of result)
         {
             $('#short_descr').val(data.short_descr)
-            $('#short_description').html(data.short_descr)
             $('#buy_unit').val(data.buy_unit)
             $('#ven_no').val(data.ven_no)
             $('#price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))

@@ -1,10 +1,21 @@
 @extends('pages.index')
 
 <style>
-.barcode_display_data {
-    display: inline-block;
-    width: 10em;
-    /* margin-right: .7em; */
+.flex-container {
+  display: flex;
+}
+.center-container-element {
+   margin-left:auto;
+   margin-right:auto;
+   display:block;
+}
+
+.align-text-elements-left {
+    padding-left:10% !important;
+}
+
+.align-text-elements-right {
+    padding-left:15% !important;
 }
 </style>
 
@@ -189,22 +200,22 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="form-group row">
+            <div class="form-grou row" id="default_print_view">
                 <div class="col-md-4">
                 </div>
-                <div class="col-md-4" style="text-align:center;">
-                    <label id="short_description"></label>
-                        <svg id="barcode"></svg>
+                <div class="col-md-4">
                     <div class="form-group row">
-                        <div class="col-lg-6">
-                            <label class="barcode_display_data"  id="barcode_receivedDate"></label>
-                            <label class="barcode_display_data" id="barcode_vendor"></label>
+                        <label class="center-container-element" id="short_description"></label>
+                        <svg class="center-container-element" id="barcode"></svg>
+                        <div class="col-lg-5 align-text-elements-left">
+                            <label  id="barcode_receivedDate" ></label>
+                            <label  id="barcode_vendor" ></label>
                         </div>
-                        <div class="col-lg-6">
-                            <label class="barcode_display_data"  id="bracode_price"></label>
-                            <label class="barcode_display_data" id="barcode_vendor_no"></label>
+                        <div class="col-lg-2">
+                        </div>
+                        <div class="col-lg-5 align-text-elements-right">
+                                <h3 class="font-weight-bold" id="bracode_price"></h3>
+                                <label id="barcode_vendor_no"></label>
                         </div>
                     </div>
                 </div>
