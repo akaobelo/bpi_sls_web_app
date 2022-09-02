@@ -9,16 +9,19 @@ void new class BipIndex{
         this.formValidation()
         this.datePickers()
         this.eventHandler()
+        $('.bip_sl2').trigger('change')
     }
+
     initialization = () => {
         this.bipForm = document.querySelector('#kt_form')
         this.currentCode = document.querySelector('#store_code')
         this.printButton = document.querySelector('#btn_print')
-        $('.bip_sl2').select2().on('change', this.getBusinessUnit)
-        $('.bip_sl2').trigger('change')
         $('#after_price_field').hide()
     }
     eventHandler = () => {
+        $('.bip_sl2').select2().on('change', this.getBusinessUnit)
+        $('#store').on('change', this.storeCode)
+        $('.sl2').select2()
         document.querySelector('#sku').addEventListener('input',(e) => {
             let skuData = (e.target.value == null ? '' : e.target.value)
             this.skuData = skuData
@@ -44,19 +47,20 @@ void new class BipIndex{
             {$('#after_price_field').show()}else{$('#after_price_field').hide()}
         })
 
-        // this.printButton.addEventListener('click', () => {
-        //     this.printTags()
-        // })
     }
 
-    // printTags = async() => {
-    //     await axios.post('/print/tag', this.getFormData())
-    // }
+
+    storeCode = async(e) => {
+        $('#store_code').empty()
+        const {data:result} = await axios.get(`/api/get/storecode/${e.currentTarget.value}`)
+        for(const e of result) $('#store_code').append(`<option value="${e.id}">${e.store_code}</option>`)
+    }
 
     getBusinessUnit = async(e) => {
         $('#store').empty()
         $('#store_code').empty()
-        let val = (e.target == 1 ? e.target.value : 1)
+        let val = (e.currentTarget.value ? e.currentTarget.value : 1)
+
         const {data:result} = await axios.get(`/api/get/store/${val}`)
         for(const e of result) $('#store').append(`<option value="${e.id}">${e.store}</option>`)
         for(const elem of result){

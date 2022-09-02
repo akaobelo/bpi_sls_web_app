@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\StoreMigration;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Store;
+use App\Models\StoreCode;
 use App\Models\BusinessUnit;
 use App\Services\TpsConnection;
 use Dompdf\Dompdf;
@@ -88,6 +89,11 @@ class StoreController extends Controller
     public function getStores($business_unit_id)
     {
        return Store::with('businessUnit','storeCode')->where('business_unit_id', $business_unit_id)->get();
+    }
+
+    public function getStoreCodes($storeID)
+    {
+        return StoreCode::where('store_id', $storeID)->get();
     }
 
 

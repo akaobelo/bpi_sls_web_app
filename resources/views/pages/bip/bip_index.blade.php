@@ -38,7 +38,7 @@
                     <div class="col-lg-6">
                         <label>Store</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md bip_sl2" name="type" id="store">
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store">
 
                             </select>
                         </div>
@@ -48,7 +48,7 @@
                     <div class="col-lg-6">
                         <label>Store Code</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md bip_sl2" name="type" id="store_code">
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store_code" disabled>
 
                             </select>
                         </div>
