@@ -181,7 +181,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         LaravelPdoOdbc\ODBCServiceProvider::class,
-        Milon\Barcode\BarcodeServiceProvider::class,
+
+
 
     ],
 

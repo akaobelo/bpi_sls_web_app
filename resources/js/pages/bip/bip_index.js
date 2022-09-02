@@ -13,6 +13,7 @@ void new class BipIndex{
     initialization = () => {
         this.bipForm = document.querySelector('#kt_form')
         this.currentCode = document.querySelector('#store_code')
+        this.printButton = document.querySelector('#btn_print')
         $('.bip_sl2').select2().on('change', this.getBusinessUnit)
         $('.bip_sl2').trigger('change')
         $('#after_price_field').hide()
@@ -43,7 +44,14 @@ void new class BipIndex{
             {$('#after_price_field').show()}else{$('#after_price_field').hide()}
         })
 
+        // this.printButton.addEventListener('click', () => {
+        //     this.printTags()
+        // })
     }
+
+    // printTags = async() => {
+    //     await axios.post('/print/tag', this.getFormData())
+    // }
 
     getBusinessUnit = async(e) => {
         $('#store').empty()
@@ -77,7 +85,17 @@ void new class BipIndex{
         }
     }
 
-    getFormData = () =>{return  new FormData(this.bipForm)}
+    getFormData = () =>
+    {
+        this.formData = new FormData(this.bipForm)
+        this.formData.append('short_description',$('#short_descr').val())
+        this.formData.append('buy_unit',$('#buy_unit').val())
+        this.formData.append('ven_no', $('#ven_no').val())
+        this.formData.append('price', $('#price').val())
+        this.formData.append('after_price', $('#after_price').val())
+
+        return  this.formData
+    }
 
     getItemBySku = async(barcode) => {
         const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})

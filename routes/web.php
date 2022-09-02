@@ -23,6 +23,7 @@ Route::middleware('guest')->group(function(){
     Route::get('/api/get/item/{barcode}',[StoreController::class,'getStoreInformation']);
     Route::get('/api/store/migration',[StoreController::class,'storeMigration']);
     Route::get('/api/get/store/{business_unit_id}',[StoreController::class,'getStores']);
+    Route::get('/print/tag',[StoreController::class,'printTag'])->name('print.tag');
 
 
 

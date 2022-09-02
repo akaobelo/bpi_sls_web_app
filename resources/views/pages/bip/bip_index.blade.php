@@ -73,7 +73,7 @@
                     </div>
                     <div class="col-lg-4">
                         <label>Quantity</label>
-                        <input type="" class="form-control" name="quantity" name="ven_no" id="ven_no">
+                        <input type="" class="form-control" name="quantity" name="quantity" id="quantity">
                     </div>
                     <div class="col-lg-4">
                         <label>Type</label>
@@ -176,7 +176,9 @@
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" class="form-control btn btn-primary font-weight-bold">Print</button>
+                        <a href="{{route('print.tag')}}">
+                            <button id="btn_print" type="button" class="form-control btn btn-primary font-weight-bold">Print</button>
+                        </a>
                     </div>
                     <div class="col-lg-2">
                         <label></label>

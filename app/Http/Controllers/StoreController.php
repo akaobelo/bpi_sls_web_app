@@ -11,9 +11,20 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Store;
 use App\Models\BusinessUnit;
 use App\Services\TpsConnection;
+use Dompdf\Dompdf;
+
 class StoreController extends Controller
 {
     use ResponseApi;
+
+    public function printTag(Request $request)
+    {
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml(view('pages.partials.printOutTags'));
+        $dompdf->render();
+        $dompdf->stream();
+    }
+
     public function storeMigration()
     {
         $files = Storage::files('imports');
@@ -46,7 +57,6 @@ class StoreController extends Controller
 
     public function getStoreInformation(Request $request, $barcode)
     {
-
         switch($request->code)
         {
             case 2001 :
@@ -79,4 +89,6 @@ class StoreController extends Controller
     {
        return Store::with('businessUnit','storeCode')->where('business_unit_id', $business_unit_id)->get();
     }
+
+
 }
