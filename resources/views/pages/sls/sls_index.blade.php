@@ -1,5 +1,6 @@
 @extends('pages.index')
 
+
 @section('content')
 <div class="container">
     <form class="form" id="kt_form">
@@ -7,17 +8,7 @@
             <div class="card-body">
 
                     <div class="form-group row">
-                        <div class="col-lg-4">
-                            <label>BU</label>
-                            <div class="input-group">
-                                <select class="form-control form-control-solid form-control-md sl2" name="business_unit" id="business_unit">
-                                    @foreach($businessUnits as $businessUnit)
-                                        <option value="{{$businessUnit->id}}">{{$businessUnit->business_unit}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <label>Store</label>
                             <div class="input-group">
                                 <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store">
@@ -25,10 +16,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <label>Store Code</label>
                             <div class="input-group">
-                                <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store_code">
+                                <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store_code" disabled>
 
                                 </select>
                             </div>
@@ -58,14 +49,14 @@
                     </div>
                     <div class="col-lg-6">
                         <label>Price</label>
-                        <input type="" class="form-control" name="price" id="price" readonly="readonly" >
+                        <input type="" class="form-control" style="background-color:#EBEBE4;" name="price" id="price" >
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-lg-12">
                         <label>Description</label>
-                        <input type="" class="form-control" name="short_descr" id="short_descr" disabled>
+                        <input type="" class="form-control" name="short_descr" style="background-color:#EBEBE4;" id="short_descr">
                     </div>
                 </div>
 
@@ -124,7 +115,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" class="form-control btn btn-primary font-weight-bold">Edit</button>
+                        <button type="button" id="edit-btn" class="form-control btn btn-primary font-weight-bold">Edit</button>
                     </div>
                     <div class="col-lg-2">
                         <label></label>

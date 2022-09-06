@@ -86,14 +86,25 @@ class StoreController extends Controller
 
     }
 
-    public function getStores($business_unit_id)
+    public function getStoreCodes($store_name)
     {
-       return Store::with('businessUnit','storeCode')->where('business_unit_id', $business_unit_id)->get();
+        $store = new TpsConnection('store_tps');
+        return $store->getStoreByID($store_name);
     }
 
-    public function getStoreCodes($storeID)
+    public function fetchStoreData()
     {
-        return StoreCode::where('store_id', $storeID)->get();
+        $tps = new TpsConnection('store_tps');
+        $filtered_tps = array();
+        foreach($tps->getStorelist() as $tps_data)
+        {
+            if(strlen($tps_data->store)  == 4)
+            {
+                $filtered_tps[] = $tps_data;
+            }
+        }
+        return $filtered_tps;
+
     }
 
 

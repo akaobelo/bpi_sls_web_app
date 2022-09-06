@@ -2,6 +2,7 @@
 void new class SlsIndex{
     constructor(){
         this.initialization()
+        this.populateStore()
         this.eventHandler()
     }
 
@@ -12,15 +13,25 @@ void new class SlsIndex{
         this.currentCode = document.querySelector('#store_code')
         this.previewPrintBtn = document.querySelector('#btn_sls_print_preview')
         this.bussUnit = document.querySelector('#business_unit')
-        $('.sl2').select2().on('change', this.getBusinessUnit)
+        this.editBtn = document.querySelector('#edit-btn')
+        this.inputProdSpec = document.querySelector('#kt_tagify_1')
+
+        $('#short_descr').prop('readonly',true)
+        $('#price').prop('readonly',true)
         $('.sl2').trigger('change')
+        $('.sl2').select2()
         this.tagify =  new Tagify(this.input, {
             whitelist: ["A# .NET", "A# (Axiom)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
             blacklist: ["Shit", "Pussy", "Fuck"], // <-- passed as an attribute in this demo
+            maxTags: 5,
         })
+
     }
 
+
+
     eventHandler  ()  {
+        $('#store').on('change', this.storeCode)
         this.removeButton.addEventListener('click', this.tagify.removeAllTags.bind(this.tagify));
         $(document).on('change','#printing_type', this.UIpropertyChange)
 
@@ -38,6 +49,29 @@ void new class SlsIndex{
             this.populateDataPrintPreview()
         })
 
+        this.editBtn.addEventListener('click', () => {
+            $('#short_descr').removeAttr('readonly')
+            $('#price').removeAttr('readonly')
+        })
+
+        this.inputProdSpec.addEventListener('input', () => {
+            console.log('thius')
+        })
+
+    }
+
+    populateStore = async() => {
+        const {data:result} =  await axios.get('/api/fetch/tpsStore')
+        for(const elem of result){
+            $('#store').append(`<option value="${elem.name}">${elem.name}</option>`)
+            $('#store_code').append(`<option>${elem.store}</option>`)
+        }
+    }
+
+    storeCode = async(e) => {
+        $('#store_code').empty()
+        const {data:result} = await axios.get(`/api/get/storecode/${e.currentTarget.value}`)
+        for(const e of result) $('#store_code').append(`<option >${e.store}</option>`)
     }
 
     populateDataPrintPreview = () => {
@@ -66,6 +100,7 @@ void new class SlsIndex{
                 `)
             }
         }
+        $('#modal-description').html(`${data.get('short_descr')}`)
         $('.color').html(`${data.get('color')}`)
         $('.material').html(`${data.get('material')}`)
         $('.size').html(`${data.get('size')}`)
@@ -76,19 +111,6 @@ void new class SlsIndex{
     }
 
     getFormData = () => {return new FormData(this.slsForm)}
-
-    getBusinessUnit = async(e) => {
-        $('#store').empty()
-        $('#store_code').empty()
-        let val = (e.target.value == 1 ? e.target.value : 1)
-        const {data:result} = await axios.get(`/api/get/store/${val}`)
-        for(const e of result) $('#store').append(`<option value="${e.id}">${e.store}</option>`)
-        for(const elem of result){
-            elem.store_code.forEach(element => {
-                $('#store_code').append(`<option value="${element.store_code}">${element.store_code}</option>`)
-            })
-        }
-    }
 
     getItemBySku = async(barcode) => {
             const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
@@ -121,7 +143,7 @@ void new class SlsIndex{
             </div>
             <div class="col-lg-6">
                 <label>Price</label>
-                <input type="email" class="form-control" name="price" id="price" disabled>
+                <input type="email" style="background-color:#EBEBE4;" class="form-control" name="price" id="price" readonly>
             </div>
             `)
         }else{
@@ -142,11 +164,11 @@ void new class SlsIndex{
             </div>
             <div class="col-lg-4">
                 <label>Price</label>
-                <input type="" class="form-control" name="price" id="price" readonly="readonly">
+                <input type="" class="form-control" style="background-color:#EBEBE4;" name="price" id="price" readonly>
             </div>
             <div class="col-lg-4">
                 <label>Sale Price</label>
-                <input type="" class="form-control" name="sale_price" id="sale_price">
+                <input type="" class="form-control" style="background-color:#EBEBE4;" name="sale_price" id="sale_price">
             </div>
             `)
         }

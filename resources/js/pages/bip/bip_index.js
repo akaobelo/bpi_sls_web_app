@@ -1,5 +1,5 @@
-const { default: axios } = require("axios");
-const { defaultsDeep } = require("lodash");
+const { default: axios } = require("axios")
+const { defaultsDeep } = require("lodash")
 
 void new class BipIndex{
 
@@ -9,17 +9,22 @@ void new class BipIndex{
         this.formValidation()
         this.datePickers()
         this.eventHandler()
+        this.populateStore()
         $('.bip_sl2').trigger('change')
     }
 
     initialization = () => {
         this.bipForm = document.querySelector('#kt_form')
         this.currentCode = document.querySelector('#store_code')
-        this.printButton = document.querySelector('#btn_print')
+        this.editBtn = document.querySelector('#editBtn')
+        $('#short_descr').prop('readonly', true)
+        $('#buy_unit').prop('readonly',true)
+        $('#ven_no').prop('readonly', true)
+        $('#price').prop('readonly',true)
+        $('#after_price').prop('readonly',true)
         $('#after_price_field').hide()
     }
     eventHandler = () => {
-        $('.bip_sl2').select2().on('change', this.getBusinessUnit)
         $('#store').on('change', this.storeCode)
         $('.sl2').select2()
         document.querySelector('#sku').addEventListener('input',(e) => {
@@ -43,31 +48,44 @@ void new class BipIndex{
         })
 
         document.querySelector('#type').addEventListener('change', (e) => {
-            if(e.target.value  == 2 || e.target.value  == 4 || e.target.value  == 7)
+            if(e.target.value  == 2 || e.target.value  == 4 )
             {$('#after_price_field').show()}else{$('#after_price_field').hide()}
         })
 
-    }
+        this.editBtn.addEventListener('click', () => {
 
+            $('#price').removeAttr('readonly')
+            $('#after_price').removeAttr('readonly')
+            $('#sku').focus()
+
+
+            $('#price').prop('style',false)
+            $('#after_price').prop('style',false)
+            $('#sku').focus()
+        })
+
+        // this.printButton.addEventListener('click',() => {
+        //    console.log('test')
+        // })
+
+    }
+    // printTagView = () => {
+    //     console.log('')
+    //     // $('#prints_container').append(`<p>This is to test</p>`)
+    // }
+
+    populateStore = async() => {
+        const {data:result} =  await axios.get('/api/fetch/tpsStore')
+        for(const elem of result){
+            $('#store').append(`<option value="${elem.name}">${elem.name}</option>`)
+            $('#store_code').append(`<option>${elem.store}</option>`)
+        }
+    }
 
     storeCode = async(e) => {
         $('#store_code').empty()
         const {data:result} = await axios.get(`/api/get/storecode/${e.currentTarget.value}`)
-        for(const e of result) $('#store_code').append(`<option value="${e.id}">${e.store_code}</option>`)
-    }
-
-    getBusinessUnit = async(e) => {
-        $('#store').empty()
-        $('#store_code').empty()
-        let val = (e.currentTarget.value ? e.currentTarget.value : 1)
-
-        const {data:result} = await axios.get(`/api/get/store/${val}`)
-        for(const e of result) $('#store').append(`<option value="${e.id}">${e.store}</option>`)
-        for(const elem of result){
-            elem.store_code.forEach(element => {
-                $('#store_code').append(`<option value="${element.store_code}">${element.store_code}</option>`)
-            })
-        }
+        for(const e of result) $('#store_code').append(`<option >${e.store}</option>`)
     }
 
     previewPrint = () => {
@@ -81,7 +99,6 @@ void new class BipIndex{
         $('#barcode_receivedDate').html(humanDate(formData.get('receivedDate')))
         for (const elem of this.data)
         {
-
             $('#short_description').html(elem.short_descr)
             $('#bracode_price').html(numberWithCommas(parseFloat(elem.price).toFixed(2)))
             $('#barcode_vendor').html(elem.vendor)
@@ -112,7 +129,6 @@ void new class BipIndex{
             $('#price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
             $('#after_price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
         }
-
     }
 
     datePickers = () => {

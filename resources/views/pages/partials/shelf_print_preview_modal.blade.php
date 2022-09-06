@@ -2,13 +2,12 @@
     <div id="modal_size" class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header" style="justify-content: center;">
-                <h1 class="pt-2">GAISANO</h1>
-                <img alt="Logo" src="{{asset('/assets/images/G STORE.png')}}" class="max-h-25px" />
+                <img alt="Logo" src="{{asset('/assets/images/shelf.png')}}" class="max-h-35px" />
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     <div class="col-md-12" style="text-align: center;">
-                        <h3>BOOK SHELF LARGE</h3>
+                        <h3 id="modal-description">BOOK SHELF LARGE</h3>
                     </div>
                 </div>
                 <div class="form-group">
@@ -37,12 +36,12 @@
                 <div class="form-group">
                     <div class="col-md-12">
                         <label class="font-weight-bold text-primary">Price:</label>
-                        <input type="" class="form-control price" style="height:50px;font-size:40px;text-align:center;" disabled>
+                        <input type="" class="form-control price" style="height:50px;font-size:35px;text-align:center;" disabled>
                     </div>
 
                     <div class="col-md-12" id="sale_price_container" hidden>
                         <label class="font-weight-bold text-primary">Sale Price:</label>
-                        <input type="" class="form-control sale_price" style="height:50px;font-size:40px;text-align:center;" disabled>
+                        <input type="" class="form-control sale_price" style="height:50px;font-size:50px;text-align:center;" disabled>
                     </div>
                 </div>
             </div>

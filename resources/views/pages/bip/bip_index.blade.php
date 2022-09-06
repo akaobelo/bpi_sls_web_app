@@ -25,17 +25,8 @@
         <div class="card card-custom gutter-b">
             <div class="card-body">
                 <div class="form-group row">
-                    <div class="col-lg-6">
-                        <label>BU</label>
-                        <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md bip_sl2" name="business_unit" id="business_unit">
-                                @foreach($businessUnits as $businessUnit)
-                                    <option value="{{$businessUnit->id}}">{{$businessUnit->business_unit}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
+
+                    <div class="col-lg-4">
                         <label>Store</label>
                         <div class="input-group">
                             <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store">
@@ -43,9 +34,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <label>Store Code</label>
                         <div class="input-group">
                             <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store_code" disabled>
@@ -53,7 +42,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <label>Date Received</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="receivedDate" placeholder="Select date" id='receivedDate' />
@@ -83,15 +72,11 @@
                                 <option value="2">Hard Tag Markdown</option>
                                 <option value="3">Sticker Tag (Ballpen)</option>
                                 <option value="4">Sticker Tag Markdown</option>
-                                <option value="5">Shelf Hard Tag</option>
-                                <option value="6">Concessionaire</option>
-                                <option value="7">Concessionaire Markdown</option>
+                                <option value="5">Shelf Tag</option>
                             </select>
                         </div>
                     </div>
                 </div>
-
-
                 <!-- begin: Example Code-->
                 <div class="example-code mt-10">
                     <ul class="example-nav nav nav-tabs nav-bold nav-tabs-line nav-tabs-line-2x">
@@ -128,26 +113,26 @@
                 <div class="form-group row">
                     <div class="col-lg-8">
                         <label>Description</label>
-                        <input type="email" class="form-control" name="short_descr" id="short_descr" disabled>
+                        <input type="email" style="background-color:#EBEBE4;" class="form-control" name="short_descr" id="short_descr">
                     </div>
                     <div class="col-lg-4">
                         <label>BUM</label>
-                        <input type="email" class="form-control" name="buy_unit" id="buy_unit" disabled>
+                        <input  type="email" style="background-color:#EBEBE4;" class="form-control" name="buy_unit" id="buy_unit">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-lg-4">
                         <label>Stock No.</label>
-                        <input type="email" class="form-control" name="ven_no" id="ven_no" disabled>
+                        <input  type="email" class="form-control" style="background-color:#EBEBE4;" name="ven_no" id="ven_no">
                     </div>
                     <div class="col-lg-4">
                         <label>Price</label>
-                        <input type="email" class="form-control" name="price" id="price" disabled>
+                        <input type="email" class="form-control" style="background-color:#EBEBE4;" name="price" id="price">
                     </div>
                     <div class="col-lg-4" id="after_price_field">
                         <label>After Price</label>
-                        <input type="email" class="form-control" name="price" id="after_price" disabled>
+                        <input type="email" class="form-control" style="background-color:#EBEBE4;" name="after_price" id="after_price">
                     </div>
                 </div>
 
@@ -182,7 +167,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" class="form-control btn btn-primary font-weight-bold">Edit</button>
+                        <button type="button" id="editBtn" class="form-control btn btn-primary font-weight-bold">Edit</button>
                     </div>
                 </div>
                 <!-- end: Example Code-->

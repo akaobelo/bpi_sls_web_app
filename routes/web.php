@@ -20,9 +20,10 @@ Route::middleware('guest')->group(function(){
     Route::get('/bip',[StoreController::class,'bipIndexView'])->name('bip.index');
     Route::get('/sls',[StoreController::class,'slsIndexView'])->name('sls.index');
 });
+
+    Route::get('/api/fetch/tpsStore',[StoreController::class,'fetchStoreData']);
     Route::get('/api/get/item/{barcode}',[StoreController::class,'getStoreInformation']);
     Route::get('/api/store/migration',[StoreController::class,'storeMigration']);
-    Route::get('/api/get/store/{business_unit_id}',[StoreController::class,'getStores']);
     Route::get('/api/get/storecode/{storeID}',[StoreController::class,'getStoreCodes']);
     Route::get('/print/tag',[StoreController::class,'printTag'])->name('print.tag');
 

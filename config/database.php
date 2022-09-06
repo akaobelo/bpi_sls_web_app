@@ -131,6 +131,14 @@ return [
             'password' => ''
         ],
 
+        'store_tps' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'STORE_TPS',
+            'username' => '',
+            'password' => ''
+        ],
+
     ],
 
     /*
