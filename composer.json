@@ -12,6 +12,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
         "maatwebsite/excel": "^3.1",
+        "mike42/escpos-php": "^4.0",
+        "milon/barcode": "^9.0",
         "predis/predis": "^2.0",
         "yoramdelangen/laravel-pdo-odbc": "^1.1"
     },

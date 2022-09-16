@@ -1,5 +1,5 @@
 const { default: axios } = require("axios")
-const { defaultsDeep } = require("lodash")
+const { compact } = require("lodash")
 
 void new class BipIndex{
 
@@ -14,9 +14,11 @@ void new class BipIndex{
     }
 
     initialization = () => {
+        this.countClick = 0
         this.bipForm = document.querySelector('#kt_form')
         this.currentCode = document.querySelector('#store_code')
         this.editBtn = document.querySelector('#editBtn')
+        $('#this_print').trigger('click')
         $('#short_descr').prop('readonly', true)
         $('#buy_unit').prop('readonly',true)
         $('#ven_no').prop('readonly', true)
@@ -27,6 +29,7 @@ void new class BipIndex{
     eventHandler = () => {
         $('#store').on('change', this.storeCode)
         $('.sl2').select2()
+
         document.querySelector('#sku').addEventListener('input',(e) => {
             let skuData = (e.target.value == null ? '' : e.target.value)
             this.skuData = skuData
@@ -45,6 +48,23 @@ void new class BipIndex{
 
         document.querySelector('#print_preview').addEventListener('click', (e) => {
             this.previewPrint()
+            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text()
+            console.log('test')
+            this.countClick+=1
+            if(this.countClick == 1)
+            {
+                const container = document.querySelector('#btn_print_container')
+                const anchor = document.createElement('a')
+                const button = document.createElement('button')
+                anchor.href = `/print/tag?${data}`
+                button.innerText = 'Print'
+                button.classList.add("form-control","btn-primary","btn","btn-primary","font-weight-bold")
+                button.setAttribute('type','button')
+                anchor.appendChild(button)
+                container.appendChild(anchor)
+                console.log(this.countClick)
+            }
+
         })
 
         document.querySelector('#type').addEventListener('change', (e) => {
@@ -63,16 +83,7 @@ void new class BipIndex{
             $('#after_price').prop('style',false)
             $('#sku').focus()
         })
-
-        // this.printButton.addEventListener('click',() => {
-        //    console.log('test')
-        // })
-
     }
-    // printTagView = () => {
-    //     console.log('')
-    //     // $('#prints_container').append(`<p>This is to test</p>`)
-    // }
 
     populateStore = async() => {
         const {data:result} =  await axios.get('/api/fetch/tpsStore')
@@ -88,8 +99,8 @@ void new class BipIndex{
         for(const e of result) $('#store_code').append(`<option >${e.store}</option>`)
     }
 
-    previewPrint = () => {
 
+    previewPrint = () => {
         JsBarcode("#barcode", `${this.skuData}`, {
             format: "CODE39",
             height: 60,
@@ -114,6 +125,7 @@ void new class BipIndex{
         this.formData.append('ven_no', $('#ven_no').val())
         this.formData.append('price', $('#price').val())
         this.formData.append('after_price', $('#after_price').val())
+        this.formData.append('barcode_vendor_no', $('#barcode_vendor_no').text())
 
         return  this.formData
     }
@@ -130,6 +142,7 @@ void new class BipIndex{
             $('#after_price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
         }
     }
+
 
     datePickers = () => {
         $('#receivedDate').datepicker(datePickerDefaultSetting).on('changeDate',  e => this.bipValidation.revalidateField('receivedDate'))

@@ -13,6 +13,8 @@ use App\Models\StoreCode;
 use App\Models\BusinessUnit;
 use App\Services\TpsConnection;
 use Dompdf\Dompdf;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Mike42\Escpos\Printer;
 
 class StoreController extends Controller
 {
@@ -20,10 +22,69 @@ class StoreController extends Controller
 
     public function printTag(Request $request)
     {
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml(view('pages.partials.printOutTags'));
-        $dompdf->render();
-        $dompdf->stream();
+
+
+        // foreach(json_decode($data, true) as $key => $elem)
+        // {
+        //     dump(json_decode($data, true));
+        // }
+        $data = (object) $request->all();
+        $compact = ['store' => $data->store,
+                    'receivedDate' => $data->receivedDate,
+                    'sku' => $data->sku,
+                    'quantity' => $data->quantity,
+                    'type' => $data->type,
+                    'short_descr' => $data->short_descr,
+                    'buy_unit' => $data->buy_unit,
+                    'ven_no' => $data->ven_no,
+                    'price' => $data->price,
+                    'after_price' => $data->after_price,
+                    'barcode_vendor' => $data->barcode_vendor];
+
+        // $dompdf = new Dompdf();
+        // $dompdf->getOptions()->setChroot(public_path());
+        // $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
+        // $dompdf->render();
+        // $dompdf->stream();
+
+        switch ($request->type)
+        {
+            case 1 : // Hard Tag
+                return view('pages.partials.hard_tag',['data' => $compact]);
+            break;
+
+            case 2 : // Hard Tag Markdown
+                return view('pages.partials.hard_tag',['data' => $compact]);
+            break;
+
+            case 3 : //Sticker Tag (Ballpen)
+                return view('pages.partials.ballpen_tag',['data' => $compact]);
+            break;
+
+            case 4 : // Sticker Tag Markdownn
+                return view('pages.partials.sticker_tag',['data' => $compact]);
+            break;
+
+            case 5 : //Shelf Tag
+                return view('pages.partials.shelf_tag',['data' => $compact]);
+            break;
+
+            default:
+                echo 'Wala';
+        }
+
+        // $connector = new FilePrintConnector("php://stdout");
+
+        // $printer = new Printer($connector);
+        // $printer -> text("Hello World!\n");
+        // dd($printer);
+        // $printer -> cut();
+        // $printer -> close();
+    }
+
+    public function formData(Request $request)
+    {
+        return $request->all();
     }
 
     public function storeMigration()

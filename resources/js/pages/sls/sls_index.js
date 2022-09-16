@@ -53,12 +53,8 @@ void new class SlsIndex{
             $('#short_descr').removeAttr('readonly')
             $('#price').removeAttr('readonly')
         })
-
-        this.inputProdSpec.addEventListener('input', () => {
-            console.log('thius')
-        })
-
     }
+
 
     populateStore = async() => {
         const {data:result} =  await axios.get('/api/fetch/tpsStore')
@@ -92,11 +88,9 @@ void new class SlsIndex{
 
             for(const specs of prod_spec){
                 $('#product_specification').append(`
-                <ul class="list-group" style="list-style: none;">
-                    <li class="text-muted text-hover-primary text-wrap">
-                        ${specs.value}
-                    </li>
-                </ul>
+                    <span  class="text-muted text-hover-primary text-wrap">
+                        ${specs.value},
+                    </span>
                 `)
             }
         }

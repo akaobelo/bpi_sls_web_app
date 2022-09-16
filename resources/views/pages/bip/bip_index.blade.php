@@ -29,7 +29,7 @@
                     <div class="col-lg-4">
                         <label>Store</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store">
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="store" id="store">
 
                             </select>
                         </div>
@@ -37,7 +37,7 @@
                     <div class="col-lg-4">
                         <label>Store Code</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store_code" disabled>
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="store_code" id="store_code" disabled>
 
                             </select>
                         </div>
@@ -159,11 +159,12 @@
                         <label></label>
                         <button id="print_preview" type="button" class="form-control btn btn-primary font-weight-bold">Data Preview</button>
                     </div>
+
                     <div class="col-lg-2">
                         <label></label>
-                        <a href="{{route('print.tag')}}">
-                            <button id="btn_print" type="button" class="form-control btn btn-primary font-weight-bold">Print</button>
-                        </a>
+                        <div id="btn_print_container">
+
+                        </div>
                     </div>
                     <div class="col-lg-2">
                         <label></label>
@@ -187,7 +188,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-grou row" id="default_print_view">
+            <div class="form-group row" id="default_print_view">
                 <div class="col-md-4">
                 </div>
                 <div class="col-md-4">
@@ -202,7 +203,7 @@
                         </div>
                         <div class="col-lg-5 align-text-elements-right">
                                 <h3 class="font-weight-bold" id="bracode_price"></h3>
-                                <label id="barcode_vendor_no"></label>
+                                <label name="barcode_vendor_no" id="barcode_vendor_no"></label>
                         </div>
                     </div>
                 </div>

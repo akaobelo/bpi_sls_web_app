@@ -26,6 +26,7 @@ Route::middleware('guest')->group(function(){
     Route::get('/api/store/migration',[StoreController::class,'storeMigration']);
     Route::get('/api/get/storecode/{storeID}',[StoreController::class,'getStoreCodes']);
     Route::get('/print/tag',[StoreController::class,'printTag'])->name('print.tag');
+    Route::post('/api/form/data',[StoreController::class,'formData']);
 
 
 
