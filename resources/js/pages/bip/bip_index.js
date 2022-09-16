@@ -49,10 +49,10 @@ void new class BipIndex{
         document.querySelector('#print_preview').addEventListener('click', (e) => {
             this.previewPrint()
             let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text()
-            console.log('test')
             this.countClick+=1
             if(this.countClick == 1)
             {
+                $('#btn_print_container').empty()
                 const container = document.querySelector('#btn_print_container')
                 const anchor = document.createElement('a')
                 const button = document.createElement('button')
@@ -62,7 +62,7 @@ void new class BipIndex{
                 button.setAttribute('type','button')
                 anchor.appendChild(button)
                 container.appendChild(anchor)
-                console.log(this.countClick)
+                this.countClick = 0
             }
 
         })
@@ -77,8 +77,9 @@ void new class BipIndex{
             $('#price').removeAttr('readonly')
             $('#after_price').removeAttr('readonly')
             $('#sku').focus()
+            $('#ven_no').removeAttr('readonly')
 
-
+            $('#ven_no').prop('style',false)
             $('#price').prop('style',false)
             $('#after_price').prop('style',false)
             $('#sku').focus()

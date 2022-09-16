@@ -7,6 +7,7 @@ void new class SlsIndex{
     }
 
     initialization = () => {
+        this.countClick = 0
         this.input = document.querySelector('#kt_tagify_1')
         this.slsForm = document.querySelector('#kt_form')
         this.removeButton =  document.querySelector('#kt_tagify_1_remove')
@@ -52,6 +53,25 @@ void new class SlsIndex{
         this.editBtn.addEventListener('click', () => {
             $('#short_descr').removeAttr('readonly')
             $('#price').removeAttr('readonly')
+        })
+
+        document.querySelector('#btn_sls_print_preview').addEventListener('click', () => {
+            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text()
+            this.countClick+=1
+            if(this.countClick == 1)
+            {
+                $('#btn_print_container').empty()
+                const container = document.querySelector('#btn_print_container')
+                const anchor = document.createElement('a')
+                const button = document.createElement('button')
+                anchor.href = `/print/sls/tag?${data}`
+                button.innerText = 'Print'
+                button.classList.add("form-control","btn-primary","btn","btn-primary","font-weight-bold")
+                button.setAttribute('type','button')
+                anchor.appendChild(button)
+                container.appendChild(anchor)
+                this.countClick = 0
+            }
         })
     }
 

@@ -20,14 +20,8 @@ class StoreController extends Controller
 {
     use ResponseApi;
 
-    public function printTag(Request $request)
+    public function printBipTag(Request $request)
     {
-
-
-        // foreach(json_decode($data, true) as $key => $elem)
-        // {
-        //     dump(json_decode($data, true));
-        // }
         $data = (object) $request->all();
         $compact = ['store' => $data->store,
                     'receivedDate' => $data->receivedDate,
@@ -70,7 +64,7 @@ class StoreController extends Controller
             break;
 
             default:
-                echo 'Wala';
+                echo 'Empty';
         }
 
         // $connector = new FilePrintConnector("php://stdout");
@@ -80,6 +74,33 @@ class StoreController extends Controller
         // dd($printer);
         // $printer -> cut();
         // $printer -> close();
+    }
+
+    public function printSlsTag(Request $request)
+    {
+        $data = (object) $request->all();
+        $compact = ['store' => $data->store,
+        'sku' => $data->sku,
+        'quantity' => $data->quantity,
+        'type' => $data->printing_type,
+        'short_descr' => $data->short_descr,
+        'color'   => $data->color,
+        'material' => $data->material,
+        'size' => $data->size,
+        'price' => $data->price,
+        'barcode_vendor' => $data->barcode_vendor];
+
+        switch($request->printing_type)
+        {
+            case 1:
+                    return view('pages.partials.shelf_label',['data' => $compact]);
+                break;
+            case 2:
+                    return view('pages.partials.signage',['data' => $compact]);
+                break;
+            default:
+                echo 'Empty';
+        }
     }
 
     public function formData(Request $request)
