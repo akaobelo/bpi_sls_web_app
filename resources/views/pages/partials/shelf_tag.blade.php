@@ -59,7 +59,7 @@
             <span class="description font-weight-bold">{{$data['short_descr']}}</span>
             <div class="row">
                 <div class="column">
-                    {!! DNS1D::getBarcodeHTML('4445645656', 'UPCA',2,45) !!}
+                    {!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',2,45) !!}
                 </div>
                 <div class="column_right">
                     <span class="font-customize">{{$data['price']}}</span>

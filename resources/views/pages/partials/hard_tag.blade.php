@@ -58,7 +58,7 @@
             <img src="{{asset('assets/images/mark-down.png')}}"  class="logo adjust-logo">
         <div class="description_container">
             <span class="description font-weight-bold">{{$data['short_descr']}}</span>
-            <div class="text-center">{!! DNS1D::getBarcodeHTML('4445645656', 'UPCA',1,50) !!}</div>
+            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',1,50) !!}</div>
         </div>
         <div class="left_below_description">
             <span style="margin-right:20%;">
