@@ -17,6 +17,23 @@
 .align-text-elements-right {
     padding-left:15% !important;
 }
+
+#barcode_receivedDate {
+    padding-right:32px;
+}
+
+.custom_default_font{
+    font-weight: bold;
+    font-size: large;
+}
+.custom_markdown_font{
+    font-size: 15px;
+    font-weight: bold;
+}
+.align-text-elements-right-markdown {
+    padding-left:40px;
+}
+
 </style>
 
 @section('content')
@@ -45,16 +62,10 @@
                     <div class="col-lg-4">
                         <label>Date Received</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="receivedDate" placeholder="Select date" id='receivedDate' />
-                            <div class="input-group-append">
-                                <span class="input-group-text">
-                                    <i class="la la-calendar-check-o"></i>
-                                </span>
-                            </div>
+                            <input type="text" class="form-control" name="receivedDate" placeholder="Date" id='receivedDate' />
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <div class="col-lg-4">
                         <label>Sku/Barcode</label>
@@ -91,7 +102,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <div class="col-lg-8">
                     </div>
@@ -103,11 +113,8 @@
                     </div>
                 </div>
                 <!-- end: Example Code-->
-
-
             </div>
         </div>
-
         <div class="card card-custom gutter-b">
             <div class="card-body">
                 <div class="form-group row">
@@ -153,7 +160,8 @@
 
                 <div class="form-group row">
                     <div class="col-lg-6">
-
+                        <label>G Market?</label>
+                        <input name="logo_identification" id="logo_identification" class="btn btn-primary font-weight-bold" type="checkbox" data-toggle="toggle">
                     </div>
                     <div class="col-lg-2">
                         <label></label>
@@ -201,9 +209,13 @@
                         </div>
                         <div class="col-lg-2">
                         </div>
-                        <div class="col-lg-5 align-text-elements-right">
-                                <h3 class="font-weight-bold" id="bracode_price"></h3>
-                                <label name="barcode_vendor_no" id="barcode_vendor_no"></label>
+                        <div class="col-lg-5 align-text-elements-right default_view">
+                                <div><span class="custom_default_font" id="bracode_price"></span></div>
+                                <label id="barcode_vendor_no"></label>
+                        </div>
+                        <div class="col-lg-5 markdown_view align-text-elements-right-markdown" hidden>
+                                <div class="custom_markdown_font">NOW: <span class="custom_markdown_font" id="markdown_now_price"></span></div>
+                                <div>BEFORE: <span id="markdown_before_price"></span></div>
                         </div>
                     </div>
                 </div>

@@ -33,7 +33,8 @@ class StoreController extends Controller
                     'ven_no' => $data->ven_no,
                     'price' => $data->price,
                     'after_price' => $data->after_price,
-                    'barcode_vendor' => $data->barcode_vendor];
+                    'barcode_vendor' => $data->barcode_vendor,
+                    'logoCheck' => $data->logoCheck];
 
         $dompdf = new Dompdf();
 
@@ -42,21 +43,21 @@ class StoreController extends Controller
         switch ($request->type)
         {
             case 1 : // Hard Tag
-                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','60');
-                $dompdf->render();
-                $dompdf->stream('Hard-Tag.pdf', array('Attachment'=> 0));
-                exit(0);
-                // return view('pages.partials.hard_tag',['data' => $compact]);
+                // $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
+                // $dompdf->set_option('dpi','60');
+                // $dompdf->render();
+                // $dompdf->stream('Hard-Tag.pdf', array('Attachment'=> 0));
+                // exit(0);
+                return view('pages.partials.hard_tag',['data' => $compact]);
             break;
 
             case 2 : // Hard Tag Markdown
-                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','60');
-                $dompdf->render();
-                $dompdf->stream('Hard-Tag-Markdown.pdf', array("Attachment" => 0));
-                exit(0);
-                // return view('pages.partials.hard_tag',['data' => $compact]);
+                // $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
+                // $dompdf->set_option('dpi','60');
+                // $dompdf->render();
+                // $dompdf->stream('Hard-Tag-Markdown.pdf', array("Attachment" => 0));
+                // exit(0);
+                return view('pages.partials.hard_tag',['data' => $compact]);
             break;
 
             case 3 : //Sticker Tag (Ballpen)
