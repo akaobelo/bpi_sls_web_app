@@ -1,126 +1,131 @@
 <style>
    .container {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+        /* padding-right: 15px;
+        padding-left: 15px; */
+        /* margin-right: auto;
+        margin-left: auto; */
+        padding-right: 50px;
+        padding-left: 65px;
+        width: 288px;
+        height: 480px;
+        /* position: relative; */
+    }
+    .header {
+        text-align: center;
+    }
+    .body {
+        padding-left:5%;
+        padding-right:5%;
     }
 
-    @media (min-width: 768px) {
-    .container {
-        width: 750px;
-    }
-    }
-
-    @media (min-width: 992px) {
-    .container {
-        width: 970px;
-    }
+    body {
+        width: 816px;
+        height: 1056px;
+        margin:auto;
+        /* padding-left:5%; */
     }
 
-    @media (min-width: 1200px) {
-    .container {
-        width: 1170px;
-    }
-    }
-
-    .container .col p {
-    padding: .25rem .75rem;
+    body div {
+        /* margin-bottom: 2%; */
+        display: inline-block;
     }
 
-
-    /* 2 columns (600px) */
-
-    @media only screen and (min-width:600px) {
-    .container .col {
-        float: left;
-        width: 50%;
-    }
+    body div a {
+        color:#808080;
     }
 
-
-    /* 3 columns (768px) */
-
-    @media only screen and (min-width:768px) {
-    .container .col {
-        width: 33.333%;
-    }
+    .body-description {
+        font-weight: 700;
+        font-size: 15px;
     }
 
-
-    /* 4 columns (992px) */
-
-    @media only screen and (min-width:992px) {
-        .container .col {
-            width: 25%;
-        }
+    .body-description a{
+        font-size: 12px;
     }
 
-    .adjust-logo {
-        width: 50%;
-        padding-top:5%;
+    .footer {
+        width:100%;
+        text-align: center;
     }
 
+    .logo {
+        width: 100%;
+        /* original setting */
+        padding-top:20%;
+    }
+
+    hr.solid {
+        border-top: 1px solid #bbb;
+    }
+
+    hr.dotted {
+        border-top: 1px dotted #bbb;
+    }
+
+    input {
+        border: 0;
+        margin-top:5px;
+    }
+
+    .font-style {
+        font-size: 20px;
+    }
+    .price_field {
+        width:260px;
+        height:50px;
+        background-color:#B9B7BD;
+        font-size:30px;
+        text-align: center;
+        font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
+    }
 </style>
-
 @for ($i = 0; $i <= (int)$data['quantity']-1; $i++)
-<div class="container">
-    <div class="col">
-        <div class="modal-header" style="justify-content: center;">
-            <img alt="Logo" src="{{asset('/assets/images/shelf.png')}}" class="logo adjust-logo" />
+    <div class="container">
+        <div class="header">
+        <img src="{{public_path('assets/images/shelf.png')}}" class="logo">
+        {{-- <img alt="Logo" src="{{asset('/assets/images/shelf.png')}}" class="logo" /> --}}
+        <hr class="solid">
+        <h2>{{$data['short_descr']}}</h2>
         </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <div class="col-md-12" style="text-align: center;">
-                    <h3 id="modal-description">BOOK SHELF LARGE</h3>
-                </div>
+        <div class="body">
+            <div>
+                <span class="body-description">Color:</span>
+                <a>{{$data['color']}}</a>
             </div>
-            <div class="form-group">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="font-weight-bold mr-2">Color:</span>
-                    <a href="#" class="text-muted text-hover-primary text-wrap color"  style="width: 15rem;"></a>
-                </div>
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="font-weight-bold mr-2">Material:</span>
-                    <a href="#" class="text-muted text-hover-primary text-wrap material" style="width: 15rem;"></a>
-                </div>
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="font-weight-bold mr-2">Size:</span>
-                    <a href="#" class="text-muted text-hover-primary text-wrap size" style="width: 15rem;"></a>
-                </div>
+            <br>
+            <div>
+                <span class="body-description">Material:</span>
+                <a class="font-weight-lighter">{{$data['material']}}</a>
             </div>
-            <div class="form-group" id="shelf_container_print">
-                <div class="d-flex align-items-center justify-content-between mb-2" style="width: 15rem;">
-                    <span class="font-weight-bold mr-2">Product Specification:</span>
-                </div>
-                <div class="d-flex align-items-center justify-content-between mb-2" style="width: 15rem;">
-                    <div id="product_specification" class="ml-1">
-                    </div>
-                </div>
+            <br>
+            <div>
+                <span class="body-description">Size:</span>
+                <a>{{$data['size']}}</a>
             </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label class="font-weight-bold text-primary">Price:</label>
-                    <input type="" class="form-control price" style="height:50px;font-size:35px;text-align:center;" disabled>
-                </div>
-
-                <div class="col-md-12" id="sale_price_container" hidden>
-                    <label class="font-weight-bold text-primary">Sale Price:</label>
-                    <input type="" class="form-control sale_price" style="height:50px;font-size:50px;text-align:center;" disabled>
-                </div>
+            <br>
+            <div>
+                <span class="body-description">Product Specification:</span>
+            </div>
+            <div>
+                @foreach(json_decode($data['product_specification']) as $val)
+                    <a>{{$val->value}}</a>,
+                 @endforeach
+            </div>
+            <div>
+                <label style="color: red;" class="body-description">Price:</label>
+                <div class="price_field">₱<span>{{$data['price']}}</span></div>
             </div>
         </div>
-
-        <div class="modal-footer">
-            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',1,50) !!}</div>
-
-            <div id="btn_print_container">
-
-            </div>
+        <hr class="dotted">
+        <div class="footer">
+            {!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',3,60) !!}
+            <span class="font-style">{{$data['sku']}}</span>
         </div>
     </div>
-  </div>
 @endfor
+{{-- @for ($i = 0; $i <= (int)$data['quantity']-1; $i++)
+
+@endfor --}}
 
 
 
