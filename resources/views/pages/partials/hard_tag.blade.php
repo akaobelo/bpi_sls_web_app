@@ -9,12 +9,12 @@
     }
 
     .left_below_description {
-        font-size: 9px;
+        font-size: 8px;
     }
 
     .right_below_description {
-        font-size: 9px;
-        margin-right:10%;
+        font-size: 8px;
+        margin-right:2%;
     }
 
     .description_container {
@@ -23,7 +23,7 @@
     }
 
     .adjust-logo {
-        width: 50%;
+        width: 70%;
         padding-top:5%;
     }
 
@@ -52,31 +52,38 @@
     .sku {
         font-size:10px;
     }
+    .before_price {
+        font-size:7px;
+    }
 
 </style>
 
 @for ($i = 0; $i <= (int)$data['quantity']-1; $i++)
 <div class="block">
     <div class="col-md-4">
-        @if($data['logoCheck'] === 'false')
-            {{-- <img src="{{public_path('assets/images/new_g_store.png')}}"  class="logo adjust-logo"> --}}
+        @if($data['store_code'] === '1')
+            <img src="{{public_path('assets/images/new_g_store.png')}}"  class="logo adjust-logo">
         @else
-            {{-- <img src="{{public_path('assets/images/new_g_market.png')}}"  class="logo adjust-logo"> --}}
+            <img src="{{public_path('assets/images/new_g_market.png')}}"  class="logo adjust-logo">
         @endif
 
-            <img src="{{asset('assets/images/mark-down.png')}}"  class="logo adjust-logo">
+            {{-- <img src="{{asset('assets/images/mark-down.png')}}"  class="logo adjust-logo"> --}}
             <div class="description_container">
             <span class="description font-weight-bold">{{$data['short_descr']}}</span>
             <div class="text-center">{!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',1,50) !!}</div>
             <div class="text-center sku">{{$data['sku']}}</div>
         </div>
         <div class="left_below_description">
-            <span style="margin-right:40%;">
+
+            @if($data['type'] == 2 || $data['type'] == 4)
+            <span style="margin-right:20%;">
                 {{$data['receivedDate']}}
             </span>
-            @if($data['type'] == 2 || $data['type'] == 4)
             <span class="font-customize">NOW: {{$data['after_price']}}</span>
             @else
+            <span style="margin-right:50%;">
+                {{$data['receivedDate']}}
+            </span>
             <span class="font-customize">{{$data['price']}}</span>
             @endif
         </div>
@@ -85,11 +92,11 @@
                 {{$data['barcode_vendor']}}
             </span>
             @if($data['type'] ==  2 || $data['type'] == 4)
-                <span style="margin-left:30%;">
+                <span class="before_price" style="margin-left:7px;">
                     BEFORE: {{$data['price']}}
                 </span>
             @else
-                <span style="margin-left:30%;">
+                <span style="margin-left:45%;">
                     {{$data['ven_no'] ? $data['ven_no'] : 'Stock No.'}}
                 </span>
             @endif

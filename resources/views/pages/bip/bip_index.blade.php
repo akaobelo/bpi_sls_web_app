@@ -46,7 +46,7 @@
                     <div class="col-lg-4">
                         <label>Store</label>
                         <div class="input-group">
-                            <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="store" id="store">
+                            <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="store" id="store" autofocus>
 
                             </select>
                         </div>
@@ -160,8 +160,6 @@
 
                 <div class="form-group row">
                     <div class="col-lg-6">
-                        <label>G Market?</label>
-                        <input name="logo_identification" id="logo_identification" class="btn btn-primary font-weight-bold" type="checkbox" data-toggle="toggle">
                     </div>
                     <div class="col-lg-2">
                         <label></label>

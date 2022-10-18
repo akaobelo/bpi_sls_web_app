@@ -4,10 +4,13 @@
         padding-left: 15px; */
         /* margin-right: auto;
         margin-left: auto; */
-        padding-right: 50px;
-        padding-left: 65px;
+        padding-right: 20px;
+        padding-left: 15px;
         width: 288px;
-        height: 480px;
+        height: 420px;
+        margin-bottom:-15%;
+        margin-top:15%;
+        border-style:solid;
         /* position: relative; */
     }
     .header {
@@ -18,11 +21,10 @@
         padding-right:5%;
     }
 
-    body {
-        width: 816px;
+        body {
+            width: 816px;
         height: 1056px;
         margin:auto;
-        /* padding-left:5%; */
     }
 
     body div {
@@ -31,16 +33,19 @@
     }
 
     body div a {
-        color:#808080;
+        font-family: 'MetropolisNF', sans-serif;
+        color:brown;
     }
 
     .body-description {
         font-weight: 700;
         font-size: 15px;
+        font-family: 'MetropolisNF', sans-serif;
     }
 
     .body-description a{
         font-size: 12px;
+        font-family: 'MetropolisNF', sans-serif;
     }
 
     .footer {
@@ -51,7 +56,6 @@
     .logo {
         width: 100%;
         /* original setting */
-        padding-top:20%;
     }
 
     hr.solid {
@@ -85,7 +89,7 @@
         <img src="{{public_path('assets/images/shelf.png')}}" class="logo">
         {{-- <img alt="Logo" src="{{asset('/assets/images/shelf.png')}}" class="logo" /> --}}
         <hr class="solid">
-        <h2>{{$data['short_descr']}}</h2>
+        <h2 style="font-family: 'MetropolisNF', sans-serif;">{{$data['short_descr']}}</h2>
         </div>
         <div class="body">
             <div>
@@ -119,7 +123,7 @@
         <hr class="dotted">
         <div class="footer">
             {!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',3,60) !!}
-            <span class="font-style">{{$data['sku']}}</span>
+            <span class="font-style">{{$data['upc']}}</span>
         </div>
     </div>
 @endfor

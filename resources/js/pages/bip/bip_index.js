@@ -44,9 +44,11 @@ void new class BipIndex{
             $('#barcode').html('')
         })
 
-        document.querySelector('#print_preview').addEventListener('click', (e) => {
-            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&logoCheck=' +  $('#logo_identification').is(':checked')
-            console.log(data)
+        document.querySelector('#print_preview').addEventListener('keypress', async(e) => {
+            if(e.keyCode === 13)
+            {
+
+            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value
             this.previewPrint()
             if(this.currentType == 2 || this.currentType == 4)
             {
@@ -62,10 +64,14 @@ void new class BipIndex{
             const button = document.createElement('button')
             anchor.href = `/print/tag?${data}`
             button.innerText = 'Print'
-            button.classList.add("form-control","btn-primary","btn","btn-primary","font-weight-bold")
+            button.classList.add("form-control","btn-primary","btn","btn-primary","font-weight-bold","print_trigger")
             button.setAttribute('type','button')
+            anchor.setAttribute('target','_blank')
             anchor.appendChild(button)
             container.appendChild(anchor)
+
+            }
+
         })
 
         document.querySelector('#type').addEventListener('change', (e) => {
@@ -129,7 +135,6 @@ void new class BipIndex{
         this.formData.append('price', $('#price').val())
         this.formData.append('after_price', $('#after_price').val())
         this.formData.append('barcode_vendor_no', $('#barcode_vendor_no').text())
-        this.formData.append('display_logo', $('#logo_identification').is(':checked'))
         return  this.formData
     }
 

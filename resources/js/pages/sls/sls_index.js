@@ -56,7 +56,7 @@ void new class SlsIndex{
         })
 
         document.querySelector('#btn_sls_print_preview').addEventListener('click', () => {
-            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text()
+            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&upc=' + this.dataUPC
             this.countClick+=1
             if(this.countClick == 1)
             {
@@ -67,7 +67,8 @@ void new class SlsIndex{
                 anchor.href = `/print/sls/tag?${data}`
                 button.innerText = 'Print'
                 button.classList.add("form-control","btn-primary","btn","btn-primary","font-weight-bold")
-                button.setAttribute('type','button')
+                button.setAttribute('target','_blank')
+                anchor.setAttribute('type','button')
                 anchor.appendChild(button)
                 container.appendChild(anchor)
                 this.countClick = 0
@@ -128,8 +129,10 @@ void new class SlsIndex{
 
     getItemBySku = async(barcode) => {
             const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
+
             for(const data of result)
             {
+                this.dataUPC = data.upc
                 $('#short_descr').val(data.short_descr)
                 $('#price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
             }

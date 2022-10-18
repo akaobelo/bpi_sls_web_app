@@ -23,6 +23,7 @@ class StoreController extends Controller
     public function printBipTag(Request $request)
     {
         $data = (object) $request->all();
+        $store_code = str_split($data->store_code);
         $compact = ['store' => $data->store,
                     'receivedDate' => $data->receivedDate,
                     'sku' => $data->sku,
@@ -34,7 +35,7 @@ class StoreController extends Controller
                     'price' => $data->price,
                     'after_price' => $data->after_price,
                     'barcode_vendor' => $data->barcode_vendor,
-                    'logoCheck' => $data->logoCheck];
+                    'store_code' => $store_code[0]];
 
         $dompdf = new Dompdf();
 
@@ -43,21 +44,21 @@ class StoreController extends Controller
         switch ($request->type)
         {
             case 1 : // Hard Tag
-                // $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-                // $dompdf->set_option('dpi','60');
-                // $dompdf->render();
-                // $dompdf->stream('Hard-Tag.pdf', array('Attachment'=> 0));
-                // exit(0);
-                return view('pages.partials.hard_tag',['data' => $compact]);
+                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
+                $dompdf->set_option('dpi','60');
+                $dompdf->render();
+                $dompdf->stream('Hard-Tag.pdf', array('Attachment'=> 0));
+                exit(0);
+                // return view('pages.partials.hard_tag',['data' => $compact]);
             break;
 
             case 2 : // Hard Tag Markdown
-                // $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-                // $dompdf->set_option('dpi','60');
-                // $dompdf->render();
-                // $dompdf->stream('Hard-Tag-Markdown.pdf', array("Attachment" => 0));
-                // exit(0);
-                return view('pages.partials.hard_tag',['data' => $compact]);
+                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
+                $dompdf->set_option('dpi','60');
+                $dompdf->render();
+                $dompdf->stream('Hard-Tag-Markdown.pdf', array("Attachment" => 0));
+                exit(0);
+                // return view('pages.partials.hard_tag',['data' => $compact]);
             break;
 
             case 3 : //Sticker Tag (Ballpen)
@@ -96,6 +97,7 @@ class StoreController extends Controller
     {
 
         $data = (object) $request->all();
+        $trimedUPC = ltrim($data->upc,'0');
         $compact = ['store' => $data->store,
         'sku' => $data->sku,
         'quantity' => $data->quantity,
@@ -107,7 +109,8 @@ class StoreController extends Controller
         'price' => $data->price,
         'sale_price' => (isset($data->sale_price) ?  $data->sale_price : ''),
         'product_specification' => $data->product_specification,
-        'barcode_vendor' => $data->barcode_vendor];
+        'barcode_vendor' => $data->barcode_vendor,
+        'upc' => $trimedUPC];
 
         $dompdf = new Dompdf();
         $dompdf->getOptions()->setChroot(public_path());
@@ -115,7 +118,8 @@ class StoreController extends Controller
         {
             case 1:
                 $dompdf->loadHtml(view('pages.partials.shelf_label',['data' => $compact]));
-                $dompdf->set_option('dpi','120');
+                $dompdf->set_option('dpi','85');
+                $dompdf->set_paper('letter', 'portrait');
                 $dompdf->render();
                 $dompdf->stream('Shelf-Label.pdf',array("Attachment" => 0));
                 exit(0);

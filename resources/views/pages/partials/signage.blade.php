@@ -1,14 +1,8 @@
 <style>
     .container {
-         /* padding-right: 15px;
-         padding-left: 15px; */
-         /* margin-right: auto;
-         margin-left: auto; */
          padding-right: 50px;
-         /* padding-left: 5px; */
          width: 816px;
          height: 1056px;
-         /* position: relative; */
      }
      .header {
          text-align: center;
@@ -20,6 +14,7 @@
      }
 
      body {
+        background-color: white;
          width: 816px;
          height: 1056px;
          margin:auto;
@@ -38,6 +33,8 @@
      .body-description {
          font-weight: 700;
          font-size: 35px;
+         color:black;
+        font-family: 'MetropolisNF', sans-serif;
      }
 
      .body-description a{
@@ -64,11 +61,7 @@
 
      hr.dotted {
          border-top: 1px dotted #bbb;
-     }
-
-     input {
-         border: 0;
-         margin-top:5px;
+         margin-top:-5%;
      }
 
      .font-style {
@@ -76,6 +69,8 @@
      }
      .custom-font-text {
         font-size: 30px;
+        color:brown;
+        font-family: 'MetropolisNF', sans-serif;
      }
      .price_field {
         height:80px;
@@ -86,9 +81,10 @@
         font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
      }
      .sale_price_field{
-        height:80px;
-        font-size:60px;
+        height:90px;
+        font-size:70px;
         width:735px;
+        padding-bottom:10px;
         background-color:#B9B7BD;
         text-align:center;
         font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
@@ -101,7 +97,7 @@
          <img src="{{public_path('assets/images/shelf.png')}}"  class="logo">
          {{-- <img alt="Logo" src="{{asset('/assets/images/shelf.png')}}" class="logo" /> --}}
          <hr class="solid">
-         <h1>{{$data['short_descr']}}</h1>
+         <h1 style="font-family: 'MetropolisNF', sans-serif;">{{$data['short_descr']}}</h1>
          </div>
          <div class="body">
              <div>
@@ -120,13 +116,12 @@
              <br>
              <div>
                  <label style="color: red;" class="body-description">Price:</label>
-                 <br>
                  <div class="price_field">₱{{$data['price']}}</div>
              </div>
              <br>
              <div>
                 <label style="color: red;" class="body-description">Sale Price:</label>
-                <br>
+
                 <div class="sale_price_field">₱{{$data['sale_price']}}</div>
             </div>
          </div>
@@ -134,7 +129,7 @@
          <hr class="dotted">
          <div class="footer">
              {!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',7,140) !!}
-             <span class="font-style">{{$data['sku']}}</span>
+             <span class="font-style">{{$data['upc']}}</span>
          </div>
      </div>
  @endfor
