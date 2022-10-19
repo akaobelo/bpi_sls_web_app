@@ -30,6 +30,9 @@ Route::middleware('guest')->group(function(){
     Route::post('/api/form/data',[StoreController::class,'formData']);
 
 
+    Route::post('/api/validate/master/{key}',[StoreController::class,'validateMasterKey']);
+
+
 
 
 

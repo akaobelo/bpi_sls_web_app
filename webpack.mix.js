@@ -17,6 +17,6 @@ mix.js('resources/js/app.js', 'public/js')
     ]);
 
 mix.js('resources/js/pages/bip/bip_index.js','public/js/pages/bip')
-
+mix.js('resources/js/pages/others/master_settings.js','public/js/pages/others')
 mix.js('resources/js/pages/sls/sls_index.js','public/js/pages/sls')
 
