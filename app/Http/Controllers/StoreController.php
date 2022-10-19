@@ -11,10 +11,15 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Store;
 use App\Models\StoreCode;
 use App\Models\BusinessUnit;
+use App\Models\MasterPassword;
 use App\Services\TpsConnection;
 use Dompdf\Dompdf;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\Printer;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Throwable;
+use Exception;
 
 class StoreController extends Controller
 {
@@ -24,6 +29,7 @@ class StoreController extends Controller
     {
         $data = (object) $request->all();
         $store_code = str_split($data->store_code);
+        $trimedUPC = ltrim($data->upc,'0');
         $compact = ['store' => $data->store,
                     'receivedDate' => $data->receivedDate,
                     'sku' => $data->sku,
@@ -35,7 +41,8 @@ class StoreController extends Controller
                     'price' => $data->price,
                     'after_price' => $data->after_price,
                     'barcode_vendor' => $data->barcode_vendor,
-                    'store_code' => $store_code[0]];
+                    'store_code' => $store_code[0],
+                    'upc' => $trimedUPC];
 
         $dompdf = new Dompdf();
 
@@ -223,6 +230,14 @@ class StoreController extends Controller
         }
         return $filtered_tps;
 
+    }
+
+    public function validateMasterKey($master_key)
+    {
+        $currentPassword = MasterPassword::get();
+        if(Hash::check($currentPassword[0]['master_key'],$master_key))
+             $this->error('Invalid password', 404);
+        return view('pages.master_settings');
     }
 
 

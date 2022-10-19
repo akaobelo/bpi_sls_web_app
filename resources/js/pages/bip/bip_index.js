@@ -48,7 +48,7 @@ void new class BipIndex{
             if(e.keyCode === 13)
             {
 
-            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value
+            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc' + this.dataUPC
             this.previewPrint()
             if(this.currentType == 2 || this.currentType == 4)
             {
@@ -69,7 +69,13 @@ void new class BipIndex{
             anchor.setAttribute('target','_blank')
             anchor.appendChild(button)
             container.appendChild(anchor)
-
+            // this.bipForm.reset()
+            // $('#short_description').html('')
+            // $('#barcode_receivedDate').html('')
+            // $('#bracode_price').html('')
+            // $('#barcode_vendor').html('')
+            // $('#barcode_vendor_no').html('')
+            // $('#barcode').html('')
             }
 
         })
@@ -145,6 +151,7 @@ void new class BipIndex{
             for(const data of result)
             {
                 this.vendor = data.vendor
+                this.dataUPC = data.upc
                 $('#short_descr').val(data.short_descr)
                 $('#buy_unit').val(data.buy_unit)
                 $('#ven_no').val(data.ven_no)
