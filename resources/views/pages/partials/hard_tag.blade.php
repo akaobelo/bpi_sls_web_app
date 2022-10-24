@@ -1,5 +1,7 @@
 <style>
-
+    html {
+        background-color:black;
+    }
     .description {
         font-size: 8px;
     }
@@ -23,8 +25,8 @@
     }
 
     .adjust-logo {
-        width: 70%;
-        padding-top:5%;
+        width: 80%;
+
     }
 
     .font-customize {
@@ -33,6 +35,7 @@
     body {
         width: 371px;
         margin: auto;
+        background-color:white;
     }
 
     .row {
@@ -44,13 +47,18 @@
         text-align: center;
         width: 120.94488189px;
         height: 120.94488189px;
-        margin-bottom:17px;
+        margin-bottom:-5px;
+        margin-top:5px;
     }
     .text-center {
-        padding-left:6%;
+        padding-left:8%;
     }
     .sku {
-        font-size:10px;
+        font-size:8px;
+        letter-spacing: 1px;
+        text-align:center;
+        margin-right:5px;
+
     }
     .before_price {
         font-size:7px;
@@ -61,16 +69,16 @@
 @for ($i = 0; $i <= (int)$data['quantity']-1; $i++)
 <div class="block">
     <div class="col-md-4">
-        @if($data['store_code'] === '1')
-            <img src="{{public_path('assets/images/new_g_store.png')}}"  class="logo adjust-logo">
-        @else
-            <img src="{{public_path('assets/images/new_g_market.png')}}"  class="logo adjust-logo">
-        @endif
+            @if($data['store_code'] === '1')
+                <img src="{{public_path('assets/images/new_g_store.png')}}"  class="logo adjust-logo">
+            @else
+                <img src="{{public_path('assets/images/new_g_market.png')}}"  class="logo adjust-logo">
+            @endif
 
             {{-- <img src="{{asset('assets/images/mark-down.png')}}"  class="logo adjust-logo"> --}}
             <div class="description_container">
             <span class="description font-weight-bold">{{$data['short_descr']}}</span>
-            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',1,50) !!}</div>
+            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',1,40) !!}</div>
             <div class="text-center sku">{{$data['upc']}}</div>
         </div>
         <div class="left_below_description">

@@ -1,16 +1,11 @@
 <style>
     .container {
-         padding-right: 50px;
          width: 816px;
          height: 1056px;
+         background-color:white;
      }
      .header {
          text-align: center;
-     }
-     .body {
-         padding-left:5%;
-         margin-bottom: 5%;
-         padding-right:5%;
      }
 
      body {
@@ -23,7 +18,6 @@
 
      body div {
          margin-bottom: 4%;
-         display: inline-block;
      }
 
      body div a {
@@ -32,8 +26,7 @@
 
      .body-description {
          font-weight: 700;
-         font-size: 35px;
-         color:black;
+         font-size: 50px;
         font-family: 'MetropolisNF', sans-serif;
      }
 
@@ -73,47 +66,55 @@
         font-family: 'MetropolisNF', sans-serif;
      }
      .price_field {
-        height:80px;
-        font-size:50px;
-        width:735px;
-        background-color:#B9B7BD;
-        text-align:center;
-        font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
+
+        font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif, 'MetropolisNF', sans-serif;
+        background-color:#88878a;
+        font-size:120px;
+        width:800px;
+        border:solid;
+        font-style: bold;
+        padding: 10px;
+        text-align: center;
+        word-break: break-all; /* optional */
      }
      .sale_price_field{
-        height:90px;
+        font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif, 'MetropolisNF', sans-serif;
+        background-color:#88878a;
+        font-size:140px;
+        border: solid;
+        display: inline-block;
+        width:800px;
+        padding: 10px;
+        font-style: bold;
+        text-align: center;
+        word-break: break-all; /* optional */
+     }
+     .header-sale{
+        font-family: 'MetropolisNF', sans-serif;
+        font-size:140px;
+        margin-bottom:10px;
+        margin-top:-10px;
+        margin-left:50px;
+        color:red;
+        letter-spacing: 50px;
+        text-align: center!important;
+     }
+
+     .short_description {
+        font-family: 'MetropolisNF', sans-serif;
         font-size:70px;
-        width:735px;
-        padding-bottom:10px;
-        background-color:#B9B7BD;
-        text-align:center;
-        font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
      }
 
  </style>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
  @for ($i = 0; $i <= (int)$data['quantity']-1; $i++)
      <div class="container">
          <div class="header">
-         <img src="{{public_path('assets/images/shelf.png')}}"  class="logo">
-         {{-- <img alt="Logo" src="{{asset('/assets/images/shelf.png')}}" class="logo" /> --}}
+           <h1 class="header-sale">SALE</h1>
          <hr class="solid">
-         <h1 style="font-family: 'MetropolisNF', sans-serif;">{{$data['short_descr']}}</h1>
+         <h1 class="short_description">{{$data['short_descr']}}</h1>
          </div>
          <div class="body">
-             <div>
-                 <span class="body-description">Color:</span>
-                 <a class="custom-font-text">{{$data['color']}}</a>
-             </div>
-
-             <div>
-                 <span class="body-description">Material:</span>
-                 <a class="custom-font-text">{{$data['material']}}</a>
-             </div>
-             <div>
-                 <span class="body-description">Size:</span>
-                 <a class="custom-font-text">{{$data['size']}}</a>
-             </div>
-             <br>
              <div>
                  <label style="color: red;" class="body-description">Price:</label>
                  <div class="price_field">₱{{$data['price']}}</div>
@@ -121,15 +122,8 @@
              <br>
              <div>
                 <label style="color: red;" class="body-description">Sale Price:</label>
-
                 <div class="sale_price_field">₱{{$data['sale_price']}}</div>
             </div>
-         </div>
-
-         <hr class="dotted">
-         <div class="footer">
-             {!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',7,140) !!}
-             <span class="font-style">{{$data['upc']}}</span>
          </div>
      </div>
  @endfor

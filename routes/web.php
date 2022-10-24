@@ -28,6 +28,7 @@ Route::middleware('guest')->group(function(){
     Route::get('/print/tag',[StoreController::class,'printBipTag']);
     Route::get('/print/sls/tag',[StoreController::class,'printSlsTag'])->name('print.sls.tag');
     Route::post('/api/form/data',[StoreController::class,'formData']);
+    Route::get('/api/validated/data/{storeCode}',[StoreController::class,'validatedData']);
 
 
 

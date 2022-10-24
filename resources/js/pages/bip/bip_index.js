@@ -48,7 +48,7 @@ void new class BipIndex{
             if(e.keyCode === 13)
             {
 
-            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc' + this.dataUPC
+            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc=' + this.dataUPC
             this.previewPrint()
             if(this.currentType == 2 || this.currentType == 4)
             {
@@ -102,6 +102,7 @@ void new class BipIndex{
 
     populateStore = async() => {
         const {data:result} =  await axios.get('/api/fetch/tpsStore')
+
         for(const elem of result){
             $('#store').append(`<option value="${elem.name}">${elem.name}</option>`)
             $('#store_code').append(`<option>${elem.store}</option>`)
@@ -147,7 +148,7 @@ void new class BipIndex{
     getItemBySku = async(barcode) => {
 
             const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
-
+            console.log(result)
             for(const data of result)
             {
                 this.vendor = data.vendor

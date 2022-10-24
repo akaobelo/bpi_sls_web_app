@@ -114,7 +114,7 @@ class StoreController extends Controller
         'material' => $data->material,
         'size' => $data->size,
         'price' => $data->price,
-        'sale_price' => (isset($data->sale_price) ?  $data->sale_price : ''),
+        'sale_price' => (isset($data->sale_price) ?  number_format($data->sale_price,2,'.',',') : ''),
         'product_specification' => $data->product_specification,
         'barcode_vendor' => $data->barcode_vendor,
         'upc' => $trimedUPC];
@@ -232,13 +232,18 @@ class StoreController extends Controller
 
     }
 
-    public function validateMasterKey($master_key)
-    {
-        $currentPassword = MasterPassword::get();
-        if(Hash::check($currentPassword[0]['master_key'],$master_key))
-             $this->error('Invalid password', 404);
-        return view('pages.master_settings');
-    }
+    // public function validateMasterKey($master_key)
+    // {
+    //     $currentPassword = MasterPassword::get();
+    //     if(Hash::check($currentPassword[0]['master_key'],$master_key))
+    //          $this->error('Invalid password', 404);
+    //     return view('pages.master_settings');
+    // }
 
+    public function validatedData($storeCode)
+    {
+        $tps =  new TpsConnection('odbc_2001');
+        return $tps->getValidatedData();
+    }
 
 }
