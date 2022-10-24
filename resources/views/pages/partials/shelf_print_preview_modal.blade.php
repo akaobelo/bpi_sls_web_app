@@ -48,6 +48,10 @@
 
             <div class="modal-footer">
                 <svg id="barcode"></svg>
+
+                <div id="btn_print_container">
+
+                </div>
             </div>
         </div>
     </div>

@@ -138,7 +138,7 @@ window.numberWithCommas = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }
 
-window.humanDate = (date) => new Date(date).toLocaleString('en-us',{month:'long', day:'numeric',year:'numeric'})
+window.humanDate = (date) => new Date(date).toLocaleString('en-us',{month:'short', day:'numeric',year:'numeric'})
 
 window.humanDateWithoutDay = (date) => new Date(date).toLocaleString('en-us',{month:'long',year:'numeric'})
 

@@ -6,12 +6,11 @@
     <form class="form" id="kt_form">
         <div class="card card-custom gutter-b">
             <div class="card-body">
-
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <label>Store</label>
                             <div class="input-group">
-                                <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store">
+                                <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="store" id="store">
 
                                 </select>
                             </div>
@@ -19,13 +18,12 @@
                         <div class="col-lg-6">
                             <label>Store Code</label>
                             <div class="input-group">
-                                <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="type" id="store_code" disabled>
+                                <select autocomplete="off" class="form-control form-control-solid form-control-md sl2" name="store_code" id="store_code" disabled>
 
                                 </select>
                             </div>
                         </div>
                     </div>
-
                 <div class="form-group row">
                     <div class="col-lg-6">
                         <label>Sku/Barcode</label>

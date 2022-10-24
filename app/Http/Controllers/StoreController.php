@@ -11,24 +11,25 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Store;
 use App\Models\StoreCode;
 use App\Models\BusinessUnit;
+use App\Models\MasterPassword;
 use App\Services\TpsConnection;
 use Dompdf\Dompdf;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\Printer;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Throwable;
+use Exception;
 
 class StoreController extends Controller
 {
     use ResponseApi;
 
-    public function printTag(Request $request)
+    public function printBipTag(Request $request)
     {
-
-
-        // foreach(json_decode($data, true) as $key => $elem)
-        // {
-        //     dump(json_decode($data, true));
-        // }
         $data = (object) $request->all();
+        $store_code = str_split($data->store_code);
+        $trimedUPC = ltrim($data->upc,'0');
         $compact = ['store' => $data->store,
                     'receivedDate' => $data->receivedDate,
                     'sku' => $data->sku,
@@ -39,47 +40,109 @@ class StoreController extends Controller
                     'ven_no' => $data->ven_no,
                     'price' => $data->price,
                     'after_price' => $data->after_price,
-                    'barcode_vendor' => $data->barcode_vendor];
+                    'barcode_vendor' => $data->barcode_vendor,
+                    'store_code' => $store_code[0],
+                    'upc' => $trimedUPC];
 
-        // $dompdf = new Dompdf();
-        // $dompdf->getOptions()->setChroot(public_path());
-        // $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-        // $dompdf->render();
-        // $dompdf->stream();
+        $dompdf = new Dompdf();
+
+        $dompdf->getOptions()->setChroot(public_path());
 
         switch ($request->type)
         {
             case 1 : // Hard Tag
-                return view('pages.partials.hard_tag',['data' => $compact]);
+                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
+                $dompdf->set_option('dpi','60');
+                $dompdf->render();
+                $dompdf->stream('Hard-Tag.pdf', array('Attachment'=> 0));
+                exit(0);
+                // return view('pages.partials.hard_tag',['data' => $compact]);
             break;
 
             case 2 : // Hard Tag Markdown
-                return view('pages.partials.hard_tag',['data' => $compact]);
+                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
+                $dompdf->set_option('dpi','60');
+                $dompdf->render();
+                $dompdf->stream('Hard-Tag-Markdown.pdf', array("Attachment" => 0));
+                exit(0);
+                // return view('pages.partials.hard_tag',['data' => $compact]);
             break;
 
             case 3 : //Sticker Tag (Ballpen)
-                return view('pages.partials.ballpen_tag',['data' => $compact]);
+                $dompdf->loadHtml(view('pages.partials.ballpen_tag',['data' => $compact]));
+                $dompdf->set_option('dpi','45');
+                $dompdf->render();
+                $dompdf->stream('Sticker-Tag.pdf',array("Attachment" => 0));
+                exit(0);
+                // return view('pages.partials.ballpen_tag',['data' => $compact]);
             break;
 
             case 4 : // Sticker Tag Markdownn
-                return view('pages.partials.sticker_tag',['data' => $compact]);
+                $dompdf->loadHtml(view('pages.partials.sticker_tag',['data' => $compact]));
+                $dompdf->set_option('dpi','44');
+                $dompdf->render();
+                $dompdf->stream('Sticker-Tag-Markdown.pdf',array("Attachment" => 0));
+                exit(0);
+                // return view('pages.partials.sticker_tag',['data' => $compact]);
             break;
 
             case 5 : //Shelf Tag
-                return view('pages.partials.shelf_tag',['data' => $compact]);
+                $dompdf->loadHtml(view('pages.partials.shelf_tag',['data' => $compact]));
+                $dompdf->set_option('dpi','45');
+                $dompdf->render();
+                $dompdf->stream('Shelf-Tag.pdf',array("Attachment" => 0));
+                exit(0);
+                // return view('pages.partials.shelf_tag',['data' => $compact]);
             break;
 
             default:
-                echo 'Wala';
+                echo 'Empty';
         }
+    }
 
-        // $connector = new FilePrintConnector("php://stdout");
+    public function printSlsTag(Request $request)
+    {
 
-        // $printer = new Printer($connector);
-        // $printer -> text("Hello World!\n");
-        // dd($printer);
-        // $printer -> cut();
-        // $printer -> close();
+        $data = (object) $request->all();
+        $trimedUPC = ltrim($data->upc,'0');
+        $compact = ['store' => $data->store,
+        'sku' => $data->sku,
+        'quantity' => $data->quantity,
+        'type' => $data->printing_type,
+        'short_descr' => $data->short_descr,
+        'color'   => $data->color,
+        'material' => $data->material,
+        'size' => $data->size,
+        'price' => $data->price,
+        'sale_price' => (isset($data->sale_price) ?  number_format($data->sale_price,2,'.',',') : ''),
+        'product_specification' => $data->product_specification,
+        'barcode_vendor' => $data->barcode_vendor,
+        'upc' => $trimedUPC];
+
+        $dompdf = new Dompdf();
+        $dompdf->getOptions()->setChroot(public_path());
+        switch($request->printing_type)
+        {
+            case 1:
+                $dompdf->loadHtml(view('pages.partials.shelf_label',['data' => $compact]));
+                $dompdf->set_option('dpi','85');
+                $dompdf->set_paper('letter', 'portrait');
+                $dompdf->render();
+                $dompdf->stream('Shelf-Label.pdf',array("Attachment" => 0));
+                exit(0);
+                // return view('pages.partials.shelf_label',['data' => $compact]);
+                break;
+            case 2:
+                $dompdf->loadHtml(view('pages.partials.signage',['data' => $compact]));
+                $dompdf->set_option('dpi','120');
+                $dompdf->render();
+                $dompdf->stream('Signage.pdf', array("Attachment" => 0));
+                exit(0);
+                // return view('pages.partials.signage',['data' => $compact]);
+                break;
+            default:
+                echo 'Empty';
+        }
     }
 
     public function formData(Request $request)
@@ -142,7 +205,8 @@ class StoreController extends Controller
                 return $tps->getItemBySKU($barcode);
                 break;
             default:
-                throw new Error('Invalid Code', 400);
+                echo "Invalid Code";
+                break;
         }
 
     }
@@ -168,5 +232,18 @@ class StoreController extends Controller
 
     }
 
+    // public function validateMasterKey($master_key)
+    // {
+    //     $currentPassword = MasterPassword::get();
+    //     if(Hash::check($currentPassword[0]['master_key'],$master_key))
+    //          $this->error('Invalid password', 404);
+    //     return view('pages.master_settings');
+    // }
+
+    public function validatedData($storeCode)
+    {
+        $tps =  new TpsConnection('odbc_2001');
+        return $tps->getValidatedData();
+    }
 
 }

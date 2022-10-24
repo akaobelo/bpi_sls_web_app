@@ -2,23 +2,32 @@
 
     .description {
         font-size: 15px;
-        float:left;
+        /* float:left; */
+
+        /* dompdf setting */
+        margin-right:40%;
     }
 
     .left_below_description {
+        /* simple view setting */
+        /* float:left; */
         font-size: 13px;
-        float:left;
+
+        /* dompdf setting */
+        /* padding-bottom:50%; */
+        margin-right:80%;
     }
 
     .description_container {
-        padding: 5% 5% 5% 5%
+        padding: 0% 5% 0% 5%
     }
     .font-customize {
         font-weight: bold;
-        display: inline-block;
+        padding-right: 30%;
+        font-size:15px;
     }
-    body {
-        width: 321.25984252px;
+   body {
+        width: 321.26px;
         margin: auto;
     }
     .block {
@@ -26,7 +35,6 @@
         text-align: center;
         width: 321.25984252px;
         height: 120.94488189px;
-        margin: auto;
     }
 
     {
@@ -35,11 +43,13 @@
     /* Set additional styling options for the columns*/
     .column {
     float: left;
-    width: 50%;
+    /* margin-right:50%; */
+    /* width: 50%; */
     }
 
     .column_right {
-    float: left;
+    /* original settings */
+    margin-left:50%;
     width: 50%;
     padding-top:5%;
     }
@@ -64,9 +74,9 @@
                 <div class="column_right">
                     <span class="font-customize">{{$data['price']}}</span>
                 </div>
-            </div>
-            <div class="left_below_description">
-                <span>{{$data['barcode_vendor']}}</span>
+                <div class="left_below_description">
+                    <span>{{$data['barcode_vendor']}}</span>
+                </div>
             </div>
         </div>
     </div>

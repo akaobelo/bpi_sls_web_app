@@ -10,9 +10,26 @@ class TpsConnection {
         $this->db = DB::connection($dsn);
     }
 
+    public function getValidatedData()
+    {
+        // $this->db->table('invmst')
+        //         ->join('invupc','invmst.sku', '=', 'invupc.sku')
+        //         ->select('invmst.sku','invmst.short_descr','invmst.price','invmst.ven_no','invupc.upc')
+        //         ->get();
+
+        // return $data;
+    }
+
     public function getItemBySKU($sku)
     {
-        return $this->db->table('invmst')->select('sku','upc','short_descr','price','ven_no','vendor','buy_unit')->where('sku',$sku)->get()->toArray();
+        $data = $this->db->table('invmst')->select('sku','upc','short_descr','price','ven_no','vendor','buy_unit');
+        if(strlen($sku) == 9)
+        {
+           return $data->where('sku',$sku)->get()->toArray();
+        }else
+        {
+          return  $data->Where('upc',$sku)->get()->toArray();
+        }
     }
 
     public function getStorelist()
