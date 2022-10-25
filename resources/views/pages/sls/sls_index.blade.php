@@ -1,6 +1,5 @@
 @extends('pages.index')
 
-
 @section('content')
 <div class="container">
     <form class="form" id="kt_form">
@@ -72,6 +71,11 @@
                     <div class="col-lg-4">
                         <label>Size</label>
                         <input type="" class="form-control" name="size" id="size">
+                    </div>
+                    <div class="col-lg-4 signage_option" hidden>
+                        <br>
+                        <label>Sale Price?</label>
+                        <input type="checkbox" class="checkbox" />
                     </div>
                 </div>
 

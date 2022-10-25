@@ -7,6 +7,7 @@ void new class SlsIndex{
     }
 
     initialization = () => {
+
         this.countClick = 0
         this.input = document.querySelector('#kt_tagify_1')
         this.slsForm = document.querySelector('#kt_form')
@@ -29,10 +30,9 @@ void new class SlsIndex{
 
     }
 
-
-
     eventHandler  ()  {
         $('#store').on('change', this.storeCode)
+        $(document).on('click','.checkbox', this.checkStatusCheck)
         this.removeButton.addEventListener('click', this.tagify.removeAllTags.bind(this.tagify));
         $(document).on('change','#printing_type', this.UIpropertyChange)
 
@@ -56,7 +56,7 @@ void new class SlsIndex{
         })
 
         document.querySelector('#btn_sls_print_preview').addEventListener('click', () => {
-            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&upc=' + this.dataUPC
+            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&upc=' + this.dataUPC + '&signage_option=' + this.signageOption
             this.countClick+=1
             if(this.countClick == 1)
             {
@@ -76,7 +76,9 @@ void new class SlsIndex{
         })
     }
 
-
+    checkStatusCheck = () => {
+        this.signageOption = $('.checkbox').is(':checked')
+    }
     populateStore = async() => {
         const {data:result} =  await axios.get('/api/fetch/tpsStore')
         for(const elem of result){
@@ -164,6 +166,7 @@ void new class SlsIndex{
             </div>
             `)
         }else{
+            $('.signage_option').removeAttr('hidden')
             $('#sale_price_container').removeAttr('hidden')
             $('#modal_size').addClass('modal-md')
             $('#modal_size').removeClass('modal-sm')

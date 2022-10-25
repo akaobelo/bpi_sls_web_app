@@ -117,7 +117,8 @@ class StoreController extends Controller
         'sale_price' => (isset($data->sale_price) ?  number_format($data->sale_price,2,'.',',') : ''),
         'product_specification' => $data->product_specification,
         'barcode_vendor' => $data->barcode_vendor,
-        'upc' => $trimedUPC];
+        'upc' => $trimedUPC,
+        'signageOption' => ($data->signage_option ? $data->signage_option : 'false')];
 
         $dompdf = new Dompdf();
         $dompdf->getOptions()->setChroot(public_path());
@@ -134,7 +135,8 @@ class StoreController extends Controller
                 break;
             case 2:
                 $dompdf->loadHtml(view('pages.partials.signage',['data' => $compact]));
-                $dompdf->set_option('dpi','120');
+                $dompdf->set_option('dpi','180');
+                $dompdf->setPaper('A4', 'landscape');
                 $dompdf->render();
                 $dompdf->stream('Signage.pdf', array("Attachment" => 0));
                 exit(0);
