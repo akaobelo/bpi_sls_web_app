@@ -131,6 +131,54 @@ return [
             'password' => ''
         ],
 
+        'odbc_1001' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_1001',
+            'username' => '',
+            'password' => ''
+        ],
+
+        'odbc_1010' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_1010',
+            'username' => '',
+            'password' => ''
+        ],
+
+        'odbc_2010' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_2010',
+            'username' => '',
+            'password' => ''
+        ],
+
+        'odbc_3001' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_3001',
+            'username' => '',
+            'password' => ''
+        ],
+
+        'odbc_3009' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_3009',
+            'username' => '',
+            'password' => ''
+        ],
+
+        'odbc_6001' => [
+            'driver' => 'odbc',
+            'database' => '',
+            'dsn' => 'ODBC_6001',
+            'username' => '',
+            'password' => ''
+        ],
+
         'store_tps' => [
             'driver' => 'odbc',
             'database' => '',

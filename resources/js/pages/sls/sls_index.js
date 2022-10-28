@@ -98,8 +98,8 @@ void new class SlsIndex{
         let size = 0
 
         if(data.get('printing_type') == 2) size = 50
-        JsBarcode("#barcode", `${data.get('sku')}`, {
-            format: "CODE39",
+        JsBarcode("#barcode", `${data.get('upc')}`, {
+            format: "EAN13",
             height: 60,
             fontSize: 40,
             textAlign: "center",

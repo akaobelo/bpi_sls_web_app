@@ -10,16 +10,6 @@ class TpsConnection {
         $this->db = DB::connection($dsn);
     }
 
-    public function getValidatedData()
-    {
-        // $this->db->table('invmst')
-        //         ->join('invupc','invmst.sku', '=', 'invupc.sku')
-        //         ->select('invmst.sku','invmst.short_descr','invmst.price','invmst.ven_no','invupc.upc')
-        //         ->get();
-
-        // return $data;
-    }
-
     public function getItemBySKU($sku)
     {
         $data = $this->db->table('invmst')->select('sku','upc','short_descr','price','ven_no','vendor','buy_unit');
@@ -28,7 +18,19 @@ class TpsConnection {
            return $data->where('sku',$sku)->get()->toArray();
         }else
         {
-          return  $data->Where('upc',$sku)->get()->toArray();
+          $invupc = $this->db->table('invupc')->select('sku','upc')->Where('upc',$sku)->get();
+          $invmst = $data->where('sku',$invupc[0]->sku)->get();
+
+          $compact = [
+          'sku' => $invupc[0]->sku,
+          'short_descr' => $invmst[0]->short_descr,
+          'buy_unit' => $invmst[0]->buy_unit,
+          'ven_no' => $invmst[0]->ven_no,
+          'price' => $invmst[0]->price,
+          'vendor' => $invmst[0]->vendor,
+          'upc' => $invupc[0]->upc];
+
+          return array($compact);
         }
     }
 

@@ -1,5 +1,7 @@
 <style>
-
+    html {
+        background-color: black;
+    }
     .description {
         font-size: 8px;
         width:50%;
@@ -32,8 +34,10 @@
     }
 
     body {
-          width:390px;
-          justify-content: center;
+        width:390px;
+        background-color:white;
+        margin:auto;
+        text-align: center;
     }
 
     .row {
@@ -47,13 +51,11 @@
         width: 113.39px;
         height: 94.49px;
         /* Sticker Tag Settings */
-        margin-bottom:15px;
+        margin-bottom:10px;
     }
     .text-center {
         padding-left:6%;
     }
-
-
     .sku {
         font-size:8px;
     }
@@ -72,7 +74,7 @@
             {{-- <img src="{{asset('assets/images/mark-down.png')}}"  class="logo adjust-logo"> --}}
             <div class="description_container">
             <span class="description font-weight-bold">{{$data['short_descr']}}</span>
-            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',1,30) !!}</div>
+            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['upc'], 'EAN13',1,30) !!}</div>
             <div class="text-center sku">{{$data['upc']}}</div>
         </div>
         <div class="left_below_description">

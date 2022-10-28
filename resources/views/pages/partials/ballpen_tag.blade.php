@@ -1,5 +1,7 @@
 <style>
-
+    html {
+        background-color:black;
+    }
     .description {
         font-size: 8px;
     }
@@ -26,7 +28,9 @@
     }
     body {
         width: 390px;
-        justify-content: center;
+        text-align: center;
+        margin:auto;
+        background-color: white;
     }
     .block {
         display: inline-block;
@@ -34,8 +38,8 @@
         width: 113.38582677px;
         height: 47.244094488px;
         /* Sticker Tag Settings */
-        margin-bottom:5px;
-        margin-left:5px;
+        margin-bottom:-10px;
+        margin-top:-5px;
     }
     .text-center {
         padding-left:6%;
@@ -53,7 +57,7 @@
         </div>
         <div class="description_container">
             <span class="description font-weight-bold">{{$data['short_descr']}}</span>
-            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',1,15) !!}</div>
+            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['upc'], 'EAN13',1,15) !!}</div>
         </div>
         <div class="text-center description">
             <span>

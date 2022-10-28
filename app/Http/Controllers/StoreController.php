@@ -70,7 +70,7 @@ class StoreController extends Controller
 
             case 3 : //Sticker Tag (Ballpen)
                 $dompdf->loadHtml(view('pages.partials.ballpen_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','45');
+                $dompdf->set_option('dpi','55');
                 $dompdf->render();
                 $dompdf->stream('Sticker-Tag.pdf',array("Attachment" => 0));
                 exit(0);
@@ -79,7 +79,7 @@ class StoreController extends Controller
 
             case 4 : // Sticker Tag Markdownn
                 $dompdf->loadHtml(view('pages.partials.sticker_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','44');
+                $dompdf->set_option('dpi','55');
                 $dompdf->render();
                 $dompdf->stream('Sticker-Tag-Markdown.pdf',array("Attachment" => 0));
                 exit(0);
@@ -206,6 +206,30 @@ class StoreController extends Controller
                 $tps = new TpsConnection('odbc_2009');
                 return $tps->getItemBySKU($barcode);
                 break;
+            case 1001 :
+                $tps = new TpsConnection('odbc_1001');
+                return $tps->getItemBySKU($barcode);
+                break;
+            case 1010 :
+                $tps = new TpsConnection('odbc_1010');
+                return $tps->getItemBySKU($barcode);
+                break;
+            case 2010 :
+                $tps = new TpsConnection('odbc_2010');
+                return $tps->getItemBySKU($barcode);
+                break;
+            case 3001 :
+                $tps = new TpsConnection('odbc_3001');
+                return $tps->getItemBySKU($barcode);
+                break;
+            case 3009 :
+                $tps = new TpsConnection('odbc_3009');
+                return $tps->getItemBySKU($barcode);
+                break;
+            case 6001 :
+                $tps = new TpsConnection('odbc_6001');
+                return $tps->getItemBySKU($barcode);
+                break;
             default:
                 echo "Invalid Code";
                 break;
@@ -241,11 +265,5 @@ class StoreController extends Controller
     //          $this->error('Invalid password', 404);
     //     return view('pages.master_settings');
     // }
-
-    public function validatedData($storeCode)
-    {
-        $tps =  new TpsConnection('odbc_2001');
-        return $tps->getValidatedData();
-    }
 
 }

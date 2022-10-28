@@ -47,8 +47,8 @@
         text-align: center;
         width: 120.94488189px;
         height: 120.94488189px;
-        margin-bottom:-5px;
-        margin-top:5px;
+        margin-bottom:-8px;
+        /* margin-top:5px; */
     }
     .text-center {
         padding-left:8%;
@@ -78,7 +78,7 @@
             {{-- <img src="{{asset('assets/images/mark-down.png')}}"  class="logo adjust-logo"> --}}
             <div class="description_container">
             <span class="description font-weight-bold">{{$data['short_descr']}}</span>
-            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',1,40) !!}</div>
+            <div class="text-center">{!! DNS1D::getBarcodeHTML($data['upc'], 'EAN13',1,40) !!}</div>
             <div class="text-center sku">{{$data['upc']}}</div>
         </div>
         <div class="left_below_description">
@@ -100,11 +100,11 @@
                 {{$data['barcode_vendor']}}
             </span>
             @if($data['type'] ==  2 || $data['type'] == 4)
-                <span class="before_price" style="margin-left:7px;">
+                <span class="before_price" style="margin-left:5px;">
                     BEFORE: {{$data['price']}}
                 </span>
             @else
-                <span style="margin-left:45%;">
+                <span style="margin-left:10%;">
                     {{$data['ven_no'] ? $data['ven_no'] : 'Stock No.'}}
                 </span>
             @endif

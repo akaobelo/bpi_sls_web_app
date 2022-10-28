@@ -122,7 +122,7 @@
         </div>
         <hr class="dotted">
         <div class="footer">
-            {!! DNS1D::getBarcodeHTML($data['sku'], 'UPCA',3,60) !!}
+            {!! DNS1D::getBarcodeHTML($data['upc'], 'EAN13',3,60) !!}
             <span class="font-style">{{$data['upc']}}</span>
         </div>
     </div>

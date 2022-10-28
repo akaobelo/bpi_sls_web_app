@@ -35,13 +35,7 @@ void new class BipIndex{
         })
 
         document.querySelector('#btn_clear').addEventListener('click',(e) => {
-            this.bipForm.reset()
-            $('#short_description').html('')
-            $('#barcode_receivedDate').html('')
-            $('#bracode_price').html('')
-            $('#barcode_vendor').html('')
-            $('#barcode_vendor_no').html('')
-            $('#barcode').html('')
+            this.resetForm()
         })
 
         document.querySelector('#print_preview').addEventListener('keypress', async(e) => {
@@ -69,15 +63,39 @@ void new class BipIndex{
             anchor.setAttribute('target','_blank')
             anchor.appendChild(button)
             container.appendChild(anchor)
-            // this.bipForm.reset()
-            // $('#short_description').html('')
-            // $('#barcode_receivedDate').html('')
-            // $('#bracode_price').html('')
-            // $('#barcode_vendor').html('')
-            // $('#barcode_vendor_no').html('')
-            // $('#barcode').html('')
             }
 
+        })
+
+        document.querySelector('#print_preview').addEventListener('click', async(e) => {
+
+            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc=' + this.dataUPC
+            this.previewPrint()
+            if(this.currentType == 2 || this.currentType == 4)
+            {
+                $('.default_view').attr('hidden',true)
+                $('.markdown_view').removeAttr('hidden')
+            }else{
+                $('.default_view').removeAttr('hidden')
+                $('.markdown_view').attr('hidden',true)
+            }
+            $('#btn_print_container').empty()
+            const container = document.querySelector('#btn_print_container')
+            const anchor = document.createElement('a')
+            const button = document.createElement('button')
+            anchor.href = `/print/tag?${data}`
+            button.innerText = 'Print'
+            button.classList.add("form-control","btn-primary","btn","btn-primary","font-weight-bold","print_trigger")
+            button.setAttribute('type','button')
+            anchor.setAttribute('target','_blank')
+            anchor.appendChild(button)
+            container.appendChild(anchor)
+
+
+        })
+
+        $(document).on('click','.print_trigger', () => {
+            this.resetForm()
         })
 
         document.querySelector('#type').addEventListener('change', (e) => {
@@ -100,6 +118,16 @@ void new class BipIndex{
         })
     }
 
+    resetForm = () => {
+        this.bipForm.reset()
+        $('#short_description').html('')
+        $('#barcode_receivedDate').html('')
+        $('#bracode_price').html('')
+        $('#barcode_vendor').html('')
+        $('#barcode_vendor_no').html('')
+        $('#barcode').html('')
+    }
+
     populateStore = async() => {
         const {data:result} =  await axios.get('/api/fetch/tpsStore')
 
@@ -118,7 +146,7 @@ void new class BipIndex{
 
     previewPrint = () => {
         const formData = this.getFormData()
-        JsBarcode("#barcode", `${this.skuData}`, {
+        JsBarcode("#barcode", `${parseInt(this.skuData,10)}`, {
             format: "CODE39",
             height: 60,
             displayValue: true
@@ -148,9 +176,12 @@ void new class BipIndex{
     getItemBySku = async(barcode) => {
 
             const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
-            console.log(result)
-            for(const data of result)
+
+
+            for(const data of
+                result)
             {
+                console.log(result)
                 this.vendor = data.vendor
                 this.dataUPC = data.upc
                 $('#short_descr').val(data.short_descr)
