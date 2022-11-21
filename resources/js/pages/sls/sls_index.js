@@ -98,8 +98,8 @@ void new class SlsIndex{
         let size = 0
 
         if(data.get('printing_type') == 2) size = 50
-        JsBarcode("#barcode", `${data.get('upc')}`, {
-            format: "EAN13",
+        JsBarcode("#barcode", `${parseInt(this.skuData,10)}`, {
+            format: "CODE39",
             height: 60,
             fontSize: 40,
             textAlign: "center",
@@ -129,7 +129,9 @@ void new class SlsIndex{
 
     getFormData = () => {return new FormData(this.slsForm)}
 
-    getItemBySku = async(barcode) => {
+    getItemBySku = async barcode => {
+
+        try {
             const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
 
             for(const data of result)
@@ -138,6 +140,11 @@ void new class SlsIndex{
                 $('#short_descr').val(data.short_descr)
                 $('#price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
             }
+        }catch({response:err})
+        {
+            showAlert('Warning!', 'Invalid Code', 'warning')
+        }
+
     }
 
     UIpropertyChange (e) {
