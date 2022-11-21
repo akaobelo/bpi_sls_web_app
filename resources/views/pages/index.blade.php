@@ -73,7 +73,7 @@
                            <div id="kt_header_menu" class="header-menu header-menu-left header-menu-mobile header-menu-layout-default">
                               <!--begin::Header Nav-->
                               <ul class="menu-nav">
-                                 <li class="menu-item menu-item-submenu menu-item-rel {{Request::routeIs('bip.index') ? ' menu-item-here' : ''}}" >
+                                 <li class="menu-item menu-item-submenu menu-item-rel {{Request::routeIs('bip.index') ? ' menu-item-here' : ''}}" placeholder="absent" style="pointer-events:none;opacity:0.6;">
                                     <a href="{{route('bip.index')}}" class="menu-link active">
                                     <span class="menu-text">Barcode Interface Program</span>
                                     {{-- <span class="menu-desc">Barcode Interface Program</span> --}}
