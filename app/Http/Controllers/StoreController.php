@@ -15,7 +15,6 @@ use App\Models\MasterPassword;
 use App\Services\TpsConnection;
 use Dompdf\Dompdf;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
-use Mike42\Escpos\Printer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
@@ -51,17 +50,21 @@ class StoreController extends Controller
         switch ($request->type)
         {
             case 1 : // Hard Tag
-                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','60');
-                $dompdf->render();
-                $dompdf->stream('Hard-Tag.pdf', array('Attachment'=> 0));
-                exit(0);
+
+                // dd(system('cmd /c=d C:[]'));
+                // $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
+                // $dompdf->set_option('dpi','47');
+                // $dompdf->set_paper('a4');
+                // $dompdf->render();
+                // $dompdf->stream('Hard-Tag.pdf', array('Attachment'=> 0));
+                // exit(0);
                 // return view('pages.partials.hard_tag',['data' => $compact]);
             break;
 
             case 2 : // Hard Tag Markdown
-                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','60');
+                $dompdf->loadHtml(view('pages.partials.hard_tag_markdown',['data' => $compact]));
+                $dompdf->set_option('dpi','45');
+                $dompdf->set_paper('a4');
                 $dompdf->render();
                 $dompdf->stream('Hard-Tag-Markdown.pdf', array("Attachment" => 0));
                 exit(0);
@@ -80,6 +83,8 @@ class StoreController extends Controller
             case 4 : // Sticker Tag Markdownn
                 $dompdf->loadHtml(view('pages.partials.sticker_tag',['data' => $compact]));
                 $dompdf->set_option('dpi','55');
+                $customPaper = array(0,0,360,120);
+                $dompdf->set_paper($customPaper);
                 $dompdf->render();
                 $dompdf->stream('Sticker-Tag-Markdown.pdf',array("Attachment" => 0));
                 exit(0);
@@ -88,7 +93,7 @@ class StoreController extends Controller
 
             case 5 : //Shelf Tag
                 $dompdf->loadHtml(view('pages.partials.shelf_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','45');
+                $dompdf->set_option('dpi','55');
                 $dompdf->render();
                 $dompdf->stream('Shelf-Tag.pdf',array("Attachment" => 0));
                 exit(0);
@@ -184,54 +189,55 @@ class StoreController extends Controller
 
     public function getStoreInformation(Request $request, $barcode)
     {
+        $barcode_append = str_pad($barcode,18,"0",STR_PAD_LEFT);
         switch($request->code)
         {
             case 2001 :
                 $tps = new TpsConnection('odbc_2001');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 2003 :
                 $tps = new TpsConnection('odbc_2003');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 2006 :
                 $tps = new TpsConnection('odbc_2006');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 2008 :
                 $tps = new TpsConnection('odbc_2008');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 2009 :
                 $tps = new TpsConnection('odbc_2009');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 1001 :
                 $tps = new TpsConnection('odbc_1001');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 1010 :
                 $tps = new TpsConnection('odbc_1010');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 2010 :
                 $tps = new TpsConnection('odbc_2010');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 3001 :
                 $tps = new TpsConnection('odbc_3001');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 3009 :
                 $tps = new TpsConnection('odbc_3009');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             case 6001 :
                 $tps = new TpsConnection('odbc_6001');
-                return $tps->getItemBySKU($barcode);
+                return $tps->getItemBySKU($barcode_append);
                 break;
             default:
-                echo "Invalid Code";
+                echo "Item Not Found";
                 break;
         }
 
