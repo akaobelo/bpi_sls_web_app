@@ -168,9 +168,10 @@
 
                     <div class="col-lg-2">
                         <label></label>
-                        <div id="btn_print_container">
+                        <button id="print_data" type="button" class="form-control btn btn-primary font-weight-bold">Print</button>
+                        {{-- <div id="btn_print_container">
 
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="col-lg-2">
                         <label></label>

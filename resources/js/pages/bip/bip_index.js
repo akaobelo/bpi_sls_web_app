@@ -1,4 +1,5 @@
 const { default: axios } = require("axios")
+const e = require("cors")
 
 void new class BipIndex{
 
@@ -10,6 +11,7 @@ void new class BipIndex{
         this.populateStore()
         $('.bip_sl2').trigger('change')
         this.currentType = 1
+        this.postBarTenderUrl = 'http://DESKTOP-QH8KGAJ:8080/Integration/WebServiceIntegrationPOST/Execute'
     }
 
     initialization = () => {
@@ -38,35 +40,9 @@ void new class BipIndex{
             this.resetForm()
         })
 
-        document.querySelector('#print_preview').addEventListener('keypress', async(e) => {
-            if(e.keyCode === 13)
-            {
-
-            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc=' + this.dataUPC
-            this.previewPrint()
-            if(this.currentType == 2 || this.currentType == 4)
-            {
-                $('.default_view').attr('hidden',true)
-                $('.markdown_view').removeAttr('hidden')
-            }else{
-                $('.default_view').removeAttr('hidden')
-                $('.markdown_view').attr('hidden',true)
-            }
-            $('#btn_print_container').empty()
-            const container = document.querySelector('#btn_print_container')
-            const anchor = document.createElement('a')
-            const button = document.createElement('button')
-            anchor.href = `/print/tag?${data}`
-            button.innerText = 'Print'
-            button.classList.add("form-control","btn-primary","btn","btn-primary","font-weight-bold","print_trigger")
-            button.setAttribute('type','button')
-            anchor.setAttribute('target','_blank')
-            anchor.appendChild(button)
-            container.appendChild(anchor)
-            }
-
+        document.querySelector('#print_data').addEventListener('click', async() => {
+            this.postPrintData()
         })
-
         document.querySelector('#print_preview').addEventListener('click', async(e) => {
 
             let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc=' + this.dataUPC
@@ -98,6 +74,8 @@ void new class BipIndex{
             this.resetForm()
         })
 
+
+
         document.querySelector('#type').addEventListener('change', (e) => {
             this.currentType = e.target.value
             if(e.target.value  == 2 || e.target.value  == 4 )
@@ -105,7 +83,6 @@ void new class BipIndex{
         })
 
         this.editBtn.addEventListener('click', () => {
-
             $('#price').removeAttr('readonly')
             $('#after_price').removeAttr('readonly')
             $('#sku').focus()
@@ -116,6 +93,104 @@ void new class BipIndex{
             $('#after_price').prop('style',false)
             $('#sku').focus()
         })
+    }
+
+
+    postPrintData = () => {
+        this.store_code = $('#store_code').val()
+
+        switch(this.getFormData().get('type')){
+            case '1':
+                fetch(this.postBarTenderUrl,{
+                    mode: 'no-cors',
+                    method: 'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    body: this.postPrintBodyData()
+                })
+                break;
+
+            case '2':
+                this.hard_tag_label = (this.store_code[0] == 1 ? 'hard_tag_markdownG.btw' : 'hard_tag_markdownM.btw')
+                fetch(this.postBarTenderUrl,{
+                    mode: 'no-cors',
+                    method: 'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "PrinterName": 'Citizen CL-S700CII',
+                        "Quantity": this.getFormData().get('quantity'),
+                        "barcode_vendor": this.getFormData().get('vendor'),
+                        "price":  this.getFormData().get('after_price'),
+                        "received_date": this.getFormData().get('receivedDate'),
+                        "short_descr": this.getFormData().get('short_descr'),
+                        "upc": this.getFormData().get('sku'),
+                        "ven_no": this.getFormData().get('price'),
+                        "TagLabel": this.hard_tag_label
+                    })
+                })
+                break;
+            case '3':
+                fetch(this.postBarTenderUrl,{
+                    mode: 'no-cors',
+                    method: 'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "PrinterName": 'Citizen CL-S700CII',
+                        "Quantity": this.getFormData().get('quantity'),
+                        "barcode_vendor": this.getFormData().get('vendor'),
+                        "price":  this.getFormData().get('after_price'),
+                        "received_date": this.getFormData().get('receivedDate'),
+                        "short_descr": this.getFormData().get('short_descr'),
+                        "upc": this.getFormData().get('sku'),
+                        "ven_no": this.getFormData().get('price'),
+                        "TagLabel": 'sticker_ballpen.btw'
+                    })
+                })
+                break;
+
+            case '4':
+                this.sticker_tag_label = (this.store_code[0] == 1 ? 'sticker_tag_markdownG.btw' : 'sticker_tag_markdownM.btw')
+                fetch(this.postBarTenderUrl,{
+                    mode: 'no-cors',
+                    method: 'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "PrinterName": 'Citizen CL-S700CII',
+                        "Quantity": this.getFzormData().get('quantity'),
+                        "barcode_vendor": this.getFormData().get('vendor'),
+                        "price":  this.getFormData().get('after_price'),
+                        "received_date": this.getFormData().get('receivedDate'),
+                        "short_descr": this.getFormData().get('short_descr'),
+                        "upc": this.getFormData().get('sku'),
+                        "ven_no": this.getFormData().get('price'),
+                        "TagLabel": this.sticker_tag_label
+                    })
+                })
+                break;
+
+            // case '5':
+            //     fetch(this.postBarTenderUrl,{
+            //         mode: 'no-cors',
+            //         method: 'POST',
+            //         headers:{
+            //             'Accept': 'application/json',
+            //             'Content-type': 'application/json'
+            //         },
+            //         body: this.postPrintBodyData()
+            //     })
+            //     break;
+        }
     }
 
     resetForm = () => {
@@ -137,7 +212,7 @@ void new class BipIndex{
         }
     }
 
-    storeCode = async(e) => {
+    storeCode = async e => {
         $('#store_code').empty()
         const {data:result} = await axios.get(`/api/get/storecode/${e.currentTarget.value}`)
         for(const e of result) $('#store_code').append(`<option >${e.store}</option>`)
@@ -163,6 +238,7 @@ void new class BipIndex{
     getFormData = () =>
     {
         this.formData = new FormData(this.bipForm)
+
         this.formData.append('vendor', this.vendor)
         this.formData.append('short_description',$('#short_descr').val())
         this.formData.append('buy_unit',$('#buy_unit').val())
@@ -173,24 +249,21 @@ void new class BipIndex{
         return  this.formData
     }
 
-    getItemBySku = async(barcode) => {
+    getItemBySku = async barcode => {
 
             const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
-
-
-            for(const data of
-                result)
+            for(const data of result)
             {
-                console.log(result)
                 this.vendor = data.vendor
                 this.dataUPC = data.upc
+                console.log(data)
                 $('#short_descr').val(data.short_descr)
                 $('#buy_unit').val(data.buy_unit)
                 $('#ven_no').val(data.ven_no)
                 $('#price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
                 $('#after_price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
             }
-            if(result == "Invalid Code") showAlert('Warning!',result,'warning')
+            if(result == "Item Not Found!") showAlert('Warning!',result,'warning')
 
     }
 

@@ -24,86 +24,6 @@ class StoreController extends Controller
 {
     use ResponseApi;
 
-    public function printBipTag(Request $request)
-    {
-        $data = (object) $request->all();
-        $store_code = str_split($data->store_code);
-        $trimedUPC = ltrim($data->upc,'0');
-        $compact = ['store' => $data->store,
-                    'receivedDate' => $data->receivedDate,
-                    'sku' => $data->sku,
-                    'quantity' => $data->quantity,
-                    'type' => $data->type,
-                    'short_descr' => $data->short_descr,
-                    'buy_unit' => $data->buy_unit,
-                    'ven_no' => $data->ven_no,
-                    'price' => $data->price,
-                    'after_price' => $data->after_price,
-                    'barcode_vendor' => $data->barcode_vendor,
-                    'store_code' => $store_code[0],
-                    'upc' => $trimedUPC];
-
-        $dompdf = new Dompdf();
-
-        $dompdf->getOptions()->setChroot(public_path());
-
-        switch ($request->type)
-        {
-            case 1 : // Hard Tag
-
-                // dd(system('cmd /c=d C:[]'));
-                // $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-                // $dompdf->set_option('dpi','47');
-                // $dompdf->set_paper('a4');
-                // $dompdf->render();
-                // $dompdf->stream('Hard-Tag.pdf', array('Attachment'=> 0));
-                // exit(0);
-                // return view('pages.partials.hard_tag',['data' => $compact]);
-            break;
-
-            case 2 : // Hard Tag Markdown
-                $dompdf->loadHtml(view('pages.partials.hard_tag_markdown',['data' => $compact]));
-                $dompdf->set_option('dpi','45');
-                $dompdf->set_paper('a4');
-                $dompdf->render();
-                $dompdf->stream('Hard-Tag-Markdown.pdf', array("Attachment" => 0));
-                exit(0);
-                // return view('pages.partials.hard_tag',['data' => $compact]);
-            break;
-
-            case 3 : //Sticker Tag (Ballpen)
-                $dompdf->loadHtml(view('pages.partials.ballpen_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','55');
-                $dompdf->render();
-                $dompdf->stream('Sticker-Tag.pdf',array("Attachment" => 0));
-                exit(0);
-                // return view('pages.partials.ballpen_tag',['data' => $compact]);
-            break;
-
-            case 4 : // Sticker Tag Markdownn
-                $dompdf->loadHtml(view('pages.partials.sticker_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','55');
-                $customPaper = array(0,0,360,120);
-                $dompdf->set_paper($customPaper);
-                $dompdf->render();
-                $dompdf->stream('Sticker-Tag-Markdown.pdf',array("Attachment" => 0));
-                exit(0);
-                // return view('pages.partials.sticker_tag',['data' => $compact]);
-            break;
-
-            case 5 : //Shelf Tag
-                $dompdf->loadHtml(view('pages.partials.shelf_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','55');
-                $dompdf->render();
-                $dompdf->stream('Shelf-Tag.pdf',array("Attachment" => 0));
-                exit(0);
-                // return view('pages.partials.shelf_tag',['data' => $compact]);
-            break;
-
-            default:
-                echo 'Empty';
-        }
-    }
 
     public function printSlsTag(Request $request)
     {
@@ -152,30 +72,6 @@ class StoreController extends Controller
         }
     }
 
-    public function formData(Request $request)
-    {
-        return $request->all();
-    }
-
-    public function storeMigration()
-    {
-        $files = Storage::files('imports');
-        $flag = false;
-
-        foreach($files as $file)
-        {
-            $filename = explode('/',$file)[1];
-           if(!StoreMigration::where('migration', $filename)->first()){
-                Excel::import(new MasterStoreImport, $file);
-                StoreMigration::create(['migration' => $filename]);
-                $flag = true;
-           }
-        }
-
-        if(!$flag) return $this->error('Nothing to migrate', 400);
-
-        return $this->success('Success', null, 201);
-    }
 
     public function bipIndexView()
     {
