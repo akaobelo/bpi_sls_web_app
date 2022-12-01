@@ -98,7 +98,6 @@ void new class BipIndex{
 
     postPrintData = () => {
         this.store_code = $('#store_code').val()
-
         switch(this.getFormData().get('type')){
             case '1':
                 fetch(this.postBarTenderUrl,{
@@ -108,7 +107,17 @@ void new class BipIndex{
                         'Accept': 'application/json',
                         'Content-type': 'application/json'
                     },
-                    body: this.postPrintBodyData()
+                    body: JSON.stringify({
+                        "PrinterName": 'Citizen CL-S700CII',
+                        "Quantity": this.getFormData().get('quantity'),
+                        "barcode_vendor": this.getFormData().get('vendor'),
+                        "price":  this.getFormData().get('price'),
+                        "received_date": this.getFormData().get('receivedDate'),
+                        "short_descr": this.getFormData().get('short_descr'),
+                        "upc": this.getFormData().get('sku'),
+                        "ven_no": this.getFormData().get('ven_no'),
+                        "TagLabel": 'hard_tag.btw'
+                    })
                 })
                 break;
 
@@ -179,17 +188,27 @@ void new class BipIndex{
                 })
                 break;
 
-            // case '5':
-            //     fetch(this.postBarTenderUrl,{
-            //         mode: 'no-cors',
-            //         method: 'POST',
-            //         headers:{
-            //             'Accept': 'application/json',
-            //             'Content-type': 'application/json'
-            //         },
-            //         body: this.postPrintBodyData()
-            //     })
-            //     break;
+            case '5':
+                fetch(this.postBarTenderUrl,{
+                    mode: 'no-cors',
+                    method: 'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "PrinterName": 'Citizen CL-S700CII',
+                        "Quantity": this.getFormData().get('quantity'),
+                        "barcode_vendor": this.getFormData().get('vendor'),
+                        "price":  this.getFormData().get('price'),
+                        "received_date": this.getFormData().get('receivedDate'),
+                        "short_descr": this.getFormData().get('short_descr'),
+                        "upc": this.getFormData().get('sku'),
+                        "ven_no": this.getFormData().get('ven_no'),
+                        "TagLabel": 'shelf_hard_tag.btw'
+                    })
+                })
+                break;
         }
     }
 
