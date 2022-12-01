@@ -23,11 +23,8 @@ Route::middleware('guest')->group(function(){
 
     Route::get('/api/fetch/tpsStore',[StoreController::class,'fetchStoreData']);
     Route::get('/api/get/item/{barcode}',[StoreController::class,'getStoreInformation']);
-    Route::get('/api/store/migration',[StoreController::class,'storeMigration']);
     Route::get('/api/get/storecode/{storeID}',[StoreController::class,'getStoreCodes']);
-    Route::get('/print/tag',[StoreController::class,'printBipTag']);
     Route::get('/print/sls/tag',[StoreController::class,'printSlsTag'])->name('print.sls.tag');
-    Route::post('/api/form/data',[StoreController::class,'formData']);
 
 
     Route::post('/api/validate/master/{key}',[StoreController::class,'validateMasterKey']);

@@ -235,9 +235,9 @@ class StoreController extends Controller
     public function validateMasterKey($master_key)
     {
         $currentPassword = MasterPassword::get();
-        if(Hash::check($currentPassword[0]['master_key'],$master_key))
-             $this->error('Invalid password', 404);
-        return view('pages.master_settings');
+        if(Hash::check($master_key,$currentPassword[0]['master_key'])){
+            return $this->success('Success', null, 201);
+        }else{return $this->error('Error', 400);}
     }
 
 
