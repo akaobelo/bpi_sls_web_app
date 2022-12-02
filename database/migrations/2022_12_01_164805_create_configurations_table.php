@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStoreMigrationsTable extends Migration
+class CreateConfigurationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateStoreMigrationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('store_migrations', function (Blueprint $table) {
+        Schema::create('configurations', function (Blueprint $table) {
             $table->id();
-            $table->string('migration');
+            $table->string('printer_name');
+            $table->integer('bip_config');
+            $table->integer('sls_config');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +29,6 @@ class CreateStoreMigrationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_migrations');
+        Schema::dropIfExists('configurations');
     }
 }

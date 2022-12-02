@@ -22,7 +22,6 @@
     </div>
 </div>
 
-
 <div class="modal fade" id="master_config" tabindex="-1" role="dialog" aria-labelledby="master_config" aria-hidden="true">
     <div id="modal_size" class="modal-dialog modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
@@ -43,10 +42,10 @@
                         </select>
                         <br>
                         <select autocomplete="off" class="form-control form-control-solid form-control-md" name="disable_module" id="disable_module">
-                            <option value="1">Allow All</option>
-                            <option value="2">Barcode Interface Program</option>
-                            <option value="3">Shelf Label System</option>
-                            <option value="4">Disable Both</option>
+                            <option value="1">Barcode Interface Program</option>
+                            <option value="2">Shelf Label System</option>
+                            <option value="3">Disable Both</option>
+                            <option value="4">Allow Both</option>
                         </select>
                             <br>
                         <button type="button" id="btnConfSave" class="form-control btn btn-primary font-weight-bold">Save</button>

@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\MasterStoreImport;
 use Illuminate\Http\Request;
 use App\Traits\ResponseApi;
 use Illuminate\Support\Facades\Storage;
-use App\Models\StoreMigration;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Store;
-use App\Models\StoreCode;
-use App\Models\BusinessUnit;
 use App\Models\MasterPassword;
+use App\Models\Configuration;
 use App\Services\TpsConnection;
 use Dompdf\Dompdf;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
@@ -25,79 +21,41 @@ class StoreController extends Controller
 {
     use ResponseApi;
 
-    public function printBipTag(Request $request)
+    function index()
     {
-        $data = (object) $request->all();
-        $store_code = str_split($data->store_code);
-        $trimedUPC = ltrim($data->upc,'0');
-        $compact = ['store' => $data->store,
-                    'receivedDate' => $data->receivedDate,
-                    'sku' => $data->sku,
-                    'quantity' => $data->quantity,
-                    'type' => $data->type,
-                    'short_descr' => $data->short_descr,
-                    'buy_unit' => $data->buy_unit,
-                    'ven_no' => $data->ven_no,
-                    'price' => $data->price,
-                    'after_price' => $data->after_price,
-                    'barcode_vendor' => $data->barcode_vendor,
-                    'store_code' => $store_code[0],
-                    'upc' => $trimedUPC];
+        return view('pages.index',['configuration' => Configuration::firstOrFail()]);
+    }
 
-        $dompdf = new Dompdf();
 
-        $dompdf->getOptions()->setChroot(public_path());
+    function updateConfiguration(Request $request)
+    {
+        $configuration = Configuration::firstOrFail();
 
-        switch ($request->type)
+        switch($request->disabling)
         {
-            case 1 : // Hard Tag
-                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','60');
-                $dompdf->render();
-                $dompdf->stream('Hard-Tag.pdf', array('Attachment'=> 0));
-                exit(0);
-                // return view('pages.partials.hard_tag',['data' => $compact]);
+            case 1:
+                $configuration->update(['printer_name' => $request->printer_name,
+                                        'bip_config' => 2,
+                                        'sls_config' => 1]);
             break;
-
-            case 2 : // Hard Tag Markdown
-                $dompdf->loadHtml(view('pages.partials.hard_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','60');
-                $dompdf->render();
-                $dompdf->stream('Hard-Tag-Markdown.pdf', array("Attachment" => 0));
-                exit(0);
-                // return view('pages.partials.hard_tag',['data' => $compact]);
+            case 2:
+                $configuration->update(['printer_name' => $request->printer_name,
+                                        'bip_config' => 1,
+                                        'sls_config' => 2]);
             break;
-
-            case 3 : //Sticker Tag (Ballpen)
-                $dompdf->loadHtml(view('pages.partials.ballpen_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','45');
-                $dompdf->render();
-                $dompdf->stream('Sticker-Tag.pdf',array("Attachment" => 0));
-                exit(0);
-                // return view('pages.partials.ballpen_tag',['data' => $compact]);
+            case 3:
+                $configuration->update(['printer_name' => $request->printer_name,
+                                        'bip_config' => 2,
+                                        'sls_config' => 2]);
             break;
-
-            case 4 : // Sticker Tag Markdownn
-                $dompdf->loadHtml(view('pages.partials.sticker_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','44');
-                $dompdf->render();
-                $dompdf->stream('Sticker-Tag-Markdown.pdf',array("Attachment" => 0));
-                exit(0);
-                // return view('pages.partials.sticker_tag',['data' => $compact]);
+            case 4:
+                $configuration->update(['printer_name' => $request->printer_name,
+                                        'bip_config' => 1,
+                                        'sls_config' => 1]);
             break;
-
-            case 5 : //Shelf Tag
-                $dompdf->loadHtml(view('pages.partials.shelf_tag',['data' => $compact]));
-                $dompdf->set_option('dpi','45');
-                $dompdf->render();
-                $dompdf->stream('Shelf-Tag.pdf',array("Attachment" => 0));
-                exit(0);
-                // return view('pages.partials.shelf_tag',['data' => $compact]);
-            break;
-
-            default:
-                echo 'Empty';
         }
+
+        return $this->success('Configuration updated', $configuration, 201);
     }
 
     public function printSlsTag(Request $request)
@@ -144,40 +102,14 @@ class StoreController extends Controller
                 echo 'Empty';
         }
     }
-
-    public function formData(Request $request)
-    {
-        return $request->all();
-    }
-
-    public function storeMigration()
-    {
-        $files = Storage::files('imports');
-        $flag = false;
-
-        foreach($files as $file)
-        {
-            $filename = explode('/',$file)[1];
-           if(!StoreMigration::where('migration', $filename)->first()){
-                Excel::import(new MasterStoreImport, $file);
-                StoreMigration::create(['migration' => $filename]);
-                $flag = true;
-           }
-        }
-
-        if(!$flag) return $this->error('Nothing to migrate', 400);
-
-        return $this->success('Success', null, 201);
-    }
-
     public function bipIndexView()
     {
-        return view('pages.bip.bip_index',['businessUnits' => BusinessUnit::get()]);
+        return view('pages.bip.bip_index',['configuration' =>  Configuration::firstOrFail()]);
     }
 
     public function slsIndexView()
     {
-        return view('pages.sls.sls_index',['businessUnits' => BusinessUnit::get()]);
+        return view('pages.sls.sls_index',['configuration' => Configuration::firstOrFail()]);
     }
 
     public function getStoreInformation(Request $request, $barcode)

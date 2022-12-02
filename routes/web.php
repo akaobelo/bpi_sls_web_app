@@ -16,7 +16,7 @@ use App\Http\Controllers\StoreController;
 
 
 Route::middleware('guest')->group(function(){
-    Route::view('/','pages.index')->name('login');
+    Route::get('/',[StoreController::class,'index'])->name('login');
     Route::get('/bip',[StoreController::class,'bipIndexView'])->name('bip.index');
     Route::get('/sls',[StoreController::class,'slsIndexView'])->name('sls.index');
 });
@@ -26,7 +26,7 @@ Route::middleware('guest')->group(function(){
     Route::get('/api/get/storecode/{storeID}',[StoreController::class,'getStoreCodes']);
     Route::get('/print/sls/tag',[StoreController::class,'printSlsTag'])->name('print.sls.tag');
 
-
+    Route::post('/api/update/configuration',[StoreController::class,'updateConfiguration']);
     Route::post('/api/validate/master/{key}',[StoreController::class,'validateMasterKey']);
 
 

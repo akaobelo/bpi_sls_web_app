@@ -21,7 +21,7 @@
       <!--begin::Header Mobile-->
       <div id="kt_header_mobile" class="header-mobile bg-primary header-mobile-fixed">
          <!--begin::Logo-->
-         <a href="/admin/dashboard">
+         <a href="">
          <img alt="Logo" src="{{asset('/assets/images/GaisanoMalls-White.png')}}" class="max-h-30px" />
          {{-- Logo for Mobile View --}}
          </a>
@@ -96,14 +96,15 @@
                            <div id="kt_header_menu" class="header-menu header-menu-left header-menu-mobile header-menu-layout-default">
                               <!--begin::Header Nav-->
                               <ul class="menu-nav">
-                                 <li style="pointer-events:none;opacity:0.7;" class="menu-item menu-item-submenu menu-item-rel {{Request::routeIs('bip.index') ? ' menu-item-here' : ''}}">
-                                    <a href="{{route('bip.index')}}" class="menu-link active" disabled>
+                                {{-- {{dd($configuration[0]->bip_config)}}  --}}
+                                 <li style="{{$configuration->bip_config == 1 ? 'pointer-events:auto;' : 'pointer-events:none;opacity:0.7'}}"  class="menu-item menu-item-submenu menu-item-rel {{Request::routeIs('bip.index') ? ' menu-item-here' : ''}}">
+                                    <a href="{{route('bip.index')}}" class="menu-link active"  disabled>
                                     <span class="menu-text">Barcode Interface Program</span>
                                     {{-- <span class="menu-desc">Barcode Interface Program</span> --}}
                                     </a>
                                  </li>
-                                 <li style="pointer-events:none;opacity:0.7;" class="menu-item menu-item-submenu menu-item-rel  {{Request::routeIs('sls.index') ? ' menu-item-here' : ''}}">
-                                    <a href="{{route('sls.index')}}" class="menu-link" disabled>
+                                 <li style="{{$configuration->sls_config == 1 ? 'pointer-events:auto;' : 'pointer-events:none;opacity:0.7'}}" class="menu-item menu-item-submenu menu-item-rel  {{Request::routeIs('sls.index') ? ' menu-item-here' : ''}}">
+                                    <a href="{{route('sls.index')}}" class="menu-link master_config_sls" disabled>
                                     <span class="menu-text">Shelf Label System</span>
                                     {{-- <span class="menu-desc">Shelf Label System</span> --}}
                                     </a>
@@ -151,7 +152,7 @@
             <!--end::Svg Icon-->
          </span>
       </div>
-      @include('pages.partials.master_setting_modal')
+      @include('pages.partials.master_setting_modal',['config' => $configuration])
       <!--end::Scrolltop-->
       <!--begin::Global Theme Bundle(used by all pages)-->
       <script src="{{mix('/js/app.js')}}" ></script>

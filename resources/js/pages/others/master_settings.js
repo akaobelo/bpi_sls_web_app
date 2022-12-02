@@ -1,9 +1,13 @@
+const { default: axios } = require("axios");
+
 void new class MasterSettings{
     constructor()
     {
         this.btnConfirm = document.querySelector('#btnConfirm')
         this.btnConfSave = document.querySelector('#btnConfSave')
         this.eventHandler()
+        $('.modal-backdrop').remove();
+
     }
 
     eventHandler () {
@@ -16,10 +20,29 @@ void new class MasterSettings{
          })
     }
 
-    configuration = () => {
+    configuration = async() => {
         this.printer_setup = $('#printer_name').val()
         this.disable = $('#disable_module').val()
-        if()
+        let data = {
+            "printer_name" : this.printer_setup,
+            "disabling" : this.disable
+        }
+        try{
+            const response = await axios.post('/api/update/configuration', data)
+            $('#master_config').modal('hide')
+            $('.modal-backdrop').remove();
+            showAlert('Success',response.data.message,'success')
+        }catch({response:errr}){
+            showAlert('Error', 'Error encounter','error')
+        }
+    }
+
+    updateConfiguration = async() => {
+        try{
+            const response = await axios.post('/api/update/configuration')
+        }catch({response:err}){
+
+        }
     }
 
     validateMasterKey = async() => {
@@ -30,7 +53,6 @@ void new class MasterSettings{
                 $('#master_config').modal('show')
                 $('#master_settings').attr('hidden',true)
             }
-
         }catch({response:err})
         {
             showAlert('Error', 'Invalid Master Key','error')
