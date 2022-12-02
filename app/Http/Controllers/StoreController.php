@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\MasterStoreImport;
 use Illuminate\Http\Request;
 use App\Traits\ResponseApi;
 use Illuminate\Support\Facades\Storage;
-use App\Models\StoreMigration;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Store;
-use App\Models\StoreCode;
-use App\Models\BusinessUnit;
 use App\Models\MasterPassword;
+use App\Models\Configuration;
 use App\Services\TpsConnection;
 use Dompdf\Dompdf;
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
@@ -24,6 +20,32 @@ class StoreController extends Controller
 {
     use ResponseApi;
 
+    function index()
+        return view('pages.index',['configuration' => Configuration::firstOrFail()]);
+    }
+    function updateConfiguration(Request $request)
+    {
+        $configuration = Configuration::firstOrFail();
+        switch($request->disabling)
+        {
+            case 1:
+                $configuration->update(['printer_name' => $request->printer_name,
+                                        'bip_config' => 2,
+                                        'sls_config' => 1]);
+            case 2:
+                $configuration->update(['printer_name' => $request->printer_name,
+                                        'bip_config' => 1,
+                                        'sls_config' => 2]);
+            case 3:
+                $configuration->update(['printer_name' => $request->printer_name,
+                                        'bip_config' => 2,
+                                        'sls_config' => 2]);
+            case 4:
+                $configuration->update(['printer_name' => $request->printer_name,
+                                        'bip_config' => 1,
+                                        'sls_config' => 1]);
+
+        return $this->success('Configuration updated', $configuration, 201);
 
     public function printSlsTag(Request $request)
     {
@@ -71,16 +93,14 @@ class StoreController extends Controller
                 echo 'Empty';
         }
     }
-
-
     public function bipIndexView()
     {
-        return view('pages.bip.bip_index',['businessUnits' => BusinessUnit::get()]);
+        return view('pages.bip.bip_index',['configuration' =>  Configuration::firstOrFail()]);
     }
 
     public function slsIndexView()
     {
-        return view('pages.sls.sls_index',['businessUnits' => BusinessUnit::get()]);
+        return view('pages.sls.sls_index',['configuration' => Configuration::firstOrFail()]);
     }
 
     public function getStoreInformation(Request $request, $barcode)
@@ -163,9 +183,9 @@ class StoreController extends Controller
     // public function validateMasterKey($master_key)
     // {
     //     $currentPassword = MasterPassword::get();
-    //     if(Hash::check($currentPassword[0]['master_key'],$master_key))
-    //          $this->error('Invalid password', 404);
-    //     return view('pages.master_settings');
+        if(Hash::check($master_key,$currentPassword[0]['master_key'])){
+            return $this->success('Success', null, 201);
+        }else{return $this->error('Error', 400);}
     // }
 
 }

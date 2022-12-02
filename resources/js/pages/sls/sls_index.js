@@ -72,6 +72,7 @@ void new class SlsIndex{
                 anchor.appendChild(button)
                 container.appendChild(anchor)
                 this.countClick = 0
+                this.slsForm.reset()
             }
         })
     }
