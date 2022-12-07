@@ -166,7 +166,7 @@ void new class BipIndex{
                 break;
 
             case '4':
-                this.sticker_tag_label = (this.store_code[0] == 1 ? 'sticker_tag_markdownG.btw' : 'sticker_tag_markdownM.btw')
+                this.sticker_tag_label = (this.store_code[0] == '1' ? 'sticker_tag_markdownG.btw' : 'sticker_tag_markdownM.btw')
                 fetch(this.postBarTenderUrl,{
                     mode: 'no-cors',
                     method: 'POST',
@@ -176,7 +176,7 @@ void new class BipIndex{
                     },
                     body: JSON.stringify({
                         "PrinterName": 'Citizen CL-S700CII',
-                        "Quantity": this.getFzormData().get('quantity'),
+                        "Quantity": this.getFormData().get('quantity'),
                         "barcode_vendor": this.getFormData().get('vendor'),
                         "price":  this.getFormData().get('after_price'),
                         "received_date": this.getFormData().get('receivedDate'),
