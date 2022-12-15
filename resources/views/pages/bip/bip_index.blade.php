@@ -226,7 +226,12 @@
 </div>
 @endsection
 
+
 @push('scripts')
-    <script src="{{ asset('/js/pages/bip/bip_index.js')}}"></script>
+    <script>
+        let compName =  "{!! $compName !!}"
+    </script>
+
+    <script src="{{ asset('/js/pages/bip/bip_index.js')}}" async></script>
 @endpush
 

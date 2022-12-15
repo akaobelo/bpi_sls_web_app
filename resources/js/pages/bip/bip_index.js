@@ -11,7 +11,8 @@ void new class BipIndex{
         this.populateStore()
         $('.bip_sl2').trigger('change')
         this.currentType = 1
-        this.postBarTenderUrl = 'http://DESKTOP-QH8KGAJ:8080/Integration/WebServiceIntegrationPOST/Execute'
+        this.compName = compName
+        this.postBarTenderUrl = `http://${this.compName}:8080/Integration/WebServiceIntegrationPOST/Execute`
     }
 
     initialization = () => {

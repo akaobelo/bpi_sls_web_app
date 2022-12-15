@@ -35,7 +35,9 @@ class StoreController extends Controller
     }
     public function bipIndexView()
     {
-        return view('pages.bip.bip_index',['configuration' =>  Configuration::firstOrFail()]);
+        $COMPUTERNAME = getenv('COMPUTERNAME');
+        return view('pages.bip.bip_index',['configuration' =>  Configuration::firstOrFail(),
+                                           'compName' => $COMPUTERNAME]);
     }
 
     public function slsIndexView()
