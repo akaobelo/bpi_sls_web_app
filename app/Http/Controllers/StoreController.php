@@ -35,8 +35,8 @@ class StoreController extends Controller
     }
     public function bipIndexView()
     {
-        $COMPUTERNAME = getenv('COMPUTERNAME');
-        return view('pages.bip.bip_index',['configuration' =>  Configuration::firstOrFail(),
+        $COMPUTERNAME = $_SERVER['REMOTE_ADDR'];
+        return view('pages.bip.bip_index',['configuration' => Configuration::firstOrFail(),
                                            'compName' => $COMPUTERNAME]);
     }
 

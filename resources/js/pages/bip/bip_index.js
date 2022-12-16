@@ -12,7 +12,8 @@ void new class BipIndex{
         $('.bip_sl2').trigger('change')
         this.currentType = 1
         this.compName = compName
-        this.postBarTenderUrl = `http://${this.compName}:8080/Integration/WebServiceIntegrationPOST/Execute`
+        this.printerName = printerName
+        this.postBarTenderUrl = `http://10.10.174.200:8080/Integration/WebServiceIntegrationPOST/Execute`
     }
 
     initialization = () => {
@@ -29,6 +30,7 @@ void new class BipIndex{
     }
     eventHandler = () => {
         $('#store').on('change', this.storeCode)
+
         $('.sl2').select2()
 
         document.querySelector('#sku').addEventListener('input',(e) => {
@@ -109,7 +111,7 @@ void new class BipIndex{
                         'Content-type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "PrinterName": 'Citizen CL-S700CII',
+                        "PrinterName": this.printerName,
                         "Quantity": this.getFormData().get('quantity'),
                         "barcode_vendor": this.getFormData().get('vendor'),
                         "price":  this.getFormData().get('price'),
@@ -132,7 +134,7 @@ void new class BipIndex{
                         'Content-type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "PrinterName": 'Citizen CL-S700CII',
+                        "PrinterName": this.printerName,
                         "Quantity": this.getFormData().get('quantity'),
                         "barcode_vendor": this.getFormData().get('vendor'),
                         "price":  this.getFormData().get('after_price'),
@@ -153,7 +155,7 @@ void new class BipIndex{
                         'Content-type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "PrinterName": 'Citizen CL-S700CII',
+                        "PrinterName": this.printerName,
                         "Quantity": this.getFormData().get('quantity'),
                         "barcode_vendor": this.getFormData().get('vendor'),
                         "price":  this.getFormData().get('after_price'),
@@ -176,7 +178,7 @@ void new class BipIndex{
                         'Content-type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "PrinterName": 'Citizen CL-S700CII',
+                        "PrinterName": this.printerName,
                         "Quantity": this.getFormData().get('quantity'),
                         "barcode_vendor": this.getFormData().get('vendor'),
                         "price":  this.getFormData().get('after_price'),
@@ -198,7 +200,7 @@ void new class BipIndex{
                         'Content-type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "PrinterName": 'Citizen CL-S700CII',
+                        "PrinterName": this.printerName,
                         "Quantity": this.getFormData().get('quantity'),
                         "barcode_vendor": this.getFormData().get('vendor'),
                         "price":  this.getFormData().get('price'),

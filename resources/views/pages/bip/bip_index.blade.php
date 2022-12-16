@@ -230,6 +230,7 @@
 @push('scripts')
     <script>
         let compName =  "{!! $compName !!}"
+        let printerName = "{!! $configuration->printer_name !!}"
     </script>
 
     <script src="{{ asset('/js/pages/bip/bip_index.js')}}" async></script>
