@@ -13,7 +13,7 @@ void new class BipIndex{
         this.currentType = 1
         this.compName = compName
         this.printerName = printerName
-        this.postBarTenderUrl = `http://10.10.174.200:8080/Integration/WebServiceIntegrationPOST/Execute`
+        this.postBarTenderUrl = `http://${this.printerName}:8080/Integration/WebServiceIntegrationPOST/Execute`
     }
 
     initialization = () => {
