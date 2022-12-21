@@ -345,7 +345,7 @@ void new class BipIndex{
                     $('#after_price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
                 }
             }catch({result:err}){
-                showAlert('Warning!','Item Not Found!', 'warning')
+                if(barcode.length == 13)showAlert('Warning!','Item Not Found!', 'warning')
             }
 
 

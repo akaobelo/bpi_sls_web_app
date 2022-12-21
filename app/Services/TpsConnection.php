@@ -18,7 +18,6 @@ class TpsConnection {
         $data = $this->db->table('invmst')->select('sku','upc','short_descr','price','ven_no','vendor','buy_unit');
         if(strlen($sku) == 9)
         {
-
            return $data->where('sku',$sku)->get()->toArray();
         }else
         {
