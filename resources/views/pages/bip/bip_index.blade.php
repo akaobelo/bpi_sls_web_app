@@ -9,12 +9,6 @@
    margin-right:auto;
    display:block;
 }
-
-/* .shelf-container-element {
-   margin-left:auto;
-   margin-right:auto;
-   display:block;
-} */
 .align-text-elements-left {
     padding-left:10% !important;
 }
@@ -83,13 +77,6 @@
   grid-area: right;
 }
 
-.bottom {
-  grid-area: bottom;
-}
-
-.right-bottom {
-    grid-area:c;
-}
 
 </style>
 
@@ -275,23 +262,6 @@
                 </div>
 
                 <div class="col-md-4" id="shelf_tag_printing" hidden>
-                    {{-- <div class="form-group row">
-                        <label class="center-container-element" id="short_description"></label>
-                        <svg class="center-container-element" id="barcode"></svg>
-                        <div class="col-lg-5 align-text-elements-left">
-                            <label  id="barcode_receivedDate" ></label>
-                            <label  id="barcode_vendor" ></label>
-                        </div>
-
-                        <div class="col-lg-5 align-text-elements-right default_view">
-                                <div><span class="custom_default_font" id="bracode_price"></span></div>
-                                <label id="barcode_vendor_no"></label>
-                        </div>
-                        <div class="col-lg-5 markdown_view align-text-elements-right-markdown" hidden>
-                                <div class="custom_markdown_font">NOW: <span class="custom_markdown_font" id="markdown_now_price"></span></div>
-                                <div>BEFORE: <span id="markdown_before_price"></span></div>
-                        </div>
-                    </div> --}}
                     <div class="container-shelf">
                         <div class="center"><svg class="center-container-element" id="barcode"></svg></div>
                         <div class="top"><label class="center-container-element" id="short_description_shelf"></label></div>
@@ -299,7 +269,6 @@
                             <label class="custom_default_font_shelf_barcode" id="bracode_price_shelf"></label>
                             <label class="custom_default_font_shelf" id="barcode_receivedDate_shelf"></label>
                         </div>
-                        {{-- <div class="right-bottom"><span class="" id="barcode_receivedDate_shelf"></span></div> --}}
                     </div>
                 </div>
                 <div class="col-md-4">

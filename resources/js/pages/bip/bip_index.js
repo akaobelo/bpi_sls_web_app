@@ -1,5 +1,4 @@
 const { default: axios } = require("axios")
-const e = require("cors")
 
 void new class BipIndex{
 
@@ -48,7 +47,6 @@ void new class BipIndex{
         })
         document.querySelector('#print_preview').addEventListener('click', async(e) => {
 
-            // let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc=' + this.dataUPC
             e.preventDefault()
 
             let status = await this.bipValidation.validate()
@@ -68,11 +66,6 @@ void new class BipIndex{
             }else{
                 $('#default_printing_view').removeAttr('hidden')
                 $('#shelf_tag_printing').attr('hidden',true)
-            }
-
-            if(this.currentType == 6)
-            {
-                $('#barcode_vendor_no').hide()
             }
 
         })
@@ -239,7 +232,7 @@ void new class BipIndex{
                         "TagLabel": this.regular_sticker_tag
                     })
                 })
-                    break;
+                break;
         }
     }
 
@@ -271,15 +264,6 @@ void new class BipIndex{
 
     previewPrint = () => {
         const formData = this.getFormData()
-        console.log(formData.get('price'))
-        $('#barcode_receivedDate').html(formData.get('receivedDate'))
-        $('#short_description_shelf').html(formData.get('short_descr'))
-        $('#bracode_price').html(numberWithCommas(formData.get('price')))
-        $('#barcode_vendor').html(formData.get('vendor'))
-        $('#barcode_vendor_no').html(formData.get('ven_no'))
-        $('#markdown_now_price').html(numberWithCommas(formData.get('after_price')))
-        $('#markdown_before_price').html(numberWithCommas(formData.get('price')))
-
         if(this.currentType ==  5)
         {
             JsBarcode("#barcode", `${parseInt(this.skuData,10)}`, {
@@ -317,7 +301,6 @@ void new class BipIndex{
     getFormData = () =>
     {
         this.formData = new FormData(this.bipForm)
-
         this.formData.append('vendor', this.vendor)
         this.formData.append('short_description',$('#short_descr').val())
         this.formData.append('buy_unit',$('#buy_unit').val())
@@ -329,28 +312,21 @@ void new class BipIndex{
     }
 
     getItemBySku = async barcode => {
-
-
-            try{
-                const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
-                for(const data of result)
-                {
-                    this.vendor = data.vendor
-                    this.dataUPC = data.upc
-                    console.log(data)
-                    $('#short_descr').val(data.short_descr)
-                    $('#buy_unit').val(data.buy_unit)
-                    $('#ven_no').val(data.ven_no)
-                    $('#price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
-                    $('#after_price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
-                }
-            }catch({result:err}){
-                if(barcode.length == 13)showAlert('Warning!','Item Not Found!', 'warning')
+        try{
+            const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
+            for(const data of result)
+            {
+                this.vendor = data.vendor
+                this.dataUPC = data.upc
+                $('#short_descr').val(data.short_descr)
+                $('#buy_unit').val(data.buy_unit)
+                $('#ven_no').val(data.ven_no)
+                $('#price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
+                $('#after_price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
             }
-
-
-
-
+        }catch({result:err}){
+            if(barcode.length == 13)showAlert('Warning!','Item Not Found!', 'warning')
+        }
     }
 
     formValidation = () => {

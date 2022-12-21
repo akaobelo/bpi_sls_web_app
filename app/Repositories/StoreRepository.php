@@ -95,7 +95,6 @@ class StoreRepository implements StoreInterface
                 $dompdf->render();
                 $dompdf->stream('Shelf-Label.pdf',array("Attachment" => 0));
                 exit(0);
-                // return view('pages.partials.shelf_label',['data' => $compact]);
                 break;
             case 2:
                 $dompdf->loadHtml(view('pages.partials.signage',['data' => $compact]));
@@ -104,7 +103,6 @@ class StoreRepository implements StoreInterface
                 $dompdf->render();
                 $dompdf->stream('Signage.pdf', array("Attachment" => 0));
                 exit(0);
-                // return view('pages.partials.signage',['data' => $compact]);
                 break;
             default:
                 echo 'Empty';
@@ -126,66 +124,48 @@ class StoreRepository implements StoreInterface
         switch($request->code)
         {
             case 2001 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 2003 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 2006 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 2008 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 2009 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 1001 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
-
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 1010 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 2010 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 3001 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 3009 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             case 6001 :
-                return ($tps->getItemBySKU($barcode_append) ?
-                $tps->getItemBySKU($barcode_append) :
-                $tps->getItemBySKU($barcode_append));
+                return $this->resultItemBySku($tps->getItemBySKU($barcode_append));
                 break;
             default:
                 return "Item Not Found";
                 break;
         }
 
+    }
+
+    private function resultItemBySku($result)
+    {
+        return ($result ? $result : $result);
     }
 
 
