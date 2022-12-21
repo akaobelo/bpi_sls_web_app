@@ -122,10 +122,11 @@ class StoreRepository implements StoreInterface
     public function getStoreInformation($request, $barcode)
     {
         $barcode_append = str_pad($barcode,18,"0",STR_PAD_LEFT);
+        $tps = new TpsConnection("odbc_".$request->code);
         switch($request->code)
         {
             case 2001 :
-                // $tps = new TpsConnection('odbc_2001');
+
                 // return $tps->getItemBySKU($barcode_append);
                 return ($tps->getItemBySKU($barcode_append) ?
                 $tps->getItemBySKU($barcode_append) :

@@ -2,7 +2,6 @@
 void new class SlsIndex{
     constructor(){
         this.initialization()
-        this.formValidation()
         this.populateStore()
         this.eventHandler()
     }
