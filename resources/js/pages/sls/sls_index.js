@@ -10,7 +10,7 @@ void new class SlsIndex{
 
         this.countClick = 0
         this.input = document.querySelector('#kt_tagify_1')
-
+        this.slsForm = document.querySelector('#kt_form')
         this.removeButton =  document.querySelector('#kt_tagify_1_remove')
         this.currentCode = document.querySelector('#store_code')
         this.previewPrintBtn = document.querySelector('#btn_sls_print_preview')
