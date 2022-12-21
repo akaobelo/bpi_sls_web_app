@@ -5,6 +5,7 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\Hash;
 use App\Interfaces\StoreInterface;
 use App\Models\MasterPassword;
+use App\Models\Configuration;
 use App\Services\TpsConnection;
 use Dompdf\Dompdf;
 

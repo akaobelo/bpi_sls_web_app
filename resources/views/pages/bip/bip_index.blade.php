@@ -10,7 +10,16 @@
    display:block;
 }
 
+/* .shelf-container-element {
+   margin-left:auto;
+   margin-right:auto;
+   display:block;
+} */
 .align-text-elements-left {
+    padding-left:10% !important;
+}
+
+.align-text-elements-left-shelf {
     padding-left:10% !important;
 }
 
@@ -26,12 +35,60 @@
     font-weight: bold;
     font-size: large;
 }
+
+.custom_default_font_shelf_barcode{
+    font-weight: bold !important;
+    font-size: large !important;
+    padding-top:30px;
+}
+
+.custom_default_font_shelf{
+    font-weight: bold !important;
+    font-size: large !important;
+    padding-top:20px;
+    padding-left:40px;
+}
+
 .custom_markdown_font{
     font-size: 15px;
     font-weight: bold;
 }
 .align-text-elements-right-markdown {
     padding-left:40px;
+}
+
+.shelf_price{
+    text-align: center;
+}
+
+.container-shelf {
+  display: grid;
+  min-height: 5vh;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    ". top ."
+    "left center right"
+    ". bottom .";
+}
+
+.center {
+  grid-area: center;
+}
+
+.top {
+  grid-area: top;
+}
+
+.right {
+  grid-area: right;
+}
+
+.bottom {
+  grid-area: bottom;
+}
+
+.right-bottom {
+    grid-area:c;
 }
 
 </style>
@@ -68,7 +125,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-lg-4">
-                        <label>Sku/Barcode</label>
+                        <label>Barcode</label>
                         <input type="" class="form-control" name="sku" id="sku">
                     </div>
                     <div class="col-lg-4">
@@ -169,9 +226,6 @@
                     <div class="col-lg-2">
                         <label></label>
                         <button id="print_data" type="button" class="form-control btn btn-primary font-weight-bold">Print</button>
-                        {{-- <div id="btn_print_container">
-
-                        </div> --}}
                     </div>
                     <div class="col-lg-2">
                         <label></label>
@@ -195,10 +249,10 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row" id="default_print_view">
+            <div class="form-group row">
                 <div class="col-md-4">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" id="default_printing_view">
                     <div class="form-group row">
                         <label class="center-container-element" id="short_description"></label>
                         <svg class="center-container-element" id="barcode"></svg>
@@ -216,6 +270,35 @@
                                 <div class="custom_markdown_font">NOW: <span class="custom_markdown_font" id="markdown_now_price"></span></div>
                                 <div>BEFORE: <span id="markdown_before_price"></span></div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4" id="shelf_tag_printing" hidden>
+                    {{-- <div class="form-group row">
+                        <label class="center-container-element" id="short_description"></label>
+                        <svg class="center-container-element" id="barcode"></svg>
+                        <div class="col-lg-5 align-text-elements-left">
+                            <label  id="barcode_receivedDate" ></label>
+                            <label  id="barcode_vendor" ></label>
+                        </div>
+
+                        <div class="col-lg-5 align-text-elements-right default_view">
+                                <div><span class="custom_default_font" id="bracode_price"></span></div>
+                                <label id="barcode_vendor_no"></label>
+                        </div>
+                        <div class="col-lg-5 markdown_view align-text-elements-right-markdown" hidden>
+                                <div class="custom_markdown_font">NOW: <span class="custom_markdown_font" id="markdown_now_price"></span></div>
+                                <div>BEFORE: <span id="markdown_before_price"></span></div>
+                        </div>
+                    </div> --}}
+                    <div class="container-shelf">
+                        <div class="center"><svg class="center-container-element" id="barcode"></svg></div>
+                        <div class="top"><label class="center-container-element" id="short_description_shelf"></label></div>
+                        <div class="right">
+                            <label class="custom_default_font_shelf_barcode" id="bracode_price_shelf"></label>
+                            <label class="custom_default_font_shelf" id="barcode_receivedDate_shelf"></label>
+                        </div>
+                        {{-- <div class="right-bottom"><span class="" id="barcode_receivedDate_shelf"></span></div> --}}
                     </div>
                 </div>
                 <div class="col-md-4">

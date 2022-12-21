@@ -48,7 +48,7 @@ void new class BipIndex{
         })
         document.querySelector('#print_preview').addEventListener('click', async(e) => {
 
-            let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc=' + this.dataUPC
+            // let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc=' + this.dataUPC
             this.previewPrint()
             if(this.currentType == 2 || this.currentType == 4)
             {
@@ -58,18 +58,13 @@ void new class BipIndex{
                 $('.default_view').removeAttr('hidden')
                 $('.markdown_view').attr('hidden',true)
             }
-            $('#btn_print_container').empty()
-            const container = document.querySelector('#btn_print_container')
-            const anchor = document.createElement('a')
-            const button = document.createElement('button')
-            anchor.href = `/print/tag?${data}`
-            button.innerText = 'Print'
-            button.classList.add("form-control","btn-primary","btn","btn-primary","font-weight-bold","print_trigger")
-            button.setAttribute('type','button')
-            anchor.setAttribute('target','_blank')
-            anchor.appendChild(button)
-            container.appendChild(anchor)
-
+            if(this.currentType == 5){
+                $('#default_printing_view').attr('hidden', true)
+                $('#shelf_tag_printing').removeAttr('hidden')
+            }else{
+                $('#default_printing_view').removeAttr('hidden')
+                $('#shelf_tag_printing').attr('hidden',true)
+            }
 
         })
 
@@ -83,6 +78,7 @@ void new class BipIndex{
             this.currentType = e.target.value
             if(e.target.value  == 2 || e.target.value  == 4 )
             {$('#after_price_field').show()}else{$('#after_price_field').hide()}
+
         })
 
         this.editBtn.addEventListener('click', () => {
@@ -243,18 +239,47 @@ void new class BipIndex{
 
     previewPrint = () => {
         const formData = this.getFormData()
-        JsBarcode("#barcode", `${parseInt(this.skuData,10)}`, {
-            format: "CODE39",
-            height: 60,
-            displayValue: true
-        })
+        console.log(formData.get('price'))
         $('#barcode_receivedDate').html(formData.get('receivedDate'))
-        $('#short_description').html(formData.get('short_descr'))
+        $('#short_description_shelf').html(formData.get('short_descr'))
         $('#bracode_price').html(numberWithCommas(formData.get('price')))
         $('#barcode_vendor').html(formData.get('vendor'))
         $('#barcode_vendor_no').html(formData.get('ven_no'))
         $('#markdown_now_price').html(numberWithCommas(formData.get('after_price')))
         $('#markdown_before_price').html(numberWithCommas(formData.get('price')))
+
+        if(this.currentType ==  5)
+        {
+            JsBarcode("#barcode", `${parseInt(this.skuData,10)}`, {
+                format: "CODE128",
+                textAlign: "left",
+                height: 60,
+                displayValue: true
+            })
+
+            $('#barcode_receivedDate_shelf').html(formData.get('receivedDate'))
+            $('#short_description_shelf').html(formData.get('short_descr'))
+            $('#bracode_price_shelf').html(numberWithCommas(formData.get('price')))
+            $('#barcode_vendor').html(formData.get('vendor'))
+            $('#barcode_vendor_no').html(formData.get('ven_no'))
+            $('#markdown_now_price').html(numberWithCommas(formData.get('after_price')))
+            $('#markdown_before_price').html(numberWithCommas(formData.get('price')))
+        }else{
+            JsBarcode("#barcode", `${parseInt(this.skuData,10)}`, {
+                format: "CODE39",
+                height: 60,
+                displayValue: true
+            })
+            $('#barcode_receivedDate').html(formData.get('receivedDate'))
+            $('#short_description').html(formData.get('short_descr'))
+            $('#bracode_price').html(numberWithCommas(formData.get('price')))
+            $('#barcode_vendor').html(formData.get('vendor'))
+            $('#barcode_vendor_no').html(formData.get('ven_no'))
+            $('#markdown_now_price').html(numberWithCommas(formData.get('after_price')))
+            $('#markdown_before_price').html(numberWithCommas(formData.get('price')))
+
+        }
+
     }
 
     getFormData = () =>

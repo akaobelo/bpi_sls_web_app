@@ -18,6 +18,8 @@ void new class SlsIndex{
         this.editBtn = document.querySelector('#edit-btn')
         this.inputProdSpec = document.querySelector('#kt_tagify_1')
 
+        this.regex = /[,\s]/g
+
         $('#short_descr').prop('readonly',true)
         $('#price').prop('readonly',true)
         $('.sl2').trigger('change')
@@ -78,7 +80,12 @@ void new class SlsIndex{
     }
 
     checkStatusCheck = () => {
+        $('#sale_price').removeAttr('readonly')
         this.signageOption = $('.checkbox').is(':checked')
+        if($('.checkbox').is(':checked') == true)
+        {
+            $('#sale_price').removeAttr('readonly')
+        }
     }
     populateStore = async() => {
         const {data:result} =  await axios.get('/api/fetch/tpsStore')
@@ -97,7 +104,8 @@ void new class SlsIndex{
     populateDataPrintPreview = () => {
         const data = this.getFormData()
         let size = 0
-
+        this.sale_price = (data.get('sale_price') ? data.get('sale_price') :'0.00')
+        console.log(this.sale_price)
         if(data.get('printing_type') == 2) size = 50
         JsBarcode("#barcode", `${parseInt(this.skuData,10)}`, {
             format: "CODE39",
@@ -122,8 +130,8 @@ void new class SlsIndex{
         $('.color').html(`${data.get('color')}`)
         $('.material').html(`${data.get('material')}`)
         $('.size').html(`${data.get('size')}`)
-        $('.price').val(`₱ ${numberWithCommas(parseFloat(data.get('price')).toFixed(2))}`)
-        $('.sale_price').val(`₱ ${numberWithCommas(parseFloat(data.get('sale_price')).toFixed(2))}`)
+        $('.price').val(`₱ ${numberWithCommas(parseFloat(data.get('price').replace(this.regex,'')).toFixed(2))}`)
+        $('.sale_price').val(`₱ ${numberWithCommas(parseFloat(this.sale_price).toFixed(2))}`)
         $('#barcode_description').html(`<h3>${data.get('sku')}</h3>`)
 
     }
@@ -196,7 +204,8 @@ void new class SlsIndex{
             </div>
             <div class="col-lg-4">
                 <label>Sale Price</label>
-                <input type="" class="form-control" style="background-color:#EBEBE4;" name="sale_price" id="sale_price">
+                <input type="" class="form-control" style="background-color:#EBEBE4;" name="sale_price" id="sale_price" readonly>
+                <span class="form-text text-muted">Sale price should be lower than original price</span>
             </div>
             `)
         }
