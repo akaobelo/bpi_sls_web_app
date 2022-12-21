@@ -141,6 +141,7 @@
                                 <option value="3">Sticker Tag (Ballpen)</option>
                                 <option value="4">Sticker Tag Markdown</option>
                                 <option value="5">Shelf Tag</option>
+                                <option value="6">Regular Sticker Tag</option>
                             </select>
                         </div>
                     </div>
@@ -166,7 +167,7 @@
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" id="btn_clear" class="form-control btn btn-primary font-weight-bold">Clear</button>
+                        <button type="button" id="btn_clear" class="form-control btn btn-danger font-weight-bold">Clear</button>
                     </div>
                 </div>
                 <!-- end: Example Code-->
@@ -220,16 +221,16 @@
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button id="print_preview" type="button" class="form-control btn btn-primary font-weight-bold">Data Preview</button>
+                        <button id="print_preview" type="button" class="form-control btn btn-danger font-weight-bold">Data Preview</button>
                     </div>
 
                     <div class="col-lg-2">
                         <label></label>
-                        <button id="print_data" type="button" class="form-control btn btn-primary font-weight-bold">Print</button>
+                        <button id="print_data" type="button" class="form-control btn btn-danger font-weight-bold">Print</button>
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" id="editBtn" class="form-control btn btn-primary font-weight-bold">Edit</button>
+                        <button type="button" id="editBtn" class="form-control btn btn-danger font-weight-bold">Edit</button>
                     </div>
                 </div>
                 <!-- end: Example Code-->

@@ -25,7 +25,7 @@
                     </div>
                 <div class="form-group row">
                     <div class="col-lg-6">
-                        <label>Sku/Barcode</label>
+                        <label>Barcode</label>
                         <input type="" class="form-control" name="sku" id="sku">
                     </div>
                     <div class="col-lg-6">
@@ -84,7 +84,7 @@
                         <label>Product Specifications</label>
                         <input id="kt_tagify_1" class="form-control tagify" name='product_specification' placeholder='type...' v autofocus="" data-blacklist='' />
                         <div class="mt-3">
-                            <a href="javascript:;" id="kt_tagify_1_remove" class="btn btn-sm btn-light-primary font-weight-bold">Remove tags</a>
+                            <a href="javascript:;" id="kt_tagify_1_remove" class=" btn-sm btn btn-danger font-weight-bold">Remove tags</a>
                         </div>
                     </div>
                 </div>
@@ -113,15 +113,15 @@
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" id="btn_sls_print_preview" data-toggle="modal" data-target="#print_preview_btn" class="form-control btn btn-primary font-weight-bold">Print Preview</button>
+                        <button type="button" id="btn_sls_print_preview" data-toggle="modal" data-target="#print_preview_btn" class="form-control btn btn-danger font-weight-bold">Print Preview</button>
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" id="edit-btn" class="form-control btn btn-primary font-weight-bold">Edit</button>
+                        <button type="button" id="edit-btn" class="form-control btn btn-danger font-weight-bold">Edit</button>
                     </div>
                     <div class="col-lg-2">
                         <label></label>
-                        <button type="button" id="btn_clear" class="form-control btn btn-primary font-weight-bold">Clear</button>
+                        <button type="button" id="btn_clear" class="form-control btn btn-danger font-weight-bold">Clear</button>
                     </div>
                 </div>
             </div>

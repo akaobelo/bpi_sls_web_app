@@ -2,6 +2,7 @@
 void new class SlsIndex{
     constructor(){
         this.initialization()
+        this.formValidation()
         this.populateStore()
         this.eventHandler()
     }
@@ -10,7 +11,7 @@ void new class SlsIndex{
 
         this.countClick = 0
         this.input = document.querySelector('#kt_tagify_1')
-        this.slsForm = document.querySelector('#kt_form')
+
         this.removeButton =  document.querySelector('#kt_tagify_1_remove')
         this.currentCode = document.querySelector('#store_code')
         this.previewPrintBtn = document.querySelector('#btn_sls_print_preview')
@@ -49,7 +50,8 @@ void new class SlsIndex{
         })
 
         this.previewPrintBtn.addEventListener('click', () => {
-            this.populateDataPrintPreview()
+          this.populateDataPrintPreview()
+
         })
 
         this.editBtn.addEventListener('click', () => {
@@ -60,6 +62,8 @@ void new class SlsIndex{
         document.querySelector('#btn_sls_print_preview').addEventListener('click', () => {
             let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&upc=' + this.dataUPC + '&signage_option=' + this.signageOption
             this.countClick+=1
+
+
             if(this.countClick == 1)
             {
                 $('#btn_print_container').empty()

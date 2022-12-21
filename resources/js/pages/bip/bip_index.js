@@ -49,7 +49,11 @@ void new class BipIndex{
         document.querySelector('#print_preview').addEventListener('click', async(e) => {
 
             // let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&store_code='+this.currentCode.value + '&upc=' + this.dataUPC
-            this.previewPrint()
+            e.preventDefault()
+
+            let status = await this.bipValidation.validate()
+            if(status === 'Valid') this.previewPrint()
+
             if(this.currentType == 2 || this.currentType == 4)
             {
                 $('.default_view').attr('hidden',true)
@@ -64,6 +68,11 @@ void new class BipIndex{
             }else{
                 $('#default_printing_view').removeAttr('hidden')
                 $('#shelf_tag_printing').attr('hidden',true)
+            }
+
+            if(this.currentType == 6)
+            {
+                $('#barcode_vendor_no').hide()
             }
 
         })
@@ -208,6 +217,29 @@ void new class BipIndex{
                     })
                 })
                 break;
+
+            case '6':
+                this.regular_sticker_tag = (this.store_code[0] == '1' ? 'regular_sticker_tag_G.btw' : 'regular_sticker_tag_M.btw')
+                fetch(this.postBarTenderUrl,{
+                    mode: 'no-cors',
+                    method: 'POST',
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "PrinterName": this.printerName,
+                        "Quantity": this.getFormData().get('quantity'),
+                        "barcode_vendor": this.getFormData().get('vendor'),
+                        "price":  this.getFormData().get('after_price'),
+                        "received_date": this.getFormData().get('receivedDate'),
+                        "short_descr": this.getFormData().get('short_descr'),
+                        "upc": this.getFormData().get('sku'),
+                        "ven_no": this.getFormData().get('price'),
+                        "TagLabel": this.regular_sticker_tag
+                    })
+                })
+                    break;
         }
     }
 
@@ -323,21 +355,21 @@ void new class BipIndex{
                     sku:{
                         validators:{
                             notEmpty:{
-                                message:"Statement of account number is required"
+                                message:"Barcode is required."
                             }
                         }
                     },
                     quantity:{
                         validators:{
                             notEmpty:{
-                                message:"Statement date is required"
+                                message:"Please enter quantity for printing."
                             }
                         }
                     },
                     receivedDate:{
                         validators:{
                             notEmpty:{
-                                message:"Rental period start is required"
+                                message:"Date received is required."
                             }
                         }
                     }
