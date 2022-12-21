@@ -330,19 +330,26 @@ void new class BipIndex{
 
     getItemBySku = async barcode => {
 
-            const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
-            for(const data of result)
-            {
-                this.vendor = data.vendor
-                this.dataUPC = data.upc
-                console.log(data)
-                $('#short_descr').val(data.short_descr)
-                $('#buy_unit').val(data.buy_unit)
-                $('#ven_no').val(data.ven_no)
-                $('#price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
-                $('#after_price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
+
+            try{
+                const {data:result} = await axios.get(`/api/get/item/${barcode}`,{params:{code:this.currentCode.value}})
+                for(const data of result)
+                {
+                    this.vendor = data.vendor
+                    this.dataUPC = data.upc
+                    console.log(data)
+                    $('#short_descr').val(data.short_descr)
+                    $('#buy_unit').val(data.buy_unit)
+                    $('#ven_no').val(data.ven_no)
+                    $('#price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
+                    $('#after_price').val(numberWithCommas(parseFloat(data.price).toFixed(2)))
+                }
+            }catch({result:err}){
+                showAlert('Warning!','Item Not Found!', 'warning')
             }
-            if(result == "Item Not Found!") showAlert('Warning!',result,'warning')
+
+
+
 
     }
 

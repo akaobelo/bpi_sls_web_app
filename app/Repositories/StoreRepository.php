@@ -125,52 +125,88 @@ class StoreRepository implements StoreInterface
         switch($request->code)
         {
             case 2001 :
-                $tps = new TpsConnection('odbc_2001');
-                return $tps->getItemBySKU($barcode_append);
+                // $tps = new TpsConnection('odbc_2001');
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             case 2003 :
                 $tps = new TpsConnection('odbc_2003');
-                return $tps->getItemBySKU($barcode_append);
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             case 2006 :
                 $tps = new TpsConnection('odbc_2006');
-                return $tps->getItemBySKU($barcode_append);
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             case 2008 :
                 $tps = new TpsConnection('odbc_2008');
-                return $tps->getItemBySKU($barcode_append);
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             case 2009 :
                 $tps = new TpsConnection('odbc_2009');
-                return $tps->getItemBySKU($barcode_append);
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             case 1001 :
                 $tps = new TpsConnection('odbc_1001');
-                return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
+
                 break;
             case 1010 :
                 $tps = new TpsConnection('odbc_1010');
-                return $tps->getItemBySKU($barcode_append);
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             case 2010 :
                 $tps = new TpsConnection('odbc_2010');
-                return $tps->getItemBySKU($barcode_append);
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             case 3001 :
                 $tps = new TpsConnection('odbc_3001');
-                return $tps->getItemBySKU($barcode_append);
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             case 3009 :
                 $tps = new TpsConnection('odbc_3009');
-                return $tps->getItemBySKU($barcode_append);
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             case 6001 :
                 $tps = new TpsConnection('odbc_6001');
-                return $tps->getItemBySKU($barcode_append);
+                // return $tps->getItemBySKU($barcode_append);
+                return ($tps->getItemBySKU($barcode_append) ?
+                $tps->getItemBySKU($barcode_append) :
+                $tps->getItemBySKU($barcode_append));
                 break;
             default:
-                echo "Item Not Found";
+                return "Item Not Found";
                 break;
         }
+
     }
+
+
 }
