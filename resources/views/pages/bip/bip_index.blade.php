@@ -181,7 +181,7 @@
                         <input type="email" style="background-color:#EBEBE4;" class="form-control" name="short_descr" id="short_descr">
                     </div>
                     <div class="col-lg-4">
-                        <label>BUM</label>
+                        <label>BUOM</label>
                         <input  type="email" style="background-color:#EBEBE4;" class="form-control" name="buy_unit" id="buy_unit">
                     </div>
                 </div>
