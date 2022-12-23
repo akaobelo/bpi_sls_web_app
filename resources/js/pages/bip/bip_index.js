@@ -101,139 +101,122 @@ void new class BipIndex{
         this.store_code = $('#store_code').val()
         switch(this.getFormData().get('type')){
             case '1':
-                fetch(this.postBarTenderUrl,{
-                    mode: 'no-cors',
-                    method: 'POST',
-                    headers:{
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "PrinterName": this.printerName,
-                        "Quantity": this.getFormData().get('quantity'),
-                        "barcode_vendor": this.getFormData().get('vendor'),
-                        "price":  this.getFormData().get('price'),
-                        "received_date": this.getFormData().get('receivedDate'),
-                        "short_descr": this.getFormData().get('short_descr'),
-                        "upc": this.getFormData().get('sku'),
-                        "ven_no": this.getFormData().get('ven_no'),
-                        "TagLabel": 'hard_tag.btw'
-                    })
-                })
+                const caseOne = [
+                    this.printerName,
+                    this.getFormData().get('quantity'),
+                    this.getFormData().get('vendor'),
+                    this.getFormData().get('price'),
+                    this.getFormData().get('receivedDate'),
+                    this.getFormData().get('short_descr'),
+                    this.getFormData().get('sku'),
+                    this.getFormData().get('ven_no'),
+                    'hard_tag.btw'
+                ]
+                this.fetchPrinterData(caseOne)
                 break;
 
             case '2':
                 this.hard_tag_label = (this.store_code[0] == 1 ? 'hard_tag_markdownG.btw' : 'hard_tag_markdownM.btw')
-                fetch(this.postBarTenderUrl,{
-                    mode: 'no-cors',
-                    method: 'POST',
-                    headers:{
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "PrinterName": this.printerName,
-                        "Quantity": this.getFormData().get('quantity'),
-                        "barcode_vendor": this.getFormData().get('vendor'),
-                        "price":  this.getFormData().get('after_price'),
-                        "received_date": this.getFormData().get('receivedDate'),
-                        "short_descr": this.getFormData().get('short_descr'),
-                        "upc": this.getFormData().get('sku'),
-                        "ven_no": this.getFormData().get('price'),
-                        "TagLabel": this.hard_tag_label
-                    })
-                })
+                const caseTwo = [
+                    this.printerName,
+                    this.getFormData().get('quantity'),
+                    this.getFormData().get('vendor'),
+                    this.getFormData().get('after_price'),
+                    this.getFormData().get('receivedDate'),
+                    this.getFormData().get('short_descr'),
+                    this.getFormData().get('sku'),
+                    this.getFormData().get('price'),
+                    this.hard_tag_label
+                ]
+                this.fetchPrinterData(caseTwo)
                 break;
             case '3':
-                fetch(this.postBarTenderUrl,{
-                    mode: 'no-cors',
-                    method: 'POST',
-                    headers:{
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "PrinterName": this.printerName,
-                        "Quantity": this.getFormData().get('quantity'),
-                        "barcode_vendor": this.getFormData().get('vendor'),
-                        "price":  this.getFormData().get('after_price'),
-                        "received_date": this.getFormData().get('receivedDate'),
-                        "short_descr": this.getFormData().get('short_descr'),
-                        "upc": this.getFormData().get('sku'),
-                        "ven_no": this.getFormData().get('price'),
-                        "TagLabel": 'sticker_ballpen.btw'
-                    })
-                })
+                const caseThree = [
+                    this.printerName,
+                    this.getFormData().get('quantity'),
+                    this.getFormData().get('vendor'),
+                    this.getFormData().get('after_price'),
+                    this.getFormData().get('receivedDate'),
+                    this.getFormData().get('short_descr'),
+                    this.getFormData().get('sku'),
+                    this.getFormData().get('price'),
+                    'sticker_ballpen.btw'
+                ]
+                this.fetchPrinterData(caseThree)
                 break;
 
             case '4':
                 this.sticker_tag_label = (this.store_code[0] == '1' ? 'sticker_tag_markdownG.btw' : 'sticker_tag_markdownM.btw')
-                fetch(this.postBarTenderUrl,{
-                    mode: 'no-cors',
-                    method: 'POST',
-                    headers:{
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "PrinterName": this.printerName,
-                        "Quantity": this.getFormData().get('quantity'),
-                        "barcode_vendor": this.getFormData().get('vendor'),
-                        "price":  this.getFormData().get('after_price'),
-                        "received_date": this.getFormData().get('receivedDate'),
-                        "short_descr": this.getFormData().get('short_descr'),
-                        "upc": this.getFormData().get('sku'),
-                        "ven_no": this.getFormData().get('price'),
-                        "TagLabel": this.sticker_tag_label
-                    })
-                })
+                const caseFour = [
+                    this.printerName,
+                    this.getFormData().get('quantity'),
+                    this.getFormData().get('vendor'),
+                    this.getFormData().get('after_price'),
+                    this.getFormData().get('receivedDate'),
+                    this.getFormData().get('short_descr'),
+                    this.getFormData().get('sku'),
+                    this.getFormData().get('price'),
+                    this.sticker_tag_label
+                ]
+                this.fetchPrinterData(caseFour)
                 break;
 
             case '5':
-                fetch(this.postBarTenderUrl,{
-                    mode: 'no-cors',
-                    method: 'POST',
-                    headers:{
-                        'Accept': 'application/json',
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "PrinterName": this.printerName,
-                        "Quantity": this.getFormData().get('quantity'),
-                        "barcode_vendor": this.getFormData().get('vendor'),
-                        "price":  this.getFormData().get('price'),
-                        "received_date": this.getFormData().get('receivedDate'),
-                        "short_descr": this.getFormData().get('short_descr'),
-                        "upc": this.getFormData().get('sku'),
-                        "ven_no": this.getFormData().get('ven_no'),
-                        "TagLabel": 'shelf_hard_tag.btw'
-                    })
-                })
+                const caseFive = [
+                    this.printerName,
+                    this.getFormData().get('quantity'),
+                    this.getFormData().get('vendor'),
+                    this.getFormData().get('price'),
+                    this.getFormData().get('receivedDate'),
+                    this.getFormData().get('short_descr'),
+                    this.getFormData().get('sku'),
+                    this.getFormData().get('ven_no'),
+                    'shelf_hard_tag.btw'
+                ]
+                this.fetchPrinterData(caseFive)
+
                 break;
 
             case '6':
                 this.regular_sticker_tag = (this.store_code[0] == '1' ? 'regular_sticker_tag_G.btw' : 'regular_sticker_tag_M.btw')
-                fetch(this.postBarTenderUrl,{
+                const caseSix = [
+                    this.printerName,
+                    this.getFormData().get('quantity'),
+                    this.getFormData().get('vendor'),
+                    this.getFormData().get('after_price'),
+                    this.getFormData().get('receivedDate'),
+                    this.getFormData().get('short_descr'),
+                    this.getFormData().get('sku'),
+                    this.getFormData().get('price'),
+                    this.regular_sticker_tag
+                ]
+                this.fetchPrinterData(caseSix)
+                break;
+        }
+    }
+
+
+    fetchPrinterData = (data) => {
+        console.log(data)
+        return  fetch(this.postBarTenderUrl,{
                     mode: 'no-cors',
                     method: 'POST',
-                    headers:{
+                    headers: {
                         'Accept': 'application/json',
                         'Content-type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "PrinterName": this.printerName,
-                        "Quantity": this.getFormData().get('quantity'),
-                        "barcode_vendor": this.getFormData().get('vendor'),
-                        "price":  this.getFormData().get('after_price'),
-                        "received_date": this.getFormData().get('receivedDate'),
-                        "short_descr": this.getFormData().get('short_descr'),
-                        "upc": this.getFormData().get('sku'),
-                        "ven_no": this.getFormData().get('price'),
-                        "TagLabel": this.regular_sticker_tag
+                        "PrinterName": data[0],
+                        "Quantity": data[1],
+                        "barcode_vendor": data[2],
+                        "price":  data[3],
+                        "received_date": data[4],
+                        "short_descr": data[5],
+                        "upc": data[6],
+                        "ven_no": data[7],
+                        "TagLabel": data[8]
                     })
                 })
-                break;
-        }
     }
 
     resetForm = () => {
@@ -272,7 +255,6 @@ void new class BipIndex{
                 height: 60,
                 displayValue: true
             })
-
             $('#barcode_receivedDate_shelf').html(formData.get('receivedDate'))
             $('#short_description_shelf').html(formData.get('short_descr'))
             $('#bracode_price_shelf').html(numberWithCommas(formData.get('price')))
