@@ -140,8 +140,9 @@
     }
  </style>
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
  @for ($i = 0; $i <= (int)$data['quantity']-1; $i++)
-    @if($data['signageOption']  == 'false')
+    @if($data['signageOption']  == 'true')
         <div class="container" id="regular_container">
             <div class="header">
             <h1 class="header-description">{{$data['short_descr']}}</h1>
@@ -149,6 +150,7 @@
             <div class="body">
                 <div class="regular_price">
                     <label class="regular_label">REGULAR PRICE</label>
+
                     <span class="price_field">₱{{$data['price']}}</span>
                 </div>
                 <div class="now_price">
