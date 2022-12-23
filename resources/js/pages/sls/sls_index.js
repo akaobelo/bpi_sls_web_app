@@ -154,7 +154,7 @@ void new class SlsIndex{
             }
         }catch({response:err})
         {
-            showAlert('Warning!', 'Invalid Code', 'warning')
+            if(barcode.length == 13)showAlert('Warning!','Item Not Found!', 'warning')
         }
 
     }
