@@ -155,7 +155,7 @@
                 </div>
                 <div class="now_price">
                     <label class="now_label">NOW</label>
-                    <span class="sale_price_field">₱{{$data['sale_price']}}</span>
+                    <p><span class="sale_price_field">₱{{$data['sale_price']}}</span></p>
                 </div>
             </div>
         </div>
@@ -166,7 +166,7 @@
             </div>
             <div class="body">
                 <div class="now_price_sale">
-                    <span class="sale_price_field_sale">₱{{$data['price']}}</span>
+                   <p> <span class="sale_price_field_sale">₱{{$data['price']}}</span></p>
                 </div>
             </div>
         </div>
