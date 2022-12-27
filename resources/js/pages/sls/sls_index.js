@@ -16,6 +16,7 @@ void new class SlsIndex{
         this.bussUnit = document.querySelector('#business_unit')
         this.editBtn = document.querySelector('#edit-btn')
         this.inputProdSpec = document.querySelector('#kt_tagify_1')
+        this.signageOption = false
 
         this.regex = /[,\s]/g
 
@@ -61,7 +62,6 @@ void new class SlsIndex{
             let data = $('#kt_form').serialize() +  '&barcode_vendor=' + $('#barcode_vendor').text() + '&upc=' + this.dataUPC + '&signage_option=' + this.signageOption
             this.countClick+=1
 
-
             if(this.countClick == 1)
             {
                 $('#btn_print_container').empty()
@@ -84,6 +84,7 @@ void new class SlsIndex{
     checkStatusCheck = () => {
         $('#sale_price').removeAttr('readonly')
         this.signageOption = $('.checkbox').is(':checked')
+        console.log(this.signageOption)
         if($('.checkbox').is(':checked') == true)
         {
             $('#sale_price').removeAttr('readonly')
