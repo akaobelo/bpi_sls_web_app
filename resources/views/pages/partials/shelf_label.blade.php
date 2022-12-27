@@ -111,9 +111,14 @@
                 <span class="body-description">Product Specification:</span>
             </div>
             <div>
-                @foreach(json_decode($data['product_specification']) as $val)
-                    <a>{{$val->value}}</a>,
-                 @endforeach
+                @if(empty($data['product_specification']))
+                    <a></a>
+                @else
+                    @foreach(json_decode($data['product_specification']) as $val)
+                        <a>{{$val->value}}</a>,
+                    @endforeach
+                @endif
+
             </div>
             <div>
                 <label style="color: red;" class="body-description">Price:</label>

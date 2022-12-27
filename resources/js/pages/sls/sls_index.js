@@ -1,4 +1,3 @@
-
 void new class SlsIndex{
     constructor(){
         this.initialization()
@@ -108,7 +107,6 @@ void new class SlsIndex{
         const data = this.getFormData()
         let size = 0
         this.sale_price = (data.get('sale_price') ? data.get('sale_price') :'0.00')
-        console.log(this.sale_price)
         if(data.get('printing_type') == 2) size = 50
         JsBarcode("#barcode", `${parseInt(this.skuData,10)}`, {
             format: "CODE39",
@@ -129,6 +127,7 @@ void new class SlsIndex{
                 `)
             }
         }
+
         $('#modal-description').html(`${data.get('short_descr')}`)
         $('.color').html(`${data.get('color')}`)
         $('.material').html(`${data.get('material')}`)

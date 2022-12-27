@@ -79,7 +79,7 @@ class StoreRepository implements StoreInterface
         'size' => $data->size,
         'price' => $data->price,
         'sale_price' => (isset($data->sale_price) ?  number_format($data->sale_price,2,'.',',') : ''),
-        'product_specification' => $data->product_specification,
+        'product_specification' => (isset($data->product_specification) ? $data->product_specification : array()),
         'barcode_vendor' => $data->barcode_vendor,
         'upc' => $trimedUPC,
         'signageOption' => ($data->signage_option ? $data->signage_option : 'false')];
