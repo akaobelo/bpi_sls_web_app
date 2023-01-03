@@ -64,7 +64,40 @@
         text-align: center;
         word-break: break-all; /* optional */
      }
-     .sale_price_field{
+     .sale_price_field_length_six{
+        /* font-family: Arial, Helvetica, Verdana, Tahoma, "DejaVu Sans", sans-serif; */
+        font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
+        font-size:200px;
+        display: inline-block;
+        text-align: center;
+        font-weight: bold;
+        color:#d12338;
+        word-break: break-all; /* optional */
+     }
+
+     .sale_price_field_six_digit {
+        /* font-family: Arial, Helvetica, Verdana, Tahoma, "DejaVu Sans", sans-serif; */
+        font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
+        font-size:170px;
+        display: inline-block;
+        text-align: center;
+        font-weight: bold;
+        color:#d12338;
+        word-break: break-all; /* optional */
+     }
+
+     .sale_price_field_higher_length{
+        /* font-family: Arial, Helvetica, Verdana, Tahoma, "DejaVu Sans", sans-serif; */
+        font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
+        font-size:180px;
+        display: inline-block;
+        text-align: center;
+        font-weight: bold;
+        color:#d12338;
+        word-break: break-all; /* optional */
+     }
+
+     .sale_price_field_length_six{
         /* font-family: Arial, Helvetica, Verdana, Tahoma, "DejaVu Sans", sans-serif; */
         font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
         font-size:200px;
@@ -156,7 +189,26 @@
                 </div>
                 <div class="now_price">
                     <label class="now_label">NOW</label>
-                    <p><span class="sale_price_field">₱{{$data['sale_price']}}</span></p>
+                    {{-- {{dd(strlen($data['sale_price']))}} --}}
+                    {{-- @if(strlen($data['sale_price'] === 10))
+                    {{dd('1')}}
+                        <p><span class="sale_price_field_six_digit">₱{{$data['sale_price']}}</span></p> --}}
+
+                    @if(strlen($data['sale_price']) === 6)
+                        <p><span class="sale_price_field_length_six">₱{{$data['sale_price']}}</span></p>
+                    @elseif(strlen($data['sale_price']) === 10)
+                        <p><span class="sale_price_field_six_digit">₱{{$data['sale_price']}}</span></p>
+                    @else
+                        <p><span class="sale_price_field_higher_length">₱{{$data['sale_price']}}</span></p>
+                    @endif
+
+
+
+                    {{-- @else
+                    {{dd('3')}} --}}
+
+
+
                 </div>
             </div>
         </div>
