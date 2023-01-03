@@ -67,7 +67,7 @@
      .sale_price_field{
         /* font-family: Arial, Helvetica, Verdana, Tahoma, "DejaVu Sans", sans-serif; */
         font-family: Verdana, Tahoma, "DejaVu Sans", sans-serif;
-        font-size:240px;
+        font-size:200px;
         display: inline-block;
         text-align: center;
         font-weight: bold;
@@ -82,7 +82,8 @@
         display: inline-block;
         text-align: center;
         font-weight: bold;
-        word-break: break-all; /* optional */
+        overflow-wrap: break-word;
+         /* optional */
         white-space: normal;
      }
      .header-description{
@@ -114,7 +115,7 @@
         color: #d12338;
         font-weight: bold;
         font-family: Arial, Helvetica, sans-serif;
-        font-size: 280px;
+        font-size: 250px;
     }
 
     .regular_label{
@@ -166,7 +167,7 @@
             </div>
             <div class="body">
                 <div class="now_price_sale">
-                   <p> <span class="sale_price_field_sale">₱{{$data['price']}}</span></p>
+                   <span class="sale_price_field_sale">₱{{$data['price']}}</span>
                 </div>
             </div>
         </div>

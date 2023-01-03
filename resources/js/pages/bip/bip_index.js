@@ -13,6 +13,7 @@ void new class BipIndex{
         this.compName = compName
         this.printerName = printerName
         this.postBarTenderUrl = `http://${this.compName}:8080/Integration/WebServiceIntegrationPOST/Execute`
+        console.log(this.postBarTenderUrl)
     }
 
     initialization = () => {
@@ -73,8 +74,6 @@ void new class BipIndex{
         $(document).on('click','.print_trigger', () => {
             this.resetForm()
         })
-
-
 
         document.querySelector('#type').addEventListener('change', (e) => {
             this.currentType = e.target.value

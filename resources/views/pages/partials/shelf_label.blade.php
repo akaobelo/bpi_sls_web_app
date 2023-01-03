@@ -132,9 +132,5 @@
         </div>
     </div>
 @endfor
-{{-- @for ($i = 0; $i <= (int)$data['quantity']-1; $i++)
-
-@endfor --}}
-
 
 
