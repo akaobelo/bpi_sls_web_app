@@ -186,7 +186,7 @@ void new class BipIndex{
                     this.getFormData().get('receivedDate'),
                     this.getFormData().get('short_descr'),
                     this.getFormData().get('sku'),
-                    this.getFormData().get('price'),
+                    this.getFormData().get('ven_no'),
                     this.regular_sticker_tag
                 ]
                 this.fetchPrinterData(caseSix)
