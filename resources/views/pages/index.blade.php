@@ -99,13 +99,13 @@
                                 {{-- {{dd($configuration[0]->bip_config)}}  --}}
                                  <li style="{{$configuration->bip_config == 1 ? 'pointer-events:auto;' : 'pointer-events:none;opacity:0.7'}}"  class="menu-item menu-item-submenu menu-item-rel {{Request::routeIs('bip.index') ? ' menu-item-here' : ''}}">
                                     <a href="{{route('bip.index')}}" class="menu-link active"  disabled>
-                                    <span class="menu-text">Barcode Interface Program</span>
+                                    <span style="justify-content:center;" class="menu-text">Barcode Interface Program</span>
                                     {{-- <span class="menu-desc">Barcode Interface Program</span> --}}
                                     </a>
                                  </li>
                                  <li style="{{$configuration->sls_config == 1 ? 'pointer-events:auto;' : 'pointer-events:none;opacity:0.7'}}" class="menu-item menu-item-submenu menu-item-rel  {{Request::routeIs('sls.index') ? ' menu-item-here' : ''}}">
                                     <a href="{{route('sls.index')}}" class="menu-link master_config_sls" disabled>
-                                    <span class="menu-text">Shelf Label System</span>
+                                    <span style="justify-content:center;" class="menu-text">Shelf Label System</span>
                                     {{-- <span class="menu-desc">Shelf Label System</span> --}}
                                     </a>
                                  </li>
@@ -124,8 +124,11 @@
                <!--begin::Content-->
                <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                   <!--begin::Entry-->
-                  <div class="d-flex flex-column-fluid">
+                  <div class="d-flex flex-column-fluid" style="justify-content:center;">
                      <!--begin::Container-->
+                     @if(Request::routeIs('login'))
+                        @include('pages.partials.index_landing')
+                     @endif
                      @yield('content')
                      <!--end::Container-->
                   </div>
