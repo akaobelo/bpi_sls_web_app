@@ -1,4 +1,5 @@
 const { default: axios } = require("axios")
+const { conforms } = require("lodash")
 
 void new class BipIndex{
 
@@ -13,7 +14,6 @@ void new class BipIndex{
         this.compName = compName
         this.printerName = printerName
         this.postBarTenderUrl = `http://${this.compName}:8080/Integration/WebServiceIntegrationPOST/Execute`
-        console.log(this.postBarTenderUrl)
     }
 
     initialization = () => {
@@ -27,6 +27,7 @@ void new class BipIndex{
         $('#price').prop('readonly',true)
         $('#after_price').prop('readonly',true)
         $('#after_price_field').hide()
+        $('#receivedDate').datepicker('setDate','today').on('changeDate',  e => this.bipValidation.revalidateField('receivedDate'))
     }
     eventHandler = () => {
         $('#store').on('change', this.storeCode)
@@ -44,7 +45,8 @@ void new class BipIndex{
         })
 
         document.querySelector('#print_data').addEventListener('click', async() => {
-            this.postPrintData()
+            this.getFormData().get('quantity')
+            confirmAlert('Submit Request?',`You are about to print ${this.getFormData().get('quantity')} tags`, this.postPrintData)
         })
         document.querySelector('#print_preview').addEventListener('click', async(e) => {
 
@@ -96,16 +98,34 @@ void new class BipIndex{
     }
 
 
+    dateFormatting = () => {
+        $date = this.getFormData().get('receivedDate')
+        $formattedDate =  new Date($date)
+        $month = $formattedDate.getMonth()
+        $year = $formattedDate.getFullYear().toString().slice(-2)
+        $dateMonth = ['A', 'B', 'C', 'D', 'E', 'G', 'H', 'I', 'J', 'K', 'L']
+        $dateFormatted = `${$year}${$dateMonth[$month]}`
+       return $dateFormatted
+    }
+
     postPrintData = () => {
         this.store_code = $('#store_code').val()
+        // $date = this.getFormData().get('receivedDate')
+        // $formattedDate =  new Date($date)
+        // $month = $formattedDate.getMonth()
+        // $year = $formattedDate.getFullYear().toString().slice(-2)
+        // $dateMonth = ['A', 'B', 'C', 'D', 'E', 'G', 'H', 'I', 'J', 'K', 'L']
+        // $dateFormatted = `${$year}${$dateMonth[$month]}`
+
         switch(this.getFormData().get('type')){
             case '1':
+
                 const caseOne = [
                     this.printerName,
                     this.getFormData().get('quantity'),
                     this.getFormData().get('vendor'),
                     this.getFormData().get('price'),
-                    this.getFormData().get('receivedDate'),
+                    this.dateFormatting(),
                     this.getFormData().get('short_descr'),
                     this.getFormData().get('sku'),
                     this.getFormData().get('ven_no'),
@@ -115,13 +135,14 @@ void new class BipIndex{
                 break;
 
             case '2':
+                console.log(this.store_code[0] == '1' ? 'true' : 'false')
                 this.hard_tag_label = (this.store_code[0] == 1 ? 'hard_tag_markdownG.btw' : 'hard_tag_markdownM.btw')
                 const caseTwo = [
                     this.printerName,
                     this.getFormData().get('quantity'),
                     this.getFormData().get('vendor'),
                     this.getFormData().get('after_price'),
-                    this.getFormData().get('receivedDate'),
+                    this.dateFormatting(),
                     this.getFormData().get('short_descr'),
                     this.getFormData().get('sku'),
                     this.getFormData().get('price'),
@@ -135,7 +156,7 @@ void new class BipIndex{
                     this.getFormData().get('quantity'),
                     this.getFormData().get('vendor'),
                     this.getFormData().get('after_price'),
-                    this.getFormData().get('receivedDate'),
+                    this.dateFormatting(),
                     this.getFormData().get('short_descr'),
                     this.getFormData().get('sku'),
                     this.getFormData().get('price'),
@@ -151,7 +172,7 @@ void new class BipIndex{
                     this.getFormData().get('quantity'),
                     this.getFormData().get('vendor'),
                     this.getFormData().get('after_price'),
-                    this.getFormData().get('receivedDate'),
+                    this.dateFormatting(),
                     this.getFormData().get('short_descr'),
                     this.getFormData().get('sku'),
                     this.getFormData().get('price'),
@@ -166,7 +187,7 @@ void new class BipIndex{
                     this.getFormData().get('quantity'),
                     this.getFormData().get('vendor'),
                     this.getFormData().get('price'),
-                    this.getFormData().get('receivedDate'),
+                    this.dateFormatting(),
                     this.getFormData().get('short_descr'),
                     this.getFormData().get('sku'),
                     this.getFormData().get('ven_no'),
@@ -183,7 +204,7 @@ void new class BipIndex{
                     this.getFormData().get('quantity'),
                     this.getFormData().get('vendor'),
                     this.getFormData().get('after_price'),
-                    this.getFormData().get('receivedDate'),
+                    this.dateFormatting(),
                     this.getFormData().get('short_descr'),
                     this.getFormData().get('sku'),
                     this.getFormData().get('ven_no'),
@@ -196,7 +217,6 @@ void new class BipIndex{
 
 
     fetchPrinterData = (data) => {
-        console.log(data)
         return  fetch(this.postBarTenderUrl,{
                     mode: 'no-cors',
                     method: 'POST',
@@ -254,30 +274,33 @@ void new class BipIndex{
                 height: 60,
                 displayValue: true
             })
-            $('#barcode_receivedDate_shelf').html(formData.get('receivedDate'))
+            $('#barcode_receivedDate_shelf').html(this.dateFormatting())
             $('#short_description_shelf').html(formData.get('short_descr'))
-            $('#bracode_price_shelf').html(numberWithCommas(formData.get('price')))
+            $('#bracode_price_shelf').html(formData.get('price') % 1 === 0 ? numberWithCommas(parseInt(formData.get('price')).toFixed(2)) : formData.get('price'))
             $('#barcode_vendor').html(formData.get('vendor'))
             $('#barcode_vendor_no').html(formData.get('ven_no'))
-            $('#markdown_now_price').html(numberWithCommas(formData.get('after_price')))
-            $('#markdown_before_price').html(numberWithCommas(formData.get('price')))
+            $('#markdown_now_price').html(formData.get('after_price') % 1 === 0 ? numberWithCommas(parseInt(formData.get('after_price')).toFixed(2)) : formData.get('after_price'))
+            $('#markdown_before_price').html( formData.get('price') % 1 === 0 ? numberWithCommas(parseInt(formData.get('price')).toFixed(2)) : formData.get('price'))
         }else{
             JsBarcode("#barcode", `${parseInt(this.skuData,10)}`, {
                 format: "CODE39",
                 height: 60,
                 displayValue: true
             })
-            $('#barcode_receivedDate').html(formData.get('receivedDate'))
+            $('#barcode_receivedDate').html(this.dateFormatting())
             $('#short_description').html(formData.get('short_descr'))
-            $('#bracode_price').html(numberWithCommas(formData.get('price')))
+            $('#bracode_price').html(formData.get('price') % 1 === 0 ? numberWithCommas(parseInt(formData.get('price')).toFixed(2)) : formData.get('price'))
+
             $('#barcode_vendor').html(formData.get('vendor'))
             $('#barcode_vendor_no').html(formData.get('ven_no'))
-            $('#markdown_now_price').html(numberWithCommas(formData.get('after_price')))
-            $('#markdown_before_price').html(numberWithCommas(formData.get('price')))
+            $('#markdown_now_price').html(formData.get('after_price') % 1 === 0 ? numberWithCommas(parseInt(formData.get('after_price')).toFixed(2)) : formData.get('after_price'))
+            $('#markdown_before_price').html(formData.get('price') % 1 === 0 ? numberWithCommas(parseInt(formData.get('price')).toFixed(2)) : formData.get('price'))
 
         }
 
     }
+
+
 
     getFormData = () =>
     {
